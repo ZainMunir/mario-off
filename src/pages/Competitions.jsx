@@ -25,9 +25,13 @@ export default function Competitions() {
     })
 
     return (
-
-        <div className="grid grid-cols-2 w-full justify-evenly gap-5 scroll-auto" >
-            {competitionsElements}
-        </div>
+        <>
+            <div className="grid grid-cols-2 w-full justify-evenly gap-5 scroll-auto" >
+                {competitionsElements}
+            </div>
+            <div>
+                {/* button to create new competition that stays near the bottom of the screen / at the top if there are no competitions? */}
+            </div>
+        </>
     )
 }

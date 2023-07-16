@@ -28,3 +28,7 @@ export default function Header({ isLoggedIn }) {
         </header>
     )
 }
+
+// Potentially change logout to be an icon to go to a settings page where you can change stuff like your display name, profile pic etc
+// Then also have the logout button on that page instead. For testing, leaving as is is definitely better, but eventually, that'd be nice
+// Above would also fix the competition and logout buttons displaying after logging out, probably. Actually, it'd probably just make the logout into the profile pic instead, but closer?

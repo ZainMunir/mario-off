@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore"
+import { getFirestore, collection, query, where, getDocs, getDoc, doc } from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBmBIk0-qSvkGSUSAs46Uxsw4mRtbrxinI",
@@ -41,4 +41,13 @@ export async function getCompetitions(userid) {
         id: doc.id
     }))
     return dataArr;
+}
+
+export async function getCompetition(compid) {
+    const docRef = doc(db, "competitions", compid)
+    const querySnapshot = await getDoc(docRef)
+    return {
+        ...querySnapshot.data(),
+        id: querySnapshot.id
+    }
 }

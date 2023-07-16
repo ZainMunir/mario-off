@@ -12,6 +12,7 @@ import Login, { loader as loginLoader, action as loginAction } from './pages/Log
 import Competitions, { loader as competitionsLoader } from './pages/Competitions'
 import Error from "./components/Error"
 import CompDetails, { loader as compDetailsLoader } from './pages/CompDetails'
+import CompCreation, { loader as compCreationLoader } from './pages/CompCreation'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route
@@ -37,6 +38,12 @@ const router = createBrowserRouter(createRoutesFromElements(
       element={<CompDetails />}
       errorElement={<Error />}
       loader={compDetailsLoader}
+    />
+    <Route
+      path="competition-creation"
+      element={<CompCreation />}
+      errorElement={<Error />}
+      loader={compCreationLoader}
     />
     <Route
       path="*"
