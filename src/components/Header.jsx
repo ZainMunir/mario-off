@@ -11,7 +11,7 @@ export default function Header({ isLoggedIn }) {
     }
 
     return (
-        <header className="h-16 w-screen flex justify-center items-center bg-gray-300">
+        <header className="h-12 p-4 w-screen flex justify-center items-center bg-gray-300 sticky top-0  z-10">
             <div className="w-80 flex justify-between">
                 <Link to="/mario-off" className="flex items-center mr-auto">
                     <img src={Image} className="w-10" />

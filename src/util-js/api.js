@@ -1,3 +1,19 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore"
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBmBIk0-qSvkGSUSAs46Uxsw4mRtbrxinI",
+    authDomain: "mario-off.firebaseapp.com",
+    projectId: "mario-off",
+    storageBucket: "mario-off.appspot.com",
+    messagingSenderId: "940790753598",
+    appId: "1:940790753598:web:f1a676270a7d4256c9a46f",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const competitionsCollection = collection(db, "competitions")
+
 export async function loginUser(creds) {
     const valid = {
         email: "1@mario.com",
@@ -13,6 +29,16 @@ export async function loginUser(creds) {
     }
 
     return {
-        userId: 0
+        userId: "zain"
     }
+}
+
+export async function getCompetitions(userid) {
+    const q = await query(competitionsCollection, where('players', 'array-contains', userid))
+    const querySnapshot = await getDocs(q);
+    const dataArr = querySnapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+    }))
+    return dataArr;
 }
