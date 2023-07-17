@@ -14,7 +14,7 @@ export default function Layout() {
     return (
         <div className="w-screen h-screen flex flex-col justify-center items-center ">
             <Header isLoggedIn={isLoggedIn} />
-            <main className="flex-grow w-80 my-5 mx-2 overflow-y-auto no-scrollbar ">
+            <main className="flex-grow w-80 m-2 overflow-y-auto no-scrollbar relative">
                 <Outlet />
             </main>
             <Footer />
