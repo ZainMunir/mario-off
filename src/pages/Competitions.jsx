@@ -2,6 +2,7 @@ import React from "react";
 import { useLoaderData, Link } from "react-router-dom"
 import { requireAuth } from "../util-js/requireAuth.cjs";
 import { getCompetitions } from "../util-js/api";
+import CompThumbnail from "../components/CompThumbnail";
 
 export async function loader({ request }) {
     await requireAuth(request)
@@ -15,13 +16,13 @@ export default function Competitions() {
         const color = competition.status == "complete" ? "bg-green-400" : competition.status == "ongoing" ? "bg-orange-400" : "bg-red-500"
         return (
             <Link to={competition.id} key={competition.id}>
-                <div className="flex flex-col items-center font text-lg w-full h-60 drop-shadow-md bg-slate-300 rounded-lg">
-                    <p className={`w-full max-h-8 rounded-lg text-center capitalize ${color}`}>{competition.status}</p>
-                    <div className="flex-grow flex flex-wrap place-content-center m-1">
-                        <img src={competition.image} alt={competition.name} className="max-h-44 w-auto h-fit" />
-                    </div>
-                    <p className="capitalize">{competition.players[0]} {competition.currentScore[0]} - {competition.currentScore[1]} {competition.players[1]}</p>
-                </div>
+                <CompThumbnail
+                    status={competition.status}
+                    image={competition.image}
+                    name={competition.name}
+                    players={competition.players}
+                    currentScore={competition.currentScore}
+                />
             </Link>
         )
     })

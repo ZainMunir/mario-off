@@ -2,6 +2,7 @@ import React from "react";
 import { Form, useActionData, redirect, useNavigation } from "react-router-dom";
 import { requireAuth } from "../util-js/requireAuth.cjs";
 import { addCompetition } from "../util-js/api";
+import CompThumbnail from "../components/CompThumbnail";
 
 export async function loader({ request }) {
     await requireAuth(request)
@@ -49,17 +50,13 @@ export default function CompCreation() {
         <div className="flex flex-col items-center">
             {errorMessage && <h3 className="font-bold text-center text-lg text-red-600">{errorMessage}</h3>}
             <h3 className="font-bold text-center text-lg">Preview</h3>
-            <div className="flex flex-col items-center font text-lg  w-40 h-60 drop-shadow-md bg-slate-300 rounded-lg">
-                <p className={`w-full max-h-8 rounded-lg text-center capitalize bg-orange-400`}>Ongoing</p>
-                <div className="flex-grow flex flex-wrap place-content-center m-1">
-                    <img
-                        src={data.image}
-                        alt={data.name}
-                        className="max-h-44 w-auto h-fit"
-                    />
-                </div>
-                <p className="capitalize">{data.player1} 0 - 0 {data.player2}</p>
-            </div>
+            <CompThumbnail
+                status="ongoing"
+                image={data.image}
+                name={data.name}
+                players={[data.player1, data.player2]}
+                currentScore={[0, 0]}
+            />
             <Form
                 method="post"
                 className="flex flex-col items-center w-full p-5 "
