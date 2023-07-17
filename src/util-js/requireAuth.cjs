@@ -9,4 +9,5 @@ export async function requireAuth(request) {
             `/mario-off/login?message=You must log in first.&redirectTo=${pathname}`
         )
     }
+    return null
 }

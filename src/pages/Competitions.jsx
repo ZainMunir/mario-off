@@ -27,7 +27,7 @@ export default function Competitions() {
         )
     })
     return (
-        <div className="flex flex-col h-full overflow-y-auto no-scrollbar">
+        <div className="flex flex-col h-full overflow-y-auto no-scrollbar p-1">
             <div className="grid grid-cols-2 w-full gap-5 scroll-auto" >
                 {competitionsElements}
             </div>

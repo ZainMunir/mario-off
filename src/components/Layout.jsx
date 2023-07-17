@@ -12,9 +12,9 @@ export default function Layout() {
     const isLoggedIn = useLoaderData()
 
     return (
-        <div className="w-screen h-screen flex flex-col justify-center items-center ">
+        <div className="w-screen h-screen flex flex-col justify-center items-center">
             <Header isLoggedIn={isLoggedIn} />
-            <main className="flex-grow w-80 m-2 overflow-y-auto no-scrollbar relative">
+            <main className="flex-grow w-80 overflow-y-auto no-scrollbar relative border-x-2 border-gray-300">
                 <Outlet />
             </main>
             <Footer />

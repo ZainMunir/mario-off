@@ -13,6 +13,10 @@ import Competitions, { loader as competitionsLoader } from './pages/Competitions
 import Error from "./components/Error"
 import CompDetails, { loader as compDetailsLoader } from './pages/CompDetails'
 import CompCreation, { loader as compCreationLoader, action as compCreationAction } from './pages/CompCreation'
+import CompInfo from './pages/CompInfo'
+import CompRules from './pages/CompRules'
+import CompRounds from './pages/CompRounds'
+import { requireAuth } from './util-js/requireAuth.cjs'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route
@@ -38,7 +42,26 @@ const router = createBrowserRouter(createRoutesFromElements(
       element={<CompDetails />}
       errorElement={<Error />}
       loader={compDetailsLoader}
-    />
+    >
+      <Route
+        index
+        element={<CompInfo />}
+        errorElement={<Error />}
+        loader={async ({ request }) => await requireAuth(request)}
+      />
+      <Route
+        path="rules"
+        element={<CompRules />}
+        errorElement={<Error />}
+        loader={async ({ request }) => await requireAuth(request)}
+      />
+      <Route
+        path="rounds"
+        element={<CompRounds />}
+        errorElement={<Error />}
+        loader={async ({ request }) => await requireAuth(request)}
+      />
+    </Route>
     <Route
       path="competition-creation"
       element={<CompCreation />}

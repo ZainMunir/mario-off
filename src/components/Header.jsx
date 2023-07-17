@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Image from "../assets/favicon.webp"
 
 
@@ -10,20 +10,39 @@ export default function Header({ isLoggedIn }) {
         return navigate("/mario-off")
     }
 
+    const activeStyles = {
+        textDecoration: "underline",
+        fontWeight: "500"
+    }
     return (
-        <header className="h-12 p-4 w-screen flex justify-center items-center bg-gray-300 sticky top-0  z-10">
+        <header className="h-12 p-4 w-screen flex justify-center items-center bg-gray-400 sticky top-0  z-10">
             <div className="w-80 flex justify-between">
-                <Link to="/mario-off" className="flex items-center mr-auto">
+                <NavLink
+                    to="/mario-off"
+                    className="flex items-center mr-auto border-2 border-transparent"
+                    style={({ isActive }) => isActive ? { border: "2px solid black" } : null}
+                    end
+                >
                     <img src={Image} className="w-10" />
-                </Link>
-                {isLoggedIn && <Link to="competitions" className="flex items-center">
-                    <p>Competitions</p>
-                </Link>}
+                </NavLink>
+                {isLoggedIn &&
+                    <NavLink
+                        to="competitions"
+                        className="flex items-center"
+                        style={({ isActive }) => isActive ? activeStyles : null}
+                        end
+                    >
+                        Competitions
+                    </NavLink>}
                 {isLoggedIn ?
                     <button onClick={logout} className="flex items-center ml-2">Logout</button> :
-                    <Link to="login" className="flex items-center ml-2">
-                        <p>Login</p>
-                    </Link>}
+                    <NavLink
+                        to="login"
+                        className="flex items-center ml-2"
+                        style={({ isActive }) => isActive ? activeStyles : null}
+                    >
+                        Login
+                    </NavLink>}
             </div>
         </header>
     )
