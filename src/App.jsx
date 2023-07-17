@@ -1,9 +1,9 @@
 import React from 'react'
 import {
   RouterProvider,
-  createBrowserRouter,
   createRoutesFromElements,
-  Route
+  Route,
+  createHashRouter
 } from 'react-router-dom'
 import Layout, { loader as layoutLoader } from './components/Layout'
 import Home from './pages/Home'
@@ -18,9 +18,9 @@ import CompRules from './pages/CompRules'
 import CompRounds from './pages/CompRounds'
 import { requireAuth } from './util-js/requireAuth.cjs'
 
-const router = createBrowserRouter(createRoutesFromElements(
+const router = createHashRouter(createRoutesFromElements(
   <Route
-    path='/mario-off'
+    path='/'
     element={<Layout />}
     loader={layoutLoader}
   >

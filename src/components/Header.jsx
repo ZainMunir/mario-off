@@ -7,7 +7,7 @@ export default function Header({ isLoggedIn }) {
     let navigate = useNavigate();
     function logout() {
         localStorage.removeItem("loggedIn")
-        return navigate("/mario-off")
+        return navigate("/")
     }
 
     const activeStyles = {
@@ -18,7 +18,7 @@ export default function Header({ isLoggedIn }) {
         <header className="h-12 p-4 w-screen flex justify-center items-center bg-gray-400 sticky top-0  z-10">
             <div className="w-80 flex justify-between">
                 <NavLink
-                    to="/mario-off"
+                    to="/"
                     className="flex items-center mr-auto border-2 border-transparent"
                     style={({ isActive }) => isActive ? { border: "2px solid black" } : null}
                     end

@@ -6,7 +6,7 @@ export async function requireAuth(request) {
 
     if (!isLoggedIn) {
         throw redirect(
-            `/mario-off/login?message=You must log in first.&redirectTo=${pathname}`
+            `/login?message=You must log in first.&redirectTo=${pathname}`
         )
     }
     return null

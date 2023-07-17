@@ -19,7 +19,7 @@ export async function action({ request }) {
     const email = formData.get("email")
     const password = formData.get("password")
     const pathname = new URL(request.url)
-        .searchParams.get("redirectTo") || "/mario-off/competitions"
+        .searchParams.get("redirectTo") || "/competitions"
 
     try {
         const data = await loginUser({ email, password })
