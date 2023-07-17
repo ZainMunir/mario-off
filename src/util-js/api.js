@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, getDocs, getDoc, doc } from "firebase/firestore"
+import { getFirestore, collection, query, where, getDocs, getDoc, doc, addDoc, serverTimestamp } from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBmBIk0-qSvkGSUSAs46Uxsw4mRtbrxinI",
@@ -50,4 +50,19 @@ export async function getCompetition(compid) {
         ...querySnapshot.data(),
         id: querySnapshot.id
     }
+}
+
+export async function addCompetition(request) {
+    const newComp = {
+        ...request,
+        creationDate: serverTimestamp(),
+        updatedDate: serverTimestamp(),
+        rules: [],
+        status: "ongoing",
+        currentScore: [0, 0],
+        winner: "",
+        rounds: []
+    }
+    const compRef = await addDoc(competitionsCollection, newComp)
+    return compRef.id
 }

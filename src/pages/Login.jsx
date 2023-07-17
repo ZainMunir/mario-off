@@ -35,6 +35,7 @@ export default function Login() {
     const errorMessage = useActionData()
     const message = useLoaderData()
     const navigation = useNavigation()
+
     return (
         <div>
             <h1 className="font-bold text-center text-2xl">Sign in to your account</h1>
@@ -67,6 +68,7 @@ export default function Login() {
                         : "Log in"
                     }
                 </button>
-            </Form>        </div>
+            </Form>
+        </div>
     )
 }
