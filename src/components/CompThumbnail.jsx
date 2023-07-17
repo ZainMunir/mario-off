@@ -1,4 +1,5 @@
 import React from "react";
+import CompScore from "./CompScore";
 
 export default function CompThumbnail(props) {
     const color = props.status == "complete" ? "bg-green-400" : props.status == "ongoing" ? "bg-orange-400" : "bg-red-500"
@@ -8,7 +9,7 @@ export default function CompThumbnail(props) {
             <div className="flex-grow flex flex-wrap place-content-center m-1">
                 <img src={props.image} alt={props.name} className="max-h-44 w-auto h-fit" />
             </div>
-            <p className="capitalize">{props.players[0]} {props.currentScore[0]} - {props.currentScore[1]} {props.players[1]}</p>
+            <CompScore players={props.players} currentScore={props.currentScore} />
         </div>
     )
 }

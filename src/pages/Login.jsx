@@ -37,7 +37,7 @@ export default function Login() {
     const navigation = useNavigation()
 
     return (
-        <div>
+        <div className="p-2">
             <h1 className="font-bold text-center text-2xl">Sign in to your account</h1>
             {message && <h3 className="font-bold text-center text-xl text-red-600">{message}</h3>}
             {errorMessage && <h3 className="font-bold text-center text-lg text-red-600">{errorMessage}</h3>}

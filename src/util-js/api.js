@@ -57,6 +57,7 @@ export async function addCompetition(request) {
         ...request,
         creationDate: serverTimestamp(),
         updatedDate: serverTimestamp(),
+        description: "",
         rules: [],
         status: "ongoing",
         currentScore: [0, 0],
@@ -65,4 +66,8 @@ export async function addCompetition(request) {
     }
     const compRef = await addDoc(competitionsCollection, newComp)
     return compRef.id
+}
+
+export async function deleteCompetition() {
+    return null
 }

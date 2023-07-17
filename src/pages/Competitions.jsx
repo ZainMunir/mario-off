@@ -13,7 +13,6 @@ export default function Competitions() {
     const competitions = useLoaderData()
 
     let competitionsElements = competitions.sort((b, a) => a.updatedDate - b.updatedDate).map(competition => {
-        const color = competition.status == "complete" ? "bg-green-400" : competition.status == "ongoing" ? "bg-orange-400" : "bg-red-500"
         return (
             <Link to={competition.id} key={competition.id}>
                 <CompThumbnail
@@ -26,13 +25,14 @@ export default function Competitions() {
             </Link>
         )
     })
+    // competitionsElements = null
     return (
         <div className="flex flex-col h-full overflow-y-auto no-scrollbar p-1">
             <div className="grid grid-cols-2 w-full gap-5 scroll-auto" >
                 {competitionsElements}
             </div>
             <div className={`flex pt-1 ${competitionsElements ? "justify-end mt-auto absolute bottom-4 right-4" : "place-content-center"}`}>
-                <Link to="../competition-creation">
+                <Link to="../competition-creation" className="flex items-center">
                     <button className={`rounded-full bg-teal-500 drop-shadow-md text-white mb-2 place-content-center flex ${competitionsElements ? "text-3xl w-10 h-10" : "text-lg p-2"}`}>{competitionsElements ? "+" : "Create Competition"}</button>
                 </Link >
             </div>

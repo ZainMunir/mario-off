@@ -77,7 +77,6 @@ export default function CompCreation() {
                     value={data.image}
                     onChange={handleChange}
                     className="border-2 rounded p-1 m-2 w-5/6 text-center"
-
                 />
                 <input
                     type="text"
