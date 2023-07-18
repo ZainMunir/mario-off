@@ -5,7 +5,7 @@ import { NavLink, Outlet, useLoaderData } from "react-router-dom";
 
 export async function loader({ params, request }) {
     await requireAuth(request)
-    return getCompetition(params.id);
+    return await getCompetition(params.id);
 }
 
 export default function CompDetails() {

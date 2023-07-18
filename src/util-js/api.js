@@ -28,6 +28,14 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const competitionsCollection = collection(db, "competitions")
 
+
+const emptyRound = {
+    winner: "",
+    nestedRounds: [{
+        winner: ""
+    }]
+}
+
 export async function loginUser(creds) {
     const valid = {
         email: "1@mario.com",
@@ -41,7 +49,6 @@ export async function loginUser(creds) {
             status: 401
         }
     }
-
     return {
         userId: "zain"
     }
@@ -83,7 +90,7 @@ export async function addCompetition(request) {
         status: "ongoing",
         currentScore: [0, 0],
         winner: "",
-        rounds: []
+        rounds: [emptyRound]
     }
     const compRef = await addDoc(competitionsCollection, newComp)
     return compRef.id
@@ -126,6 +133,28 @@ export async function deleteRule(request) {
         docRef,
         {
             rules: arrayRemove(request.rule),
+            updatedDate: serverTimestamp()
+        }
+    )
+}
+
+export async function addRound(id) {
+    const docRef = doc(db, "competitions", id)
+    await updateDoc(
+        docRef,
+        {
+            rounds: arrayUnion(emptyRound),
+            updatedDate: serverTimestamp()
+        }
+    )
+}
+
+export async function deleteRound(request) {
+    const docRef = doc(db, "competitions", request.id)
+    await updateDoc(
+        docRef,
+        {
+            rounds: arrayRemove(request.round),
             updatedDate: serverTimestamp()
         }
     )
