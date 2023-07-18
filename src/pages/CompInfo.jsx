@@ -1,13 +1,37 @@
 import React from "react";
-import { Form, useOutletContext, redirect, useNavigate } from "react-router-dom";
+import { Form, useOutletContext, useActionData, useNavigate, useNavigation } from "react-router-dom";
 import CompScore from "../components/CompScore";
-import { deleteCompetition } from "../util-js/api"
+import { deleteCompetition, updateCompetition } from "../util-js/api"
 import ReactModal from "react-modal";
 import "./CompInfo.css"
+
+export async function action({ request }) {
+    const formData = await request.formData()
+    const name = formData.get("name")
+    const image = formData.get("image")
+    const status = formData.get("status")
+    const description = formData.get("description")
+    const pathname = new URL(request.url).pathname
+    try {
+        await updateCompetition({
+            id: pathname.split("/")[2],
+            name: name,
+            image: image,
+            status: status,
+            description: description,
+        })
+        return null
+    } catch (err) {
+        return err.message
+    }
+}
+
 
 export default function CompInfo() {
     const { currCompetition } = useOutletContext()
     const navigate = useNavigate()
+    const errorMessage = useActionData()
+    const navigation = useNavigation()
 
     function formatDate(date) {
         var d = new Date(date),
@@ -46,7 +70,11 @@ export default function CompInfo() {
     const [isModalOpen, setIsModalOpen] = React.useState(false)
 
     return (
-        <Form className="flex flex-col h-full ">
+        <Form
+            method="post"
+            className="flex flex-col h-full "
+        >
+            {errorMessage && <h3 className="font-bold text-center text-lg text-red-600">{errorMessage}</h3>}
             <ReactModal
                 isOpen={isModalOpen}
                 contentLabel="DeleteModal"
@@ -73,7 +101,7 @@ export default function CompInfo() {
                 <div className="flex flex-col align-middle w-1/2 text-center text-sm p-2">
                     <div className="mb-3">Started: {creationDate}</div>
                     <CompScore players={currCompetition.players} currentScore={currCompetition.currentScore} />
-                    <select className="mt-8 mx-auto w-24" defaultValue={currCompetition.status}>
+                    <select name="status" className="mt-8 mx-auto w-24" defaultValue={currCompetition.status}>
                         <option value="abandoned" >Abandoned</option>
                         <option value="ongoing" >Ongoing</option>
                         <option value="complete" >Complete</option>
@@ -107,7 +135,14 @@ export default function CompInfo() {
                     value={data.description}
                     onChange={handleChange}
                 />
-                <button className="rounded-full bg-teal-500 drop-shadow-md text-white mb-2 place-content-center flex text-lg p-2">Save info</button>
+                <button
+                    className={`${navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"} rounded-full drop-shadow-md text-white mb-2 place-content-center flex text-lg p-2 w-24`}
+                >
+                    {navigation.state === "submitting"
+                        ? "Saving"
+                        : "Save info"
+                    }
+                </button>
             </div>
         </Form>
     )

@@ -1,5 +1,17 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, getDocs, getDoc, doc, addDoc, serverTimestamp, deleteDoc } from "firebase/firestore"
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+    getDoc,
+    doc,
+    addDoc,
+    serverTimestamp,
+    deleteDoc,
+    setDoc
+} from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBmBIk0-qSvkGSUSAs46Uxsw4mRtbrxinI",
@@ -46,9 +58,16 @@ export async function getCompetitions(userid) {
 export async function getCompetition(compid) {
     const docRef = doc(db, "competitions", compid)
     const querySnapshot = await getDoc(docRef)
-    return {
-        ...querySnapshot.data(),
-        id: querySnapshot.id
+    if (querySnapshot.data()) {
+        return {
+            ...querySnapshot.data(),
+            id: querySnapshot.id
+        }
+    }
+    throw {
+        message: "Competition not found",
+        statusText: "Error",
+        status: 404
     }
 }
 
@@ -71,4 +90,20 @@ export async function addCompetition(request) {
 export async function deleteCompetition(id) {
     const docRef = doc(db, "competitions", id)
     await deleteDoc(docRef)
+}
+
+export async function updateCompetition(request) {
+    console.log(request)
+    const docRef = doc(db, "competitions", request.id)
+    await setDoc(
+        docRef,
+        {
+            name: request.name,
+            image: request.image,
+            status: request.status,
+            description: request.description,
+            updatedDate: serverTimestamp()
+        },
+        { merge: true }
+    )
 }
