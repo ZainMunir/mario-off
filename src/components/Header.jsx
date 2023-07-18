@@ -1,12 +1,14 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useRevalidator } from "react-router-dom";
 import Image from "../assets/favicon.webp"
 
 
 export default function Header({ isLoggedIn }) {
+    const revalidator = useRevalidator()
     let navigate = useNavigate();
     function logout() {
         localStorage.removeItem("loggedIn")
+        revalidator.revalidate()
         navigate("/")
     }
 

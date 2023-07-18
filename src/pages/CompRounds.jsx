@@ -46,16 +46,17 @@ export default function CompRounds() {
                 <div className="mr-auto w-32 text-left">
                     {currRound.nestedRounds[i].name}
                 </div>
-                <div>---</div>
+                <div>----</div>
                 <div className="ml-auto w-32 text-right">
                     {currRound.nestedRounds[i].winner}
                 </div>
                 {currCompetition.status === "ongoing" &&
                     <button
-                        className="right-0 top-1 absolute opacity-0 group-hover:opacity-100"
+                        className="left-36 top-1 absolute opacity-0 group-hover:opacity-100"
                         onClick={() => delSubRound(i)}
                     >
-                        <img src={Trash} className="w-3" /></button>
+                        <img src={Trash} className="w-3" />
+                    </button>
                 }
             </div>
         )
