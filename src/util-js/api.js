@@ -159,3 +159,8 @@ export async function deleteRound(request) {
         }
     )
 }
+
+export async function updateRound(request) {
+    const docRef = doc(db, "competitions", request.id)
+    return null
+}

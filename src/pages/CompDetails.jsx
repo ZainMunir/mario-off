@@ -20,7 +20,7 @@ export default function CompDetails() {
         <div className="flex flex-col w-full h-full">
             <h1 className="font-bold text-xl text-center">{currCompetition.name}</h1>
             <div className="flex flex-col bg-gray-100 flex-grow">
-                <div className="w-full flex justify-evenly border-b-2 border-b-gray-300">
+                <div className="w-full flex justify-around border-b-2 border-b-gray-300">
                     <NavLink
                         to="."
                         style={({ isActive }) => isActive ? activeStyles : null}
