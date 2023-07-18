@@ -81,15 +81,14 @@ export default function CompInfo() {
                 overlayClassName="bg-opacity-50 bg-black w-screen h-screen fixed top-0 left-0 z-20"
                 className="w-72 h-40 centerModal flex flex-col place-content-center text-center bg-gray-200 p-4 justify-between rounded-xl drop-shadow-xl "
                 appElement={document.getElementById('root')}
-
             >
                 <p>Are you sure you want to delete this competition? <br /> This action is irreversible</p>
                 <div className="flex flex-row ">
                     <div
-                        className="mt-auto text-md w-24 mx-auto bg-green-400 rounded-full drop-shadow-md text-white"
+                        className="mt-auto text-md w-24 mx-auto bg-green-400 rounded-full drop-shadow-md text-white cursor-pointer"
                         onClick={() => setIsModalOpen(false)}>Cancel</div>
                     <div
-                        className="mt-auto text-md w-24 mx-auto bg-red-500 rounded-full drop-shadow-md text-white"
+                        className="mt-auto text-md w-24 mx-auto bg-red-500 rounded-full drop-shadow-md text-white cursor-pointer"
                         onClick={deleteComp}
                     >Delete</div>
                 </div>
@@ -107,7 +106,7 @@ export default function CompInfo() {
                         <option value="complete" >Complete</option>
                     </select>
                     <div
-                        className="mt-auto text-lg w-20 mx-auto bg-red-500 rounded-full drop-shadow-md text-white"
+                        className="mt-auto text-lg w-20 mx-auto bg-red-500 rounded-full drop-shadow-md text-white cursor-pointer"
                         onClick={() => setIsModalOpen(true)}
                     >Delete</div>
                 </div>

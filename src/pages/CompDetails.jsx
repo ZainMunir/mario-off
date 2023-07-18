@@ -1,5 +1,5 @@
 import React from "react";
-import { requireAuth } from "../util-js/requireAuth.cjs";
+import { requireAuth } from "../util-js/requireAuth";
 import { getCompetition } from "../util-js/api";
 import { NavLink, Outlet, useLoaderData } from "react-router-dom";
 

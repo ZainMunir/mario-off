@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, useActionData, redirect, useNavigation } from "react-router-dom";
-import { requireAuth } from "../util-js/requireAuth.cjs";
+import { requireAuth } from "../util-js/requireAuth";
 import { addCompetition } from "../util-js/api";
 import CompThumbnail from "../components/CompThumbnail";
 

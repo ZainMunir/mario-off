@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoaderData, Link } from "react-router-dom"
-import { requireAuth } from "../util-js/requireAuth.cjs";
+import { requireAuth } from "../util-js/requireAuth";
 import { getCompetitions } from "../util-js/api";
 import CompThumbnail from "../components/CompThumbnail";
 

@@ -7,7 +7,7 @@ export default function Header({ isLoggedIn }) {
     let navigate = useNavigate();
     function logout() {
         localStorage.removeItem("loggedIn")
-        return navigate("/")
+        navigate("/")
     }
 
     const activeStyles = {

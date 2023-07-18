@@ -10,7 +10,10 @@ import {
     addDoc,
     serverTimestamp,
     deleteDoc,
-    setDoc
+    setDoc,
+    updateDoc,
+    arrayUnion,
+    arrayRemove
 } from "firebase/firestore"
 
 const firebaseConfig = {
@@ -93,7 +96,6 @@ export async function deleteCompetition(id) {
 }
 
 export async function updateCompetition(request) {
-    console.log(request)
     const docRef = doc(db, "competitions", request.id)
     await setDoc(
         docRef,
@@ -105,5 +107,27 @@ export async function updateCompetition(request) {
             updatedDate: serverTimestamp()
         },
         { merge: true }
+    )
+}
+
+export async function addRule(request) {
+    const docRef = doc(db, "competitions", request.id)
+    await updateDoc(
+        docRef,
+        {
+            rules: arrayUnion(request.rule),
+            updatedDate: serverTimestamp()
+        }
+    )
+}
+
+export async function deleteRule(request) {
+    const docRef = doc(db, "competitions", request.id)
+    await updateDoc(
+        docRef,
+        {
+            rules: arrayRemove(request.rule),
+            updatedDate: serverTimestamp()
+        }
     )
 }
