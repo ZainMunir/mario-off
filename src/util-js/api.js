@@ -31,9 +31,7 @@ const competitionsCollection = collection(db, "competitions")
 
 const emptyRound = {
     winner: "",
-    nestedRounds: [{
-        winner: ""
-    }]
+    nestedRounds: []
 }
 
 export async function loginUser(creds) {
@@ -160,7 +158,7 @@ export async function deleteRound(request) {
     )
 }
 
-export async function addToRound(request) {
+export async function updateRounds(request) {
     const docRef = doc(db, "competitions", request.id)
     await updateDoc(
         docRef,
