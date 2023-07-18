@@ -39,11 +39,13 @@ export default function CompRules() {
                 className="group relative"
             >
                 - {rule}
-                <button
-                    className="right-0 top-1 absolute opacity-0 group-hover:opacity-100"
-                    onClick={() => delRule(rule)}
-                >
-                    <img src={Trash} className="w-3" /></button>
+                {currCompetition.status === "ongoing" &&
+                    <button
+                        className="right-0 top-1 absolute opacity-0 group-hover:opacity-100"
+                        onClick={() => delRule(rule)}
+                    >
+                        <img src={Trash} className="w-3" /></button>
+                }
             </div>
         )
     })
