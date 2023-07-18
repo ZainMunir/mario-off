@@ -56,7 +56,8 @@ export default function CompInfo() {
     const [data, setData] = React.useState({
         name: currCompetition.name,
         image: currCompetition.image,
-        description: currCompetition.description
+        description: currCompetition.description,
+        status: currCompetition.status
     })
 
     function handleChange(event) {
@@ -68,6 +69,8 @@ export default function CompInfo() {
     }
 
     const [isModalOpen, setIsModalOpen] = React.useState(false)
+
+    const selectColor = data.status == "complete" ? "bg-green-400" : data.status == "ongoing" ? "bg-orange-400" : "bg-red-500"
 
     return (
         <Form
@@ -100,10 +103,15 @@ export default function CompInfo() {
                 <div className="flex flex-col align-middle w-1/2 text-center text-sm p-2">
                     <div className="mb-3">Started: {creationDate}</div>
                     <CompScore players={currCompetition.players} currentScore={currCompetition.currentScore} />
-                    <select name="status" className="mt-8 mx-auto w-24" defaultValue={currCompetition.status}>
-                        <option value="abandoned" >Abandoned</option>
-                        <option value="ongoing" >Ongoing</option>
-                        <option value="complete" >Complete</option>
+                    <select
+                        name="status"
+                        className={`mt-8 mx-auto w-28 rounded-xl p-1 ${selectColor}`}
+                        value={data.status}
+                        onChange={handleChange}
+                    >
+                        <option value="abandoned" className="bg-red-500  ">Abandoned</option>
+                        <option value="ongoing" className="bg-orange-400">Ongoing</option>
+                        <option value="complete" className="bg-green-400">Complete</option>
                     </select>
                     <div
                         className="mt-auto text-lg w-20 mx-auto bg-red-500 rounded-full drop-shadow-md text-white cursor-pointer"

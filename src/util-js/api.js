@@ -10,7 +10,6 @@ import {
     addDoc,
     serverTimestamp,
     deleteDoc,
-    setDoc,
     updateDoc,
     arrayUnion,
     arrayRemove
@@ -97,7 +96,7 @@ export async function deleteCompetition(id) {
 
 export async function updateCompetition(request) {
     const docRef = doc(db, "competitions", request.id)
-    await setDoc(
+    await updateDoc(
         docRef,
         {
             name: request.name,

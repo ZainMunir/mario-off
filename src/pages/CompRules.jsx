@@ -52,25 +52,27 @@ export default function CompRules() {
             <div>
                 {ruleElements}
             </div>
-            <Form
-                method="post"
-                className="flex flex-col justify-center mt-auto"
-            >
-                <textarea
-                    type="text"
-                    name="rule"
-                    placeholder="New Rule"
-                    className="border-2 rounded p-1 my-2 w-full"
-                />
-                <button
-                    className={`${navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"} rounded-full drop-shadow-md text-white mb-2 place-content-center flex text-md p-1 w-20 mx-auto`}
+            {currCompetition.status === "ongoing" &&
+                <Form
+                    method="post"
+                    className="flex flex-col justify-center mt-auto"
                 >
-                    {navigation.state === "submitting"
-                        ? "Adding..."
-                        : "Add rule"
-                    }
-                </button>
-            </Form>
+                    <input
+                        type="text"
+                        name="rule"
+                        placeholder="New Rule"
+                        className="border-2 rounded p-1 my-2 w-full"
+                    />
+                    <button
+                        className={`${navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"} rounded-full drop-shadow-md text-white mb-2 place-content-center flex text-md p-1 w-20 mx-auto`}
+                    >
+                        {navigation.state === "submitting"
+                            ? "Adding..."
+                            : "Add rule"
+                        }
+                    </button>
+                </Form>
+            }
         </div>
 
     )
