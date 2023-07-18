@@ -160,11 +160,33 @@ export async function deleteRound(request) {
 
 export async function updateRounds(request) {
     const docRef = doc(db, "competitions", request.id)
+    const score = calcScore(request.rounds, request.players)
     await updateDoc(
         docRef,
         {
             rounds: request.rounds,
+            currentScore: score,
             updatedDate: serverTimestamp()
         }
     )
+}
+
+function calcScore(rounds, players) {
+    let overallScore = [0, 0]
+    for (let j = 0; j < rounds.length; j++) {
+        let score = [0, 0]
+        let currRound = rounds[j].nestedRounds
+        for (let i = 0; i < currRound.length; i++) {
+            if (currRound[i].winner == players[0]) score[0]++
+            else if (currRound[i].winner == players[1]) score[1]++
+            else { score[0]++; score[1]++ }
+        }
+        if (score[0] >= score[1]) {
+            overallScore[0]++
+        }
+        if (score[0] <= score[1]) {
+            overallScore[1]++
+        }
+    }
+    return overallScore
 }

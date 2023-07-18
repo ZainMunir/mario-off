@@ -1,24 +1,33 @@
 import React from "react";
-import { useOutletContext, useNavigate, useNavigation, useRevalidator } from "react-router-dom";
+import { useOutletContext, useNavigation, useRevalidator } from "react-router-dom";
 import { addRound, deleteRound, updateRounds } from "../util-js/api"
 import Trash from "../assets/trash.png"
+import CompScore from "../components/CompScore";
 
 
 export default function CompRounds() {
     const { currCompetition } = useOutletContext()
-    // console.log("currComp", currCompetition.rounds)
 
-    const navigate = useNavigate()
     const navigation = useNavigation()
     const revalidator = useRevalidator()
 
     const [selectedRound, setSelectedRound] = React.useState(1);
     const currRound = currCompetition.rounds[selectedRound - 1]
-    // console.log("currRound", currRound)
-
     React.useEffect(() => {
         revalidator.revalidate()
     }, [selectedRound])
+
+    const [data, setData] = React.useState({
+        name: "",
+        winner: "draw"
+    })
+    function handleChange(event) {
+        const { name, value } = event.target
+        setData(prevData => ({
+            ...prevData,
+            [name]: value
+        }))
+    }
 
     const roundOptions = []
     for (let i = 0; i < currCompetition.rounds.length; i++) {
@@ -26,15 +35,21 @@ export default function CompRounds() {
             <option key={i + 1}>Round {i + 1}</option>
         )
     }
-
+    let score = [0, 0]
     const roundDetails = []
     for (let i = 0; i < currRound.nestedRounds.length; i++) {
         roundDetails.push(
             <div
                 key={`${selectedRound - 1}-${i + 1}`}
-                className="group relative"
+                className="group relative flex flex-row justify-between"
             >
-                {currRound.nestedRounds[i].name} --- {currRound.nestedRounds[i].winner}
+                <div className="mr-auto w-32 text-left">
+                    {currRound.nestedRounds[i].name}
+                </div>
+                <div>---</div>
+                <div className="ml-auto w-32 text-right">
+                    {currRound.nestedRounds[i].winner}
+                </div>
                 {currCompetition.status === "ongoing" &&
                     <button
                         className="right-0 top-1 absolute opacity-0 group-hover:opacity-100"
@@ -44,6 +59,9 @@ export default function CompRounds() {
                 }
             </div>
         )
+        if (currRound.nestedRounds[i].winner == currCompetition.players[0]) score[0]++
+        else if (currRound.nestedRounds[i].winner == currCompetition.players[1]) score[1]++
+        else { score[0]++; score[1]++ }
     }
 
     function setRound(event) {
@@ -65,24 +83,12 @@ export default function CompRounds() {
         setSelectedRound(old => old - 1 > 1 ? old - 1 : 1)
     }
 
-    const [data, setData] = React.useState({
-        name: "",
-        winner: "draw"
-    })
-
-    function handleChange(event) {
-        const { name, value } = event.target
-        setData(prevData => ({
-            ...prevData,
-            [name]: value
-        }))
-    }
-
     async function addSubRound() {
         let rounds = [...currCompetition.rounds];
         rounds[currCompetition.rounds.indexOf(currRound)].nestedRounds = [...currRound.nestedRounds, data]
         await updateRounds({
             id: currCompetition.id,
+            players: currCompetition.players,
             rounds: rounds
         })
         revalidator.revalidate()
@@ -94,13 +100,14 @@ export default function CompRounds() {
             .nestedRounds.splice(subIndex, 1)
         await updateRounds({
             id: currCompetition.id,
+            players: currCompetition.players,
             rounds: rounds
         })
         revalidator.revalidate()
     }
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full text-center">
             <div className="flex flex-row justify-between">
                 {currCompetition.status === "ongoing" &&
 
@@ -127,7 +134,8 @@ export default function CompRounds() {
                         Add Round
                     </button>}
             </div>
-            <div>
+            <CompScore players={currCompetition.players} currentScore={score} />
+            <div className="mt-5">
                 {roundDetails}
             </div>
             {currCompetition.status === "ongoing" &&
