@@ -23,6 +23,7 @@ export default function CompDetails() {
                 <div className="w-full flex justify-around border-b-2 border-b-gray-300">
                     <NavLink
                         to="."
+                        className="w-20 text-center"
                         style={({ isActive }) => isActive ? activeStyles : null}
                         end
                     >
@@ -30,12 +31,14 @@ export default function CompDetails() {
                     </NavLink>
                     <NavLink
                         to="rules"
+                        className="w-20 text-center"
                         style={({ isActive }) => isActive ? activeStyles : null}
                     >
                         Rules
                     </NavLink>
                     <NavLink
                         to="rounds"
+                        className="w-20 text-center"
                         style={({ isActive }) => isActive ? activeStyles : null}
                     >
                         Rounds
