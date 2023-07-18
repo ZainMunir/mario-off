@@ -160,7 +160,13 @@ export async function deleteRound(request) {
     )
 }
 
-export async function updateRound(request) {
+export async function addToRound(request) {
     const docRef = doc(db, "competitions", request.id)
-    return null
+    await updateDoc(
+        docRef,
+        {
+            rounds: request.rounds,
+            updatedDate: serverTimestamp()
+        }
+    )
 }

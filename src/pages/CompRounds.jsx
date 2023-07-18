@@ -1,29 +1,21 @@
 import React from "react";
-import { Form, useOutletContext, useNavigate, useLoaderData, useNavigation } from "react-router-dom";
-import { addRound, deleteRound } from "../util-js/api"
-import { requireAuth } from "../util-js/requireAuth";
+import { useOutletContext, useNavigate, useNavigation, useRevalidator } from "react-router-dom";
+import { addRound, deleteRound, addToRound } from "../util-js/api"
 
-export async function loader({ params, request }) {
-    await requireAuth(request)
-    return params.roundid || 1
-}
-
-export async function action({ request }) {
-    return null
-}
 
 export default function CompRounds() {
     const { currCompetition } = useOutletContext()
-    // console.log(currCompetition)
+    // console.log("currComp", currCompetition.rounds)
 
     const navigate = useNavigate()
     const navigation = useNavigation()
+    const revalidator = useRevalidator()
 
-    const [selectedRound, setSelectedRound] = React.useState(useLoaderData());
+    const [selectedRound, setSelectedRound] = React.useState(1);
     const currRound = currCompetition.rounds[selectedRound - 1]
 
     React.useEffect(() => {
-        navigate(".")
+        revalidator.revalidate()
     }, [selectedRound])
 
     const roundOptions = []
@@ -37,7 +29,7 @@ export default function CompRounds() {
     for (let i = 0; i < currRound.nestedRounds.length; i++) {
         roundDetails.push(
             <div key={`${selectedRound - 1}-${i + 1}`}>
-                {currRound.nestedRounds[i].winner}
+                {currRound.nestedRounds[i].name} --- {currRound.nestedRounds[i].winner}
             </div>
         )
     }
@@ -50,7 +42,7 @@ export default function CompRounds() {
 
     async function newRound() {
         await addRound(currCompetition.id)
-        navigate(".")
+        revalidator.revalidate()
     }
 
     async function delRound() {
@@ -58,8 +50,36 @@ export default function CompRounds() {
             id: currCompetition.id,
             round: currCompetition.rounds[selectedRound - 1]
         })
-        navigate(".")
-        setSelectedRound(1)
+        setSelectedRound(old => old - 1 > 1 ? old - 1 : 1)
+    }
+
+    const [data, setData] = React.useState({
+        name: "",
+        winner: "draw"
+    })
+
+    function handleChange(event) {
+        const { name, value } = event.target
+        setData(prevData => ({
+            ...prevData,
+            [name]: value
+        }))
+    }
+
+    function addSubRound() {
+        let rounds = [...currCompetition.rounds];
+        rounds[currCompetition.rounds.indexOf(currRound)].nestedRounds = [...currRound.nestedRounds, data]
+        addToRound({
+            id: currCompetition.id,
+            rounds: rounds
+        })
+        revalidator.revalidate()
+    }
+
+    function delSubRound() {
+        removeFromRound({
+            id: currCompetition.id,
+        })
     }
 
     return (
@@ -90,32 +110,37 @@ export default function CompRounds() {
             <div>
                 {roundDetails}
             </div>
-            <Form
-                method="post"
-                className="flex flex-col justify-center mt-auto "
-            >
+            <div className="flex flex-col justify-center mt-auto ">
                 <div className="flex flex-row w-full my-2">
                     <input
                         type="text"
                         name="name"
                         placeholder="Sub-round name"
                         className="border-2 rounded p-1 w-7/12"
+                        value={data.name}
+                        onChange={handleChange}
                     />
-                    <select className="border-2 rounded ml-auto p-1 w-1/3">
-                        <option>Draw</option>
+                    <select
+                        name="winner"
+                        className="border-2 rounded ml-auto p-1 w-1/3"
+                        value={data.winner}
+                        onChange={handleChange}
+                    >
+                        <option>draw</option>
                         <option>{currCompetition.players[0]}</option>
                         <option>{currCompetition.players[1]}</option>
                     </select>
                 </div>
                 <button
                     className={`${navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"} rounded-full drop-shadow-md text-white mb-2 place-content-center flex text-md p-1 w-32 mx-auto`}
+                    onClick={addSubRound}
                 >
                     {navigation.state === "submitting"
                         ? "Adding..."
                         : "Add Sub-round"
                     }
                 </button>
-            </Form>
+            </div>
         </div>
     )
 }

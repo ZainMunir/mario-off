@@ -125,7 +125,8 @@ export default function CompInfo() {
                     name="name"
                     placeholder="Competition Name"
                     value={data.name}
-                    onChange={handleChange} className="border-2 rounded p-1 m-2 w-full"
+                    onChange={handleChange}
+                    className="border-2 rounded p-1 m-2 w-full"
                 />
                 <input
                     type="url"

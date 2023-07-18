@@ -15,7 +15,7 @@ import CompDetails, { loader as compDetailsLoader } from './pages/CompDetails'
 import CompCreation, { loader as compCreationLoader, action as compCreationAction } from './pages/CompCreation'
 import CompInfo, { action as compInfoAction } from './pages/CompInfo'
 import CompRules, { action as compRulesAction } from './pages/CompRules'
-import CompRounds, { loader as compRoundsLoader, action as compRoundsAction } from './pages/CompRounds'
+import CompRounds from './pages/CompRounds'
 import { requireAuth } from './util-js/requireAuth'
 
 const router = createHashRouter(createRoutesFromElements(
@@ -61,8 +61,7 @@ const router = createHashRouter(createRoutesFromElements(
         path="rounds"
         element={<CompRounds />}
         errorElement={<Error />}
-        loader={compRoundsLoader}
-        action={compRoundsAction}
+        loader={async ({ request }) => await requireAuth(request)}
       />
     </Route>
     <Route

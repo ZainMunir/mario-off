@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, useNavigate, useNavigation } from "react-router-dom";
+import { Form, useNavigate, useNavigation, useRevalidator } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/api"
 import Trash from "../assets/trash.png"
@@ -22,14 +22,14 @@ export async function action({ request }) {
 export default function CompRules() {
     const { currCompetition } = useOutletContext()
     const navigation = useNavigation()
-    const navigate = useNavigate()
+    const revalidator = useRevalidator()
 
     async function delRule(rule) {
         await deleteRule({
             id: currCompetition.id,
             rule: rule
         })
-        navigate(".")
+        revalidator.revalidate()
     }
 
     const ruleElements = currCompetition.rules.map(rule => {
