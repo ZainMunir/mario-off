@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, getDocs, getDoc, doc, addDoc, serverTimestamp } from "firebase/firestore"
+import { getFirestore, collection, query, where, getDocs, getDoc, doc, addDoc, serverTimestamp, deleteDoc } from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBmBIk0-qSvkGSUSAs46Uxsw4mRtbrxinI",
@@ -68,6 +68,7 @@ export async function addCompetition(request) {
     return compRef.id
 }
 
-export async function deleteCompetition() {
-    return null
+export async function deleteCompetition(id) {
+    const docRef = doc(db, "competitions", id)
+    await deleteDoc(docRef)
 }
