@@ -30,6 +30,7 @@ const competitionsCollection = collection(db, "competitions")
 
 
 const emptyRound = {
+    valid: true,
     winner: "",
     nestedRounds: []
 }
@@ -160,12 +161,15 @@ export async function deleteRound(request) {
 
 export async function updateRounds(request) {
     const docRef = doc(db, "competitions", request.id)
-    const score = calcScore(request.rounds, request.players)
+    const { rounds, score } = calcScore(request.rounds, request.players)
+    const winner = score[0] > score[1] ?
+        request.players[0] : score[1] > score[0] ? request.players[1] : "draw"
     await updateDoc(
         docRef,
         {
-            rounds: request.rounds,
+            rounds: rounds,
             currentScore: score,
+            winner: winner,
             updatedDate: serverTimestamp()
         }
     )
@@ -173,20 +177,33 @@ export async function updateRounds(request) {
 
 function calcScore(rounds, players) {
     let overallScore = [0, 0]
-    for (let j = 0; j < rounds.length; j++) {
+    const newRounds = [...rounds]
+    for (let j = 0; j < newRounds.length; j++) {
         let score = [0, 0]
-        let currRound = rounds[j].nestedRounds
-        for (let i = 0; i < currRound.length; i++) {
-            if (currRound[i].winner == players[0]) score[0]++
-            else if (currRound[i].winner == players[1]) score[1]++
-            else { score[0]++; score[1]++ }
+        newRounds[j].nestedRounds
+        for (let i = 0; i < newRounds[j].nestedRounds.length; i++) {
+            if (newRounds[j].nestedRounds[i].player == players[0]) score[0] += parseInt(newRounds[j].nestedRounds[i].points)
+            else if (newRounds[j].nestedRounds[i].player == players[1]) score[1] += parseInt(newRounds[j].nestedRounds[i].points)
+            else {
+                score[0] += parseInt(newRounds[j].nestedRounds[i].points)
+                score[1] += parseInt(newRounds[j].nestedRounds[i].points)
+            }
         }
-        if (score[0] >= score[1]) {
+        if (score[0] > score[1]) {
+            newRounds[j].winner = players[0]
+            if (!newRounds[j].valid) break
             overallScore[0]++
         }
-        if (score[0] <= score[1]) {
+        else if (score[0] < score[1]) {
+            newRounds[j].winner = players[1]
+            if (!newRounds[j].valid) break
+            overallScore[1]++
+        } else {
+            newRounds[j].winner = "draw"
+            if (!newRounds[j].valid) break
+            overallScore[0]++
             overallScore[1]++
         }
     }
-    return overallScore
+    return { rounds: newRounds, score: overallScore }
 }

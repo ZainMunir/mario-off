@@ -19,7 +19,8 @@ export default function CompRounds() {
 
     const [data, setData] = React.useState({
         name: "",
-        winner: "draw"
+        player: "draw",
+        points: 1,
     })
     function handleChange(event) {
         const { name, value } = event.target
@@ -46,9 +47,9 @@ export default function CompRounds() {
                 <div className="mr-auto w-32 text-left">
                     {currRound.nestedRounds[i].name}
                 </div>
-                <div>----</div>
+                <div>{currRound.nestedRounds[i].points}</div>
                 <div className="ml-auto w-32 text-right">
-                    {currRound.nestedRounds[i].winner}
+                    {currRound.nestedRounds[i].player}
                 </div>
                 {currCompetition.status === "ongoing" &&
                     <button
@@ -60,9 +61,12 @@ export default function CompRounds() {
                 }
             </div>
         )
-        if (currRound.nestedRounds[i].winner == currCompetition.players[0]) score[0]++
-        else if (currRound.nestedRounds[i].winner == currCompetition.players[1]) score[1]++
-        else { score[0]++; score[1]++ }
+        if (currRound.nestedRounds[i].player == currCompetition.players[0]) score[0] += parseInt(currRound.nestedRounds[i].points)
+        else if (currRound.nestedRounds[i].player == currCompetition.players[1]) score[1] += parseInt(currRound.nestedRounds[i].points)
+        else {
+            score[0] += parseInt(currRound.nestedRounds[i].points)
+            score[1] += parseInt(currRound.nestedRounds[i].points)
+        }
     }
 
     function setRound(event) {
@@ -82,6 +86,7 @@ export default function CompRounds() {
             round: currCompetition.rounds[selectedRound - 1]
         })
         setSelectedRound(old => old - 1 > 1 ? old - 1 : 1)
+        revalidator.revalidate()
     }
 
     async function addSubRound() {
@@ -122,7 +127,7 @@ export default function CompRounds() {
                 <select
                     value={`Round ${selectedRound}`}
                     onChange={setRound}
-                    className="mx-auto"
+                    className="mx-auto rounded-md px-1 bg-black text-white"
                 >
                     {roundOptions}
                 </select>
@@ -146,14 +151,21 @@ export default function CompRounds() {
                             type="text"
                             name="name"
                             placeholder="Sub-round name"
-                            className="border-2 rounded p-1 w-7/12"
+                            className="border-2 rounded p-1 w-1/2"
                             value={data.name}
                             onChange={handleChange}
                         />
+                        <input
+                            type="number"
+                            name="points"
+                            className="border-2 rounded p-1 w-1/6"
+                            value={data.points}
+                            onChange={handleChange}
+                        />
                         <select
-                            name="winner"
+                            name="player"
                             className="border-2 rounded ml-auto p-1 w-1/3"
-                            value={data.winner}
+                            value={data.player}
                             onChange={handleChange}
                         >
                             <option>draw</option>
