@@ -112,6 +112,18 @@ export default function CompRounds() {
         revalidator.revalidate()
     }
 
+    async function changeValidity(event) {
+        const { name, checked } = event.target
+        let rounds = [...currCompetition.rounds];
+        rounds[currCompetition.rounds.indexOf(currRound)].valid = checked
+        await updateRounds({
+            id: currCompetition.id,
+            players: currCompetition.players,
+            rounds: rounds
+        })
+        revalidator.revalidate()
+    }
+
     return (
         <div className="flex flex-col h-full text-center">
             <div className="flex flex-row justify-between">
@@ -124,13 +136,21 @@ export default function CompRounds() {
                     >
                         Delete Round
                     </button>}
-                <select
-                    value={`Round ${selectedRound}`}
-                    onChange={setRound}
-                    className="mx-auto rounded-md px-1 bg-black text-white"
-                >
-                    {roundOptions}
-                </select>
+                <div className="flex flex-row flex-grow mx-2 justify-between">
+                    <select
+                        value={`Round ${selectedRound}`}
+                        onChange={setRound}
+                        className="rounded-md bg-black text-white text-sm h-full"
+                    >
+                        {roundOptions}
+                    </select>
+                    <input
+                        type="checkbox"
+                        name="valid"
+                        checked={currRound.valid}
+                        onChange={changeValidity}
+                    />
+                </div>
                 {currCompetition.status === "ongoing" &&
                     <button
                         onClick={newRound}

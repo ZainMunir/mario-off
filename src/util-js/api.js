@@ -30,7 +30,7 @@ const competitionsCollection = collection(db, "competitions")
 
 
 const emptyRound = {
-    valid: true,
+    valid: false,
     winner: "",
     nestedRounds: []
 }
@@ -88,7 +88,7 @@ export async function addCompetition(request) {
         rules: [],
         status: "ongoing",
         currentScore: [0, 0],
-        winner: "",
+        winner: "draw",
         rounds: [emptyRound]
     }
     const compRef = await addDoc(competitionsCollection, newComp)
