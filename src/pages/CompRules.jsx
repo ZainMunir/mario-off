@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, useNavigate, useNavigation, useRevalidator } from "react-router-dom";
+import { Form, useNavigation, useRevalidator } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/api"
 import Trash from "../assets/trash.png"
