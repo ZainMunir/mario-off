@@ -136,7 +136,7 @@ export default function CompRounds() {
                     >
                         Delete Round
                     </button>}
-                <div className="flex flex-row flex-grow mx-2 justify-between">
+                <div className="flex flex-row flex-grow mx-2 justify-around">
                     <select
                         value={`Round ${selectedRound}`}
                         onChange={setRound}
@@ -144,12 +144,13 @@ export default function CompRounds() {
                     >
                         {roundOptions}
                     </select>
-                    <input
-                        type="checkbox"
-                        name="valid"
-                        checked={currRound.valid}
-                        onChange={changeValidity}
-                    />
+                    {currCompetition.status === "ongoing" &&
+                        <input
+                            type="checkbox"
+                            name="valid"
+                            checked={currRound.valid}
+                            onChange={changeValidity}
+                        />}
                 </div>
                 {currCompetition.status === "ongoing" &&
                     <button
