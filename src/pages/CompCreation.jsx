@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, useActionData, redirect, useNavigation } from "react-router-dom";
 import { requireAuth } from "../util-js/requireAuth";
-import { addCompetition } from "../util-js/api";
+import { addCompetition, myInfo } from "../util-js/api";
 import CompThumbnail from "../components/CompThumbnail";
 
 export async function loader({ request }) {
@@ -13,12 +13,12 @@ export async function action({ request }) {
     const formData = await request.formData()
     const name = formData.get("name")
     const image = formData.get("image")
-    const players = [localStorage.getItem("userID"), formData.get("player2")]
+    const player = formData.get("player2")
     try {
         const id = await addCompetition({
             name: name,
             image: image,
-            players: players,
+            player: player,
         })
         return redirect(`../competitions/${id}`)
     } catch (err) {
@@ -30,11 +30,10 @@ export default function CompCreation() {
     const errorMessage = useActionData()
     const navigation = useNavigation()
 
-
     const [data, setData] = React.useState({
         name: "",
         image: "",
-        player1: localStorage.getItem("userID"),
+        player1: myInfo.username,
         player2: "",
     })
 

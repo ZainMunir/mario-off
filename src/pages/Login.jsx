@@ -6,7 +6,7 @@ import {
     Form,
     redirect,
 } from "react-router-dom"
-import { loginUser, googleSignIn } from "../util-js/api"
+import { googleSignIn } from "../util-js/api"
 
 
 export function loader({ request }) {

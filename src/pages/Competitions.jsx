@@ -6,7 +6,7 @@ import CompThumbnail from "../components/CompThumbnail";
 
 export async function loader({ request }) {
     await requireAuth(request)
-    return await getCompetitions(localStorage.getItem("userID"))
+    return await getCompetitions()
 }
 
 export default function Competitions() {

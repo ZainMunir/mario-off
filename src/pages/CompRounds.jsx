@@ -1,15 +1,24 @@
 import React from "react";
 import { useOutletContext, useNavigation, useRevalidator } from "react-router-dom";
-import { addRound, deleteRound, updateRounds } from "../util-js/api"
+import { addRound, deleteRound, getPersonInfo, myInfo, updateRounds } from "../util-js/api"
 import Trash from "../assets/trash.png"
 import CompScore from "../components/CompScore";
 
-
 export default function CompRounds() {
     const { currCompetition } = useOutletContext()
-
+    const [playerDeets, setPlayerDeets] = React.useState([])
     const navigation = useNavigation()
     const revalidator = useRevalidator()
+
+    React.useEffect(() => {
+        async function fetchPlayers() {
+            setPlayerDeets(
+                [await getPersonInfo(currCompetition.players[0]),
+                await getPersonInfo(currCompetition.players[1])]
+            )
+        }
+        fetchPlayers();
+    }, [])
 
     const [selectedRound, setSelectedRound] = React.useState(1);
     const currRound = currCompetition.rounds[selectedRound - 1]
@@ -36,6 +45,14 @@ export default function CompRounds() {
             <option key={i + 1}>Round {i + 1}</option>
         )
     }
+
+    function convertUidToUsername(uid) {
+        if (!playerDeets.length) return
+        return playerDeets[0] && uid == playerDeets[0].userid ?
+            playerDeets[0].username : uid == playerDeets[1].userid ?
+                playerDeets[1].username : "draw"
+    }
+
     let score = [0, 0]
     const roundDetails = []
     for (let i = 0; i < currRound.nestedRounds.length; i++) {
@@ -49,7 +66,7 @@ export default function CompRounds() {
                 </div>
                 <div>{currRound.nestedRounds[i].points}</div>
                 <div className="ml-auto w-32 text-right">
-                    {currRound.nestedRounds[i].player}
+                    {convertUidToUsername(currRound.nestedRounds[i].player)}
                 </div>
                 {currCompetition.status === "ongoing" &&
                     <button
@@ -89,9 +106,17 @@ export default function CompRounds() {
         revalidator.revalidate()
     }
 
+    function convertUsernameToUid(username) {
+        return username == playerDeets[0].username ?
+            playerDeets[0].userid : username == playerDeets[1].username ?
+                playerDeets[1].userid : "draw"
+    }
+
     async function addSubRound() {
         let rounds = [...currCompetition.rounds];
-        rounds[currCompetition.rounds.indexOf(currRound)].nestedRounds = [...currRound.nestedRounds, data]
+        let fixedData = { ...data }
+        fixedData.player = convertUsernameToUid(fixedData.player)
+        rounds[currCompetition.rounds.indexOf(currRound)].nestedRounds = [...currRound.nestedRounds, fixedData]
         await updateRounds({
             id: currCompetition.id,
             players: currCompetition.players,
@@ -113,7 +138,7 @@ export default function CompRounds() {
     }
 
     async function changeValidity(event) {
-        const { name, checked } = event.target
+        const { checked } = event.target
         let rounds = [...currCompetition.rounds];
         rounds[currCompetition.rounds.indexOf(currRound)].valid = checked
         await updateRounds({
@@ -190,8 +215,8 @@ export default function CompRounds() {
                             onChange={handleChange}
                         >
                             <option>draw</option>
-                            <option>{currCompetition.players[0]}</option>
-                            <option>{currCompetition.players[1]}</option>
+                            <option>{playerDeets[0] && playerDeets[0].username}</option>
+                            <option>{playerDeets[1] && playerDeets[1].username}</option>
                         </select>
                     </div>
                     <button

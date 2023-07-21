@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useNavigate, useRevalidator } from "react-router-dom";
 import Mushroom from "../assets/favicon.webp"
 import EmptyProfile from "../assets/profile-pic.png"
-import { googleSignOut } from "../util-js/api";
+import { googleSignOut, myInfo } from "../util-js/api";
 
 
 export default function Header({ isLoggedIn }) {
@@ -35,7 +35,7 @@ export default function Header({ isLoggedIn }) {
                     className="flex items-center ml-2 rounded-full"
                     style={({ isActive }) => isActive ? activeStyles : null}
                 >
-                    <img src={EmptyProfile} className="w-8 bg-gray-200 rounded-full" />
+                    <img src={(myInfo && myInfo.profilePic) || EmptyProfile} className="w-8 bg-gray-200 rounded-full" />
                 </NavLink>
             </div>
         </header>

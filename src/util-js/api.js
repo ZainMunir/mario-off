@@ -15,7 +15,6 @@ import {
     arrayRemove
 } from "firebase/firestore"
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
-import { redirect } from "react-router-dom";
 
 
 const firebaseConfig = {
@@ -30,33 +29,46 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const competitionsCollection = collection(db, "competitions")
+const userInfoCollection = collection(db, "userInfo")
 
 export const auth = getAuth()
 const provider = new GoogleAuthProvider();
+
 var loggedInStatus = false;
+export var myInfo = null
+
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         //do your logged in user crap here
-        console.log("Logged in ", user)
         loggedInStatus = true;
+        myInfo = await getPersonInfo(user.uid)
     } else {
-        console.log("Logged out");
         loggedInStatus = false;
+        myInfo = null
     }
 })
 
 
+export async function getPersonInfo(userId) {
+    const q = await query(userInfoCollection, where('userid', '==', userId))
+    const querySnapshot = await getDocs(q);
+    const dataArr = querySnapshot.docs.map(doc => ({
+        ...doc.data(),
+    }))
+    return dataArr[0];
+}
+
 export async function googleSignIn() {
     try {
-        const result = await signInWithPopup(auth, provider)
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+        /*const result =*/ await signInWithPopup(auth, provider)
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
+        // const user = result.user;
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const email = error.customData.email;
+        // const credential = GoogleAuthProvider.credentialFromError(error);
         throw {
             message: errorMessage,
             statusText: "Error",
@@ -73,33 +85,14 @@ export async function googleSignOut() {
     signOut(auth)
 }
 
-
-export async function loginUser(creds) {
-    const valid = {
-        email: "1@mario.com",
-        password: "p123"
-    }
-
-    if (creds.email != valid.email || creds.password != valid.password) {
-        throw {
-            message: "Wrong email or password",
-            statusText: "Error",
-            status: 401
-        }
-    }
-    return {
-        userId: "zain"
-    }
-}
-
 const emptyRound = {
     valid: false,
     winner: "",
     nestedRounds: []
 }
 
-export async function getCompetitions(userid) {
-    const q = await query(competitionsCollection, where('players', 'array-contains', userid))
+export async function getCompetitions() {
+    const q = await query(competitionsCollection, where('players', 'array-contains', myInfo.userid))
     const querySnapshot = await getDocs(q);
     const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
@@ -126,7 +119,9 @@ export async function getCompetition(compid) {
 
 export async function addCompetition(request) {
     const newComp = {
-        ...request,
+        name: request.name,
+        image: request.image,
+        players: [myInfo.userid, request.player],
         creationDate: serverTimestamp(),
         updatedDate: serverTimestamp(),
         description: "",
