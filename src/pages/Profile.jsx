@@ -7,11 +7,10 @@ export async function action({ request }) {
     const username = formData.get("username")
     const profilePic = formData.get("profilePic")
     try {
-        await updateProfile({
+        return await updateProfile({
             username: username,
             profilePic: profilePic
         })
-        return null
     } catch (err) {
         return err.message
     }

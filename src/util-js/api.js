@@ -98,6 +98,18 @@ export async function googleSignOut() {
 }
 
 export async function updateProfile(request) {
+    try {
+        const docRef = doc(db, "userInfo", request.username)
+        const querySnapshot = await getDoc(docRef)
+        const data = querySnapshot.data()
+        if (data) {
+            if (data.userid != myInfo.userid) {
+                return "Username in use"
+            }
+        }
+    } catch (err) {
+        return err
+    }
     const newProfile = { ...myInfo, ...request }
     if (myInfo.username != newProfile.username) {
         const docRef = doc(db, "userInfo", myInfo.username)
@@ -105,7 +117,9 @@ export async function updateProfile(request) {
     }
     await setDoc(doc(db, "userInfo", newProfile.username), newProfile)
     myInfo = newProfile
+    return null
 }
+
 
 export async function addFriend(username) {
     if (username == myInfo.username) {
