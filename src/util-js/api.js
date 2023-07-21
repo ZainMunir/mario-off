@@ -14,6 +14,9 @@ import {
     arrayUnion,
     arrayRemove
 } from "firebase/firestore"
+import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
+import { redirect } from "react-router-dom";
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyBmBIk0-qSvkGSUSAs46Uxsw4mRtbrxinI",
@@ -28,12 +31,48 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const competitionsCollection = collection(db, "competitions")
 
+export const auth = getAuth()
+const provider = new GoogleAuthProvider();
+var loggedInStatus = false;
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        //do your logged in user crap here
+        console.log("Logged in ", user)
+        loggedInStatus = true;
+    } else {
+        console.log("Logged out");
+        loggedInStatus = false;
+    }
+})
 
-const emptyRound = {
-    valid: false,
-    winner: "",
-    nestedRounds: []
+
+export async function googleSignIn() {
+    try {
+        const result = await signInWithPopup(auth, provider)
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        throw {
+            message: errorMessage,
+            statusText: "Error",
+            status: errorCode
+        }
+    }
 }
+
+export async function isLoggedIn() {
+    return loggedInStatus
+}
+
+export async function googleSignOut() {
+    signOut(auth)
+}
+
 
 export async function loginUser(creds) {
     const valid = {
@@ -51,6 +90,12 @@ export async function loginUser(creds) {
     return {
         userId: "zain"
     }
+}
+
+const emptyRound = {
+    valid: false,
+    winner: "",
+    nestedRounds: []
 }
 
 export async function getCompetitions(userid) {

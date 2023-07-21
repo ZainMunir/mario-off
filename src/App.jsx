@@ -17,6 +17,7 @@ import CompInfo, { action as compInfoAction } from './pages/CompInfo'
 import CompRules, { action as compRulesAction } from './pages/CompRules'
 import CompRounds from './pages/CompRounds'
 import { requireAuth } from './util-js/requireAuth'
+import Profile from './pages/Profile'
 
 const router = createHashRouter(createRoutesFromElements(
   <Route
@@ -30,6 +31,11 @@ const router = createHashRouter(createRoutesFromElements(
       element={<Login />}
       loader={loginLoader}
       action={loginAction}
+    />
+    <Route
+      path='profile'
+      element={<Profile />}
+      loader={async ({ request }) => await requireAuth(request)}
     />
     <Route
       path="competitions"

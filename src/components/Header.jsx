@@ -1,31 +1,25 @@
 import React from "react";
 import { NavLink, useNavigate, useRevalidator } from "react-router-dom";
-import Image from "../assets/favicon.webp"
+import Mushroom from "../assets/favicon.webp"
+import EmptyProfile from "../assets/profile-pic.png"
+import { googleSignOut } from "../util-js/api";
 
 
 export default function Header({ isLoggedIn }) {
-    const revalidator = useRevalidator()
-    let navigate = useNavigate();
-    function logout() {
-        localStorage.removeItem("loggedIn")
-        revalidator.revalidate()
-        navigate("/")
-    }
-
     const activeStyles = {
         textDecoration: "underline",
         fontWeight: "500"
     }
     return (
         <header className="h-12 p-4 w-screen flex justify-center items-center bg-gray-400 sticky top-0  z-10">
-            <div className="w-80 flex justify-between">
+            <div className="w-80 flex justify-between ">
                 <NavLink
                     to="/"
                     className="flex items-center mr-auto border-2 border-transparent"
                     style={({ isActive }) => isActive ? { border: "2px solid black" } : null}
                     end
                 >
-                    <img src={Image} className="w-10" />
+                    <img src={Mushroom} className="w-10" />
                 </NavLink>
                 {isLoggedIn &&
                     <NavLink
@@ -36,15 +30,13 @@ export default function Header({ isLoggedIn }) {
                     >
                         Competitions
                     </NavLink>}
-                {isLoggedIn ?
-                    <button onClick={logout} className="flex items-center ml-2">Logout</button> :
-                    <NavLink
-                        to="login"
-                        className="flex items-center ml-2"
-                        style={({ isActive }) => isActive ? activeStyles : null}
-                    >
-                        Login
-                    </NavLink>}
+                <NavLink
+                    to={isLoggedIn ? "profile " : "login"}
+                    className="flex items-center ml-2 rounded-full"
+                    style={({ isActive }) => isActive ? activeStyles : null}
+                >
+                    <img src={EmptyProfile} className="w-8 bg-gray-200 rounded-full" />
+                </NavLink>
             </div>
         </header>
     )
