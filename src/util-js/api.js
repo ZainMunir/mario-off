@@ -161,6 +161,18 @@ export async function addFriend(username) {
     }
 }
 
+export async function getActualFriends() {
+    const friendIDs = myInfo.friends.filter(friend => friend.accepted).map(x => x.userid)
+    if (!friendIDs.length) return
+    const q = await query(userInfoCollection, where('userid', 'in', friendIDs))
+    const querySnapshot = await getDocs(q);
+    const dataArr = querySnapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+    }))
+    return dataArr || [];
+}
+
 export async function getFriends() {
     const friendIDs = myInfo.friends.map(x => x.userid)
     if (!friendIDs.length) return

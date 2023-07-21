@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, useActionData, redirect, useNavigation, useNavigate } from "react-router-dom";
-import { addCompetition, getFriends, myInfo } from "../util-js/api";
+import { addCompetition, getActualFriends, myInfo } from "../util-js/api";
 import CompThumbnail from "../components/CompThumbnail";
 
 export default function CompCreation() {
@@ -11,7 +11,7 @@ export default function CompCreation() {
 
     React.useEffect(() => {
         async function friends() {
-            setFriendsInfo(await getFriends())
+            setFriendsInfo(await getActualFriends())
         }
         friends()
     }, [myInfo])
@@ -22,7 +22,7 @@ export default function CompCreation() {
         player2: "",
         player2Id: "",
     })
-    console.log(data)
+
     function handleChange(event) {
         const { name, value } = event.target
         setData(prevData => {
@@ -38,9 +38,7 @@ export default function CompCreation() {
                 [name]: value
             }
         })
-
     }
-
     const friendOptions = friendsInfo.map(friend => {
         return (
             <option key={friend.userid} id={friend.userid}>{friend.username}</option>
