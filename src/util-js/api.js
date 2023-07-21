@@ -40,10 +40,8 @@ export var myInfo = null
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
-        //do your logged in user crap here
         loggedInStatus = true;
         myInfo = await getPersonInfo(user.uid)
-        // console.log(user)
     } else {
         loggedInStatus = false;
         myInfo = null
@@ -82,6 +80,7 @@ export async function googleSignIn() {
                     username: docRef.id
                 }
             )
+            myInfo = await getPersonInfo(user.uid)
         }
     } catch (error) {
         const errorCode = error.code;
