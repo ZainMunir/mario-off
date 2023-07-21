@@ -13,7 +13,9 @@ export default function CompScore(props) {
         }
         fetchPlayers();
     }, [])
-
+    if (!playerDeets[1]) {
+        playerDeets[1] = { profilePic: "", username: "" }
+    }
     return (
         <div className="flex flex-row w-full place-content-center">
             {playerDeets[0] &&

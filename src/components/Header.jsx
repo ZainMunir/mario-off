@@ -1,8 +1,8 @@
 import React from "react";
-import { NavLink, useNavigate, useRevalidator } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Mushroom from "../assets/favicon.webp"
 import EmptyProfile from "../assets/profile-pic.png"
-import { googleSignOut, myInfo } from "../util-js/api";
+import { myInfo } from "../util-js/api";
 
 
 export default function Header({ isLoggedIn }) {
@@ -10,6 +10,7 @@ export default function Header({ isLoggedIn }) {
         textDecoration: "underline",
         fontWeight: "500"
     }
+
     return (
         <header className="h-12 p-4 w-screen flex justify-center items-center bg-gray-400 sticky top-0  z-10">
             <div className="w-80 flex justify-between ">

@@ -12,7 +12,7 @@ import Login, { loader as loginLoader, action as loginAction } from './pages/Log
 import Competitions, { loader as competitionsLoader } from './pages/Competitions'
 import Error from "./components/Error"
 import CompDetails, { loader as compDetailsLoader } from './pages/CompDetails'
-import CompCreation, { action as compCreationAction } from './pages/CompCreation'
+import CompCreation from './pages/CompCreation'
 import CompInfo, { action as compInfoAction } from './pages/CompInfo'
 import CompRules, { action as compRulesAction } from './pages/CompRules'
 import CompRounds from './pages/CompRounds'
@@ -36,12 +36,14 @@ const router = createHashRouter(createRoutesFromElements(
     <Route
       path='profile'
       element={<Profile />}
+      errorElement={<Error />}
       loader={async ({ request }) => await requireAuth(request)}
       action={profileAction}
     />
     <Route
       path='friends'
       element={<Friends />}
+      errorElement={<Error />}
       loader={async ({ request }) => await requireAuth(request)}
       action={friendsAction}
     />
@@ -83,7 +85,6 @@ const router = createHashRouter(createRoutesFromElements(
       element={<CompCreation />}
       errorElement={<Error />}
       loader={async ({ request }) => await requireAuth(request)}
-      action={compCreationAction}
     />
     <Route
       path="*"
