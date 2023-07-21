@@ -108,6 +108,108 @@ export async function updateProfile(request) {
     myInfo = newProfile
 }
 
+export async function addFriend(username) {
+    if (username == myInfo.username) {
+        throw {
+            message: "That's you!"
+        }
+    }
+    try {
+        const docRef = doc(db, "userInfo", username)
+        const querySnapshot = await getDoc(docRef)
+        const data = querySnapshot.data()
+        if (!data) {
+            throw {
+                message: "No user with that exact name"
+            }
+        }
+        if (myInfo.friends.find(x => x.userid == data.uid) != undefined) {
+            throw {
+                message: "Invite already sent / Friends already"
+            }
+        }
+        updateDoc(docRef, {
+            friends: [...data.friends, {
+                sender: false,
+                accepted: false,
+                uid: myInfo.userid
+            }]
+        })
+        updateDoc(doc(db, "userInfo", myInfo.username), {
+            friends: [...data.friends, {
+                sender: true,
+                accepted: false,
+                uid: data.userid
+            }]
+        })
+        myInfo = await getPersonInfo(myInfo.userid)
+    } catch (err) {
+        throw err
+    }
+}
+
+export async function getFriends() {
+    const friendIDs = myInfo.friends.map(x => x.uid)
+    if (!friendIDs.length) return
+    const q = await query(userInfoCollection, where('userid', 'in', friendIDs))
+    const querySnapshot = await getDocs(q);
+    const dataArr = querySnapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+    }))
+    return dataArr || [];
+}
+
+export async function acceptFriend(request) {
+    let myFriends = myInfo.friends.map(x => {
+        if (x.uid == request.userid) {
+            return {
+                ...x,
+                accepted: true
+            }
+        }
+        return x
+    })
+    let theirFriends = request.friends.map(x => {
+        if (x.uid == myInfo.userid) {
+            return {
+                ...x,
+                accepted: true
+            }
+        }
+        return x
+    })
+    try {
+        await updateDoc(doc(db, "userInfo", myInfo.username), {
+            friends: myFriends
+        })
+        await updateDoc(doc(db, "userInfo", request.username), {
+            friends: theirFriends
+        })
+        myInfo = await getPersonInfo(myInfo.userid)
+    } catch (err) {
+        throw err
+    }
+    return null
+}
+
+export async function rejectFriend(request) {
+    let myFriends = myInfo.friends.filter(x => x.uid != request.userid)
+    let theirFriends = request.friends.filter(x => x.uid != myInfo.userid)
+    try {
+        await updateDoc(doc(db, "userInfo", myInfo.username), {
+            friends: myFriends
+        })
+        await updateDoc(doc(db, "userInfo", request.username), {
+            friends: theirFriends
+        })
+        myInfo = await getPersonInfo(myInfo.userid)
+    } catch (err) {
+        throw err
+    }
+    return null
+}
+
 
 const emptyRound = {
     valid: false,

@@ -22,14 +22,24 @@ export default function Header({ isLoggedIn }) {
                     <img src={Mushroom} className="w-10" />
                 </NavLink>
                 {isLoggedIn &&
-                    <NavLink
-                        to="competitions"
-                        className="flex items-center"
-                        style={({ isActive }) => isActive ? activeStyles : null}
-                        end
-                    >
-                        Competitions
-                    </NavLink>}
+                    <>
+                        <NavLink
+                            to="friends"
+                            className="flex items-center mr-2"
+                            style={({ isActive }) => isActive ? activeStyles : null}
+                            end
+                        >
+                            Friends
+                        </NavLink>
+                        <NavLink
+                            to="competitions"
+                            className="flex items-center"
+                            style={({ isActive }) => isActive ? activeStyles : null}
+                            end
+                        >
+                            Competitions
+                        </NavLink>
+                    </>}
                 <NavLink
                     to={isLoggedIn ? "profile " : "login"}
                     className="flex items-center ml-2 rounded-full"
