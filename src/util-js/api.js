@@ -122,24 +122,24 @@ export async function addFriend(username) {
                 message: "No user with that exact name"
             }
         }
-        if (myInfo.friends.find(x => x.userid == data.uid) != undefined) {
+        if (myInfo.friends.find(x => x.userid == data.userid) != undefined) {
             throw {
                 message: "Invite already sent / Friends already"
             }
         }
-        updateDoc(docRef, {
-            friends: [...data.friends, {
+        await updateDoc(docRef, {
+            friends: arrayUnion({
                 sender: false,
                 accepted: false,
-                uid: myInfo.userid
-            }]
+                userid: myInfo.userid
+            })
         })
-        updateDoc(doc(db, "userInfo", myInfo.username), {
-            friends: [...data.friends, {
+        await updateDoc(doc(db, "userInfo", myInfo.username), {
+            friends: arrayUnion({
                 sender: true,
                 accepted: false,
-                uid: data.userid
-            }]
+                userid: data.userid
+            })
         })
         myInfo = await getPersonInfo(myInfo.userid)
     } catch (err) {
@@ -148,7 +148,7 @@ export async function addFriend(username) {
 }
 
 export async function getFriends() {
-    const friendIDs = myInfo.friends.map(x => x.uid)
+    const friendIDs = myInfo.friends.map(x => x.userid)
     if (!friendIDs.length) return
     const q = await query(userInfoCollection, where('userid', 'in', friendIDs))
     const querySnapshot = await getDocs(q);
@@ -161,7 +161,7 @@ export async function getFriends() {
 
 export async function acceptFriend(request) {
     let myFriends = myInfo.friends.map(x => {
-        if (x.uid == request.userid) {
+        if (x.userid == request.userid) {
             return {
                 ...x,
                 accepted: true
@@ -170,7 +170,7 @@ export async function acceptFriend(request) {
         return x
     })
     let theirFriends = request.friends.map(x => {
-        if (x.uid == myInfo.userid) {
+        if (x.userid == myInfo.userid) {
             return {
                 ...x,
                 accepted: true
@@ -193,8 +193,8 @@ export async function acceptFriend(request) {
 }
 
 export async function rejectFriend(request) {
-    let myFriends = myInfo.friends.filter(x => x.uid != request.userid)
-    let theirFriends = request.friends.filter(x => x.uid != myInfo.userid)
+    let myFriends = myInfo.friends.filter(x => x.userid != request.userid)
+    let theirFriends = request.friends.filter(x => x.userid != myInfo.userid)
     try {
         await updateDoc(doc(db, "userInfo", myInfo.username), {
             friends: myFriends

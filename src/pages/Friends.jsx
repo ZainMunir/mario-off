@@ -34,9 +34,9 @@ export default function Friends() {
         friends()
     }, [myInfo])
     const sentElements = friendsInfo ? sentRequests.map(friend => {
-        const currentFriend = friendsInfo.find(x => x.userid == friend.uid)
+        const currentFriend = friendsInfo.find(x => x.userid == friend.userid)
         return (
-            <div key={friend.uid}>
+            <div key={friend.userid}>
                 {currentFriend && currentFriend.username}
             </div>
         )
@@ -53,10 +53,10 @@ export default function Friends() {
     }
 
     const receivedElements = friendsInfo ? receivedRequests.map(friend => {
-        const currentFriend = friendsInfo.find(x => x.userid == friend.uid)
+        const currentFriend = friendsInfo.find(x => x.userid == friend.userid)
         return (
             <div
-                key={friend.uid}
+                key={friend.userid}
                 className="flex"
             >
                 <p className="mr-auto">
@@ -79,9 +79,9 @@ export default function Friends() {
     }) : []
 
     const actualFriendsElements = friendsInfo ? actualFriends.map(friend => {
-        const currentFriend = friendsInfo.find(x => x.userid == friend.uid)
+        const currentFriend = friendsInfo.find(x => x.userid == friend.userid)
         return (
-            <div key={friend.uid}>
+            <div key={friend.userid}>
                 {currentFriend && currentFriend.username}
             </div>
         )
