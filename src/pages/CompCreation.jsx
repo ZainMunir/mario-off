@@ -4,11 +4,6 @@ import { requireAuth } from "../util-js/requireAuth";
 import { addCompetition, myInfo } from "../util-js/api";
 import CompThumbnail from "../components/CompThumbnail";
 
-export async function loader({ request }) {
-    await requireAuth(request)
-    return null
-}
-
 export async function action({ request }) {
     const formData = await request.formData()
     const name = formData.get("name")

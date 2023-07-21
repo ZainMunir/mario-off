@@ -12,9 +12,10 @@ import {
     deleteDoc,
     updateDoc,
     arrayUnion,
-    arrayRemove
+    arrayRemove,
+    setDoc
 } from "firebase/firestore"
-import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
+import { GoogleAuthProvider, getAdditionalUserInfo, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
 
 
 const firebaseConfig = {
@@ -42,12 +43,16 @@ onAuthStateChanged(auth, async (user) => {
         //do your logged in user crap here
         loggedInStatus = true;
         myInfo = await getPersonInfo(user.uid)
+        // console.log(user)
     } else {
         loggedInStatus = false;
         myInfo = null
     }
 })
 
+export async function isLoggedIn() {
+    return loggedInStatus
+}
 
 export async function getPersonInfo(userId) {
     const q = await query(userInfoCollection, where('userid', '==', userId))
@@ -60,15 +65,27 @@ export async function getPersonInfo(userId) {
 
 export async function googleSignIn() {
     try {
-        /*const result =*/ await signInWithPopup(auth, provider)
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
-        // const user = result.user;
+        const result = await signInWithPopup(auth, provider)
+        const details = getAdditionalUserInfo(result)
+        if (details.isNewUser) {
+            const user = result.user;
+            const newInfo = {
+                username: "",
+                profilePic: user.photoURL,
+                userid: user.uid,
+                friends: []
+            }
+            const docRef = await addDoc(userInfoCollection, newInfo)
+            await updateDoc(
+                docRef,
+                {
+                    username: docRef.id
+                }
+            )
+        }
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // const email = error.customData.email;
-        // const credential = GoogleAuthProvider.credentialFromError(error);
         throw {
             message: errorMessage,
             statusText: "Error",
@@ -77,13 +94,20 @@ export async function googleSignIn() {
     }
 }
 
-export async function isLoggedIn() {
-    return loggedInStatus
-}
-
 export async function googleSignOut() {
     signOut(auth)
 }
+
+export async function updateProfile(request) {
+    const newProfile = { ...myInfo, ...request }
+    if (myInfo.username != newProfile.username) {
+        const docRef = doc(db, "userInfo", myInfo.username)
+        await deleteDoc(docRef)
+    }
+    await setDoc(doc(db, "userInfo", newProfile.username), newProfile)
+    myInfo = newProfile
+}
+
 
 const emptyRound = {
     valid: false,

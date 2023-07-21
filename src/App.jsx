@@ -12,12 +12,12 @@ import Login, { loader as loginLoader, action as loginAction } from './pages/Log
 import Competitions, { loader as competitionsLoader } from './pages/Competitions'
 import Error from "./components/Error"
 import CompDetails, { loader as compDetailsLoader } from './pages/CompDetails'
-import CompCreation, { loader as compCreationLoader, action as compCreationAction } from './pages/CompCreation'
+import CompCreation, { action as compCreationAction } from './pages/CompCreation'
 import CompInfo, { action as compInfoAction } from './pages/CompInfo'
 import CompRules, { action as compRulesAction } from './pages/CompRules'
 import CompRounds from './pages/CompRounds'
 import { requireAuth } from './util-js/requireAuth'
-import Profile from './pages/Profile'
+import Profile, { action as profileAction } from './pages/Profile'
 
 const router = createHashRouter(createRoutesFromElements(
   <Route
@@ -36,6 +36,7 @@ const router = createHashRouter(createRoutesFromElements(
       path='profile'
       element={<Profile />}
       loader={async ({ request }) => await requireAuth(request)}
+      action={profileAction}
     />
     <Route
       path="competitions"
@@ -74,7 +75,7 @@ const router = createHashRouter(createRoutesFromElements(
       path="competition-creation"
       element={<CompCreation />}
       errorElement={<Error />}
-      loader={compCreationLoader}
+      loader={async ({ request }) => await requireAuth(request)}
       action={compCreationAction}
     />
     <Route
