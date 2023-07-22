@@ -1,9 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Mushroom from "../assets/favicon.webp"
-import EmptyProfile from "../assets/profile-pic.png"
 import { myInfo } from "../util-js/api";
-
+import { AiFillHome, AiOutlineHome } from "react-icons/ai"
+import { MdAccountCircle, MdOutlineAccountCircle } from "react-icons/md"
 
 export default function Header({ isLoggedIn }) {
     const activeStyles = {
@@ -16,11 +15,10 @@ export default function Header({ isLoggedIn }) {
             <div className="w-80 flex justify-between ">
                 <NavLink
                     to="/"
-                    className="flex items-center mr-auto border-2 border-transparent"
-                    style={({ isActive }) => isActive ? { border: "2px solid black" } : null}
+                    className="flex items-center mr-auto"
                     end
                 >
-                    <img src={Mushroom} className="w-10" />
+                    {({ isActive }) => isActive ? <AiFillHome size={30} /> : <AiOutlineHome size={30} />}
                 </NavLink>
                 {isLoggedIn &&
                     <>
@@ -43,10 +41,13 @@ export default function Header({ isLoggedIn }) {
                     </>}
                 <NavLink
                     to={isLoggedIn ? "profile " : "login"}
-                    className="flex items-center ml-2 mt-1 rounded-full h-8 w-8 border-2 border-transparent"
-                    style={({ isActive }) => isActive ? { border: "2px solid black" } : null}
+                    className="flex items-center ml-2"
                 >
-                    <img src={(myInfo && myInfo.profilePic) || EmptyProfile} className="w-8 bg-gray-200 rounded-full" />
+                    {({ isActive }) => isActive ?
+                        (myInfo && myInfo.profilePic && <img src={myInfo.profilePic} className="w-8 bg-gray-200 rounded-full border-2 border-black" />) || <MdAccountCircle size={32} /> :
+                        (myInfo && myInfo.profilePic && <img src={myInfo.profilePic} className="w-8 bg-gray-200 rounded-full border-2" />) || <MdOutlineAccountCircle size={32} />
+                    }
+
                 </NavLink>
             </div>
         </header >

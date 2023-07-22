@@ -1,8 +1,8 @@
 import React from "react";
 import { useOutletContext, useNavigation, useRevalidator } from "react-router-dom";
 import { addRound, deleteRound, getPersonInfo, myInfo, updateRounds } from "../util-js/api"
-import Trash from "../assets/trash.png"
 import CompScore from "../components/CompScore";
+import { FaTrash } from "react-icons/fa";
 
 export default function CompRounds() {
     const { currCompetition } = useOutletContext()
@@ -73,7 +73,7 @@ export default function CompRounds() {
                         className="left-36 top-1 absolute opacity-0 group-hover:opacity-100"
                         onClick={() => delSubRound(i)}
                     >
-                        <img src={Trash} className="w-3" />
+                        <FaTrash size={16} />
                     </button>
                 }
             </div>

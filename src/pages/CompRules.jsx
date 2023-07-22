@@ -2,7 +2,7 @@ import React from "react";
 import { Form, useNavigation, useRevalidator } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/api"
-import Trash from "../assets/trash.png"
+import { FaTrashAlt } from "react-icons/fa"
 
 export async function action({ request }) {
     const formData = await request.formData()
@@ -44,7 +44,8 @@ export default function CompRules() {
                         className="right-0 top-1 absolute opacity-0 group-hover:opacity-100"
                         onClick={() => delRule(rule)}
                     >
-                        <img src={Trash} className="w-3" /></button>
+                        <FaTrashAlt />
+                    </button>
                 }
             </div>
         )

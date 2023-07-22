@@ -1,6 +1,6 @@
 import React from "react";
 import { getPersonInfo } from "../util-js/api";
-import EmptyProfile from "../assets/profile-pic.png"
+import { MdAccountCircle } from "react-icons/md";
 
 export default function CompScore(props) {
     const [playerDeets, setPlayerDeets] = React.useState([])
@@ -19,19 +19,13 @@ export default function CompScore(props) {
     return (
         <div className="flex flex-row w-full place-content-center">
             {playerDeets[0] &&
-                <abbr className="self-center" title={playerDeets[0].username}>
-                    <img
-                        src={playerDeets[0].profilePic || EmptyProfile}
-                        alt={playerDeets[0].username}
-                        className="w-5 self-center bg-gray-200 rounded-full mr-2" />
+                <abbr className="self-center mr-2" title={playerDeets[0].username}>
+                    {playerDeets[0].profilePic ? <img src={playerDeets[0].profilePic} className="w-5 bg-gray-200 rounded-full" /> : <MdAccountCircle size={20} />}
                 </abbr>}
             {props.currentScore[0]} - {props.currentScore[1]}
             {playerDeets[0] &&
-                <abbr className="self-center" title={playerDeets[1].username}>
-                    <img
-                        src={playerDeets[1].profilePic || EmptyProfile}
-                        alt={playerDeets[1].username}
-                        className="w-5 self-center bg-gray-200 rounded-full  ml-2" />
+                <abbr className="self-center ml-2" title={playerDeets[1].username}>
+                    {playerDeets[1].profilePic ? <img src={playerDeets[1].profilePic} className="w-5 bg-gray-200 rounded-full" /> : <MdAccountCircle size={20} />}
                 </abbr>}
         </div>
     )

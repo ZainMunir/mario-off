@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, useActionData, useNavigate, useNavigation, useRevalidator } from "react-router-dom";
 import { myInfo, addFriend, getFriends, acceptFriend, rejectFriend } from "../util-js/api"
-import EmptyProfile from "../assets/profile-pic.png"
+import { MdAccountCircle } from "react-icons/md";
 
 export async function action({ request }) {
     const formData = await request.formData()
@@ -84,10 +84,8 @@ export default function Friends() {
         const currentFriend = friendsInfo.find(x => x.userid == friend.userid)
         return (
             <div key={friend.userid} className="flex">
-                <img
-                    src={currentFriend.profilePic || EmptyProfile}
-                    className="w-5 self-center bg-gray-200 rounded-full mr-2" />
-                {currentFriend && currentFriend.username}
+                {currentFriend.profilePic ? <img src={currentFriend.profilePic} className="w-5 bg-gray-200 rounded-full self-center" /> : <MdAccountCircle size={20} />}
+                <p className="ml-2">{currentFriend && currentFriend.username}</p>
             </div>
         )
     }) : []
