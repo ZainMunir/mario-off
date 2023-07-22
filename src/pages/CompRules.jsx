@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, useNavigation, useRevalidator } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
-import { addRule, deleteRule } from "../util-js/api";
+import { addRule, deleteRule } from "../util-js/competitions-api";
 import { FaTrashAlt } from "react-icons/fa";
 
 export async function action({ request }) {

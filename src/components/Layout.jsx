@@ -1,14 +1,13 @@
 import React from "react";
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth } from "@firebase/auth";
+import { keepMyInfoUpdated } from "../util-js/api";
 import Header from "./Header";
 import Footer from "./Footer";
 import "./Layout.css";
-import { getPersonInfo, keepMyInfoUpdated } from "../util-js/api";
-import { getAuth } from "@firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Layout() {
-  const isLoggedIn = useLoaderData();
   const [myInfo, setMyInfo] = React.useState(null);
   const [user, loading, error] = useAuthState(getAuth());
 

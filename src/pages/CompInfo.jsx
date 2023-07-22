@@ -1,4 +1,5 @@
 import React from "react";
+import ReactModal from "react-modal";
 import {
   Form,
   useOutletContext,
@@ -6,9 +7,11 @@ import {
   useNavigate,
   useNavigation,
 } from "react-router-dom";
+import {
+  deleteCompetition,
+  updateCompetition,
+} from "../util-js/competitions-api";
 import CompScore from "../components/CompScore";
-import { deleteCompetition, updateCompetition } from "../util-js/api";
-import ReactModal from "react-modal";
 import "./CompInfo.css";
 
 export async function action({ request }) {

@@ -1,8 +1,8 @@
 import React from "react";
-import { updateProfile } from "../util-js/api";
 import { useNavigate, useNavigation, useOutletContext } from "react-router-dom";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { getAuth } from "@firebase/auth";
+import { updateProfile } from "../util-js/api";
 
 export default function Profile() {
   const navigation = useNavigation();
@@ -41,11 +41,6 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col items-center h-full">
-      {/* {errorMessage && (
-        <h3 className="font-bold text-center text-lg text-red-600">
-          {errorMessage}
-        </h3>
-      )} */}
       <h3 className="font-bold text-center text-lg">Profile</h3>
       <div className="h-32">
         <img src={data.profilePic} className="w-32 rounded-full" />

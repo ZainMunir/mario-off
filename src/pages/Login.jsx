@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  redirect,
-  useLoaderData,
-  useNavigate,
-  useOutletContext,
-} from "react-router-dom";
+import { useLoaderData, useNavigate, useOutletContext } from "react-router-dom";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { getAuth } from "@firebase/auth";
 

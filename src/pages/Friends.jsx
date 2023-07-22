@@ -5,7 +5,7 @@ import {
   getFriends,
   acceptFriend,
   rejectFriend,
-} from "../util-js/api";
+} from "../util-js/friends-api";
 import { MdAccountCircle } from "react-icons/md";
 
 export default function Friends() {

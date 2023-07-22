@@ -4,12 +4,12 @@ import {
   useNavigation,
   useRevalidator,
 } from "react-router-dom";
+import { getPersonInfo } from "../util-js/api";
 import {
   addRound,
   deleteRound,
-  getPersonInfo,
   updateRounds,
-} from "../util-js/api";
+} from "../util-js/competitions-api";
 import CompScore from "../components/CompScore";
 import { FaTrashAlt } from "react-icons/fa";
 

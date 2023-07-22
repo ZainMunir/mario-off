@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  useLoaderData,
-  Link,
-  useSearchParams,
-  useOutletContext,
-} from "react-router-dom";
+import { Link, useSearchParams, useOutletContext } from "react-router-dom";
 import { requireAuth } from "../util-js/requireAuth";
-import { keepCompetitionsUpdated } from "../util-js/api";
+import { keepCompetitionsUpdated } from "../util-js/competitions-api";
 import CompThumbnail from "../components/CompThumbnail";
 
 export async function loader({ request }) {
