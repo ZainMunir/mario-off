@@ -1,104 +1,101 @@
-import React from 'react'
+import React from "react";
 import {
   RouterProvider,
   createRoutesFromElements,
   Route,
-  createHashRouter
-} from 'react-router-dom'
-import Layout, { loader as layoutLoader } from './components/Layout'
-import Home from './pages/Home'
-import NotFound from './components/NotFound'
-import Login, { loader as loginLoader, action as loginAction } from './pages/Login'
-import Competitions, { loader as competitionsLoader } from './pages/Competitions'
-import Error from "./components/Error"
-import CompDetails, { loader as compDetailsLoader } from './pages/CompDetails'
-import CompCreation from './pages/CompCreation'
-import CompInfo, { action as compInfoAction } from './pages/CompInfo'
-import CompRules, { action as compRulesAction } from './pages/CompRules'
-import CompRounds from './pages/CompRounds'
-import { requireAuth } from './util-js/requireAuth'
-import Profile, { action as profileAction } from './pages/Profile'
-import Friends, { action as friendsAction } from './pages/Friends'
+  createHashRouter,
+} from "react-router-dom";
+import Layout, { loader as layoutLoader } from "./components/Layout";
+import Home from "./pages/Home";
+import NotFound from "./components/NotFound";
+import Login, {
+  loader as loginLoader,
+  action as loginAction,
+} from "./pages/Login";
+import Competitions, {
+  loader as competitionsLoader,
+} from "./pages/Competitions";
+import Error from "./components/Error";
+import CompDetails, { loader as compDetailsLoader } from "./pages/CompDetails";
+import CompCreation from "./pages/CompCreation";
+import CompInfo, { action as compInfoAction } from "./pages/CompInfo";
+import CompRules, { action as compRulesAction } from "./pages/CompRules";
+import CompRounds from "./pages/CompRounds";
+import { requireAuth } from "./util-js/requireAuth";
+import Profile, { action as profileAction } from "./pages/Profile";
+import Friends, { action as friendsAction } from "./pages/Friends";
 
-const router = createHashRouter(createRoutesFromElements(
-  <Route
-    path='/'
-    element={<Layout />}
-    loader={layoutLoader}
-  >
-    <Route index element={<Home />} />
-    <Route
-      path='login'
-      element={<Login />}
-      loader={loginLoader}
-      action={loginAction}
-    />
-    <Route
-      path='profile'
-      element={<Profile />}
-      errorElement={<Error />}
-      loader={async ({ request }) => await requireAuth(request)}
-      action={profileAction}
-    />
-    <Route
-      path='friends'
-      element={<Friends />}
-      errorElement={<Error />}
-      loader={async ({ request }) => await requireAuth(request)}
-      action={friendsAction}
-    />
-    <Route
-      path="competitions"
-      element={<Competitions />}
-      errorElement={<Error />}
-      loader={competitionsLoader}
-    />
-    <Route
-      path="competitions/:id"
-      element={<CompDetails />}
-      errorElement={<Error />}
-      loader={compDetailsLoader}
-    >
+const router = createHashRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />} loader={layoutLoader}>
+      <Route index element={<Home />} />
       <Route
-        index
-        element={<CompInfo />}
-        errorElement={<Error />}
-        loader={async ({ request }) => await requireAuth(request)}
-        action={compInfoAction}
+        path="login"
+        element={<Login />}
+        loader={loginLoader}
+        action={loginAction}
       />
       <Route
-        path="rules"
-        element={<CompRules />}
+        path="profile"
+        element={<Profile />}
         errorElement={<Error />}
         loader={async ({ request }) => await requireAuth(request)}
-        action={compRulesAction}
+        action={profileAction}
       />
       <Route
-        path="rounds"
-        element={<CompRounds />}
+        path="friends"
+        element={<Friends />}
+        errorElement={<Error />}
+        loader={async ({ request }) => await requireAuth(request)}
+        action={friendsAction}
+      />
+      <Route
+        path="competitions"
+        element={<Competitions />}
+        errorElement={<Error />}
+        loader={competitionsLoader}
+      />
+      <Route
+        path="competitions/:id"
+        element={<CompDetails />}
+        errorElement={<Error />}
+        loader={compDetailsLoader}
+      >
+        <Route
+          index
+          element={<CompInfo />}
+          errorElement={<Error />}
+          loader={async ({ request }) => await requireAuth(request)}
+          action={compInfoAction}
+        />
+        <Route
+          path="rules"
+          element={<CompRules />}
+          errorElement={<Error />}
+          loader={async ({ request }) => await requireAuth(request)}
+          action={compRulesAction}
+        />
+        <Route
+          path="rounds"
+          element={<CompRounds />}
+          errorElement={<Error />}
+          loader={async ({ request }) => await requireAuth(request)}
+        />
+      </Route>
+      <Route
+        path="competition-creation"
+        element={<CompCreation />}
         errorElement={<Error />}
         loader={async ({ request }) => await requireAuth(request)}
       />
+      <Route path="*" element={<NotFound />} />
     </Route>
-    <Route
-      path="competition-creation"
-      element={<CompCreation />}
-      errorElement={<Error />}
-      loader={async ({ request }) => await requireAuth(request)}
-    />
-    <Route
-      path="*"
-      element={<NotFound />}
-    />
-  </Route>
-))
+  )
+);
 
 export default function App() {
-  return (
-    <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />;
 }
-
 
 /*
 Ideas for functionality of the app
