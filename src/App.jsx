@@ -20,7 +20,7 @@ import CompRules, { action as compRulesAction } from "./pages/CompRules";
 import CompRounds from "./pages/CompRounds";
 import { requireAuth } from "./util-js/requireAuth";
 import Profile from "./pages/Profile";
-import Friends, { action as friendsAction } from "./pages/Friends";
+import Friends from "./pages/Friends";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -38,7 +38,6 @@ const router = createHashRouter(
         element={<Friends />}
         errorElement={<Error />}
         loader={async ({ request }) => await requireAuth(request)}
-        action={friendsAction}
       />
       <Route
         path="competitions"

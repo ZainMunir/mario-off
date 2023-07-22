@@ -14,23 +14,21 @@ import {
 } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const username = formData.get("username");
-  if (!username) {
-    return "Please enter something";
-  }
-  try {
-    await addFriend(username);
-    return null;
-  } catch (err) {
-    return err.message;
-  }
-}
+// export async function action({ request }) {
+//   const formData = await request.formData();
+//   const username = formData.get("username");
+//   if (!username) {
+//     return "Please enter something";
+//   }
+//   try {
+//     await addFriend(username);
+//     return null;
+//   } catch (err) {
+//     return err.message;
+//   }
+// }
 
 export default function Friends() {
-  const errorMessage = useActionData();
-  const navigation = useNavigation();
   const navigate = useNavigate();
   const { myInfo } = useOutletContext();
 
@@ -39,6 +37,8 @@ export default function Friends() {
   const receivedRequests = friends.filter((x) => !x.accepted && !x.sender);
   const actualFriends = friends.filter((x) => x.accepted);
   const [friendsInfo, setFriendsInfo] = React.useState([]);
+
+  const [username, setUsername] = React.useState("");
 
   React.useEffect(() => {
     async function friends() {
@@ -116,28 +116,40 @@ export default function Friends() {
       })
     : [];
 
+  async function submit() {
+    if (!username) {
+      return;
+    }
+    try {
+      await addFriend(username, myInfo);
+      return null;
+    } catch (err) {
+      return err.message;
+    }
+  }
   return (
     <div className="mx-2 flex flex-col h-full">
-      {errorMessage && (
+      {/* {errorMessage && (
         <h3 className="font-bold text-center text-lg text-red-600">
           {errorMessage}
         </h3>
-      )}
-      <Form method="post" className="flex flex-row justify-between mt-2">
+      )} */}
+      <div className="flex flex-row justify-between mt-2">
         <input
           type="text"
           name="username"
           placeholder="Add friend (username)"
           className="border-2 rounded px-1 w-3/5"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
         />
         <button
-          className={`${
-            navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
-          } rounded-full drop-shadow-md text-white place-content-center flex text-md px-1 w-24`}
+          className="bg-teal-500 rounded-full drop-shadow-md text-white place-content-center flex text-md px-1 w-24"
+          onClick={submit}
         >
-          {navigation.state === "submitting" ? "Sending..." : "Send"}
+          Send
         </button>
-      </Form>
+      </div>
       <div className="flex flex-col flex-grow">
         {receivedElements.length > 0 && (
           <>

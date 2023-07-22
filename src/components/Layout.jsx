@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import "./Layout.css";
-import { getPersonInfo } from "../util-js/api";
+import { getPersonInfo, keepMyInfoUpdated } from "../util-js/api";
 import { getAuth } from "@firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -15,7 +15,7 @@ export default function Layout() {
   React.useEffect(() => {
     async function getInfo() {
       if (user) {
-        getPersonInfo(user.uid).then((data) => setMyInfo(data));
+        await keepMyInfoUpdated(user.uid, setMyInfo);
       } else {
         setMyInfo(null);
       }
@@ -23,9 +23,10 @@ export default function Layout() {
     getInfo();
   }, [user]);
 
-  if (loading) {
+  if (loading || (user && !myInfo)) {
     return <h1>Loading...</h1>;
   }
+
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <Header isLoggedIn={user && true} myInfo={myInfo} />
