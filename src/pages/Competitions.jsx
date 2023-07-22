@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, Link } from "react-router-dom"
+import { useLoaderData, Link, useSearchParams } from "react-router-dom"
 import { requireAuth } from "../util-js/requireAuth";
 import { getCompetitions } from "../util-js/api";
 import CompThumbnail from "../components/CompThumbnail";
@@ -11,8 +11,33 @@ export async function loader({ request }) {
 
 export default function Competitions() {
     const competitions = useLoaderData()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const statusFilter = searchParams.get("status")
 
-    let competitionsElements = competitions.sort((b, a) => a.updatedDate - b.updatedDate).map(competition => {
+    function clearFilter() {
+        setSearchParams(prevParams => {
+            prevParams.delete("status")
+            return prevParams
+        })
+    }
+
+    function handleFilterChange(event) {
+        const { name, value } = event.target
+        setSearchParams(prevParams => {
+            if (value === "") {
+                prevParams.delete(name)
+            } else {
+                prevParams.set(name, value)
+            }
+            return prevParams
+        })
+    }
+
+    const displayedCompetitions = statusFilter
+        ? competitions.filter(competitions => competitions.status === statusFilter)
+        : competitions
+
+    let competitionsElements = displayedCompetitions.sort((b, a) => a.updatedDate - b.updatedDate).map(competition => {
         return (
             <Link to={competition.id} key={competition.id}>
                 <CompThumbnail
@@ -25,9 +50,34 @@ export default function Competitions() {
             </Link>
         )
     })
-    // competitionsElements = null
+    if (competitionsElements.length == 0 && !statusFilter) competitionsElements = null
+
+    const selectColor = statusFilter == "complete" ? "bg-green-400" : statusFilter == "ongoing" ? "bg-orange-400" : statusFilter == "abandoned" ? "bg-red-500" : "bg-gray-100"
+
     return (
         <div className="flex flex-col h-full overflow-y-auto no-scrollbar p-1">
+            {competitionsElements &&
+                <div className="mb-2 flex flex-row gap-2 text-sm justify-between">
+                    <select
+                        name="status"
+                        className={`w-26 rounded-xl p-1 ${selectColor}`}
+                        value={statusFilter || "Status"}
+                        onChange={handleFilterChange}
+                    >
+                        <option value="" className="bg-gray-100" >Status</option>
+                        <option value="abandoned" className="bg-red-500  ">Abandoned</option>
+                        <option value="ongoing" className="bg-orange-400">Ongoing</option>
+                        <option value="complete" className="bg-green-400">Complete</option>
+                    </select>
+
+                    {statusFilter &&
+                        <button
+                            onClick={clearFilter}
+                            className=""
+                        >Clear filters</button>
+                    }
+                </div>
+            }
             <div className="grid grid-cols-2 w-full gap-5 scroll-auto" >
                 {competitionsElements}
             </div>
