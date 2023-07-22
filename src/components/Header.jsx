@@ -1,15 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { myInfo } from "../util-js/api";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { MdAccountCircle, MdOutlineAccountCircle } from "react-icons/md";
 
-export default function Header({ isLoggedIn }) {
+export default function Header({ isLoggedIn, myInfo }) {
   const activeStyles = {
     textDecoration: "underline",
     fontWeight: "500",
   };
-
   return (
     <header className="h-12 p-4 w-screen flex justify-center items-center bg-gray-400 sticky top-0  z-10">
       <div className="w-80 flex justify-between ">

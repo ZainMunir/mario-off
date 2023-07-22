@@ -5,13 +5,10 @@ import {
   Route,
   createHashRouter,
 } from "react-router-dom";
-import Layout, { loader as layoutLoader } from "./components/Layout";
+import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import NotFound from "./components/NotFound";
-import Login, {
-  loader as loginLoader,
-  action as loginAction,
-} from "./pages/Login";
+import Login, { loader as loginLoader } from "./pages/Login";
 import Competitions, {
   loader as competitionsLoader,
 } from "./pages/Competitions";
@@ -22,25 +19,19 @@ import CompInfo, { action as compInfoAction } from "./pages/CompInfo";
 import CompRules, { action as compRulesAction } from "./pages/CompRules";
 import CompRounds from "./pages/CompRounds";
 import { requireAuth } from "./util-js/requireAuth";
-import Profile, { action as profileAction } from "./pages/Profile";
+import Profile from "./pages/Profile";
 import Friends, { action as friendsAction } from "./pages/Friends";
 
 const router = createHashRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />} loader={layoutLoader}>
+    <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-      <Route
-        path="login"
-        element={<Login />}
-        loader={loginLoader}
-        action={loginAction}
-      />
+      <Route path="login" element={<Login />} loader={loginLoader} />
       <Route
         path="profile"
         element={<Profile />}
         errorElement={<Error />}
         loader={async ({ request }) => await requireAuth(request)}
-        action={profileAction}
       />
       <Route
         path="friends"

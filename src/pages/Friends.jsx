@@ -4,10 +4,9 @@ import {
   useActionData,
   useNavigate,
   useNavigation,
-  useRevalidator,
+  useOutletContext,
 } from "react-router-dom";
 import {
-  myInfo,
   addFriend,
   getFriends,
   acceptFriend,
@@ -33,6 +32,7 @@ export default function Friends() {
   const errorMessage = useActionData();
   const navigation = useNavigation();
   const navigate = useNavigate();
+  const { myInfo } = useOutletContext();
 
   const friends = myInfo.friends;
   const sentRequests = friends.filter((x) => !x.accepted && x.sender);
@@ -101,11 +101,11 @@ export default function Friends() {
           (x) => x.userid == friend.userid
         );
         return (
-          <div key={friend.userid} className="flex">
+          <div key={friend.userid} className="flex items-center">
             {currentFriend.profilePic ? (
               <img
                 src={currentFriend.profilePic}
-                className="w-5 bg-gray-200 rounded-full self-center"
+                className="w-5 bg-gray-200 rounded-full"
               />
             ) : (
               <MdAccountCircle size={20} />

@@ -1,18 +1,12 @@
 import React from "react";
-import {
-  Form,
-  useActionData,
-  redirect,
-  useNavigation,
-  useNavigate,
-} from "react-router-dom";
-import { addCompetition, getActualFriends, myInfo } from "../util-js/api";
+import { useNavigation, useNavigate, useOutletContext } from "react-router-dom";
+import { addCompetition, getActualFriends } from "../util-js/api";
 import CompThumbnail from "../components/CompThumbnail";
 
 export default function CompCreation() {
   const navigation = useNavigation();
   const navigate = useNavigate();
-
+  const { myInfo } = useOutletContext();
   const [friendsInfo, setFriendsInfo] = React.useState([]);
 
   React.useEffect(() => {

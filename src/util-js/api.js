@@ -61,62 +61,25 @@ export async function getPersonInfo(userId) {
     return dataArr[0];
 }
 
-export async function googleSignIn() {
-    try {
-        const result = await signInWithPopup(auth, provider)
-        const details = getAdditionalUserInfo(result)
-        if (details.isNewUser) {
-            const user = result.user;
-            const newInfo = {
-                username: "",
-                profilePic: user.photoURL,
-                userid: user.uid,
-                friends: []
-            }
-            const docRef = await addDoc(userInfoCollection, newInfo)
-            await updateDoc(
-                docRef,
-                {
-                    username: docRef.id
-                }
-            )
-            myInfo = await getPersonInfo(user.uid)
-        }
-    } catch (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        throw {
-            message: errorMessage,
-            statusText: "Error",
-            status: errorCode
-        }
-    }
-}
-
-export async function googleSignOut() {
-    signOut(auth)
-}
-
 export async function updateProfile(request) {
     try {
         const docRef = doc(db, "userInfo", request.username)
         const querySnapshot = await getDoc(docRef)
         const data = querySnapshot.data()
         if (data) {
-            if (data.userid != myInfo.userid) {
+            if (data.userid != request.myInfo.userid) {
                 return "Username taken"
             }
         }
     } catch (err) {
         return err
     }
-    const newProfile = { ...myInfo, ...request }
-    if (myInfo.username != newProfile.username) {
-        const docRef = doc(db, "userInfo", myInfo.username)
+    const newProfile = { ...request.myInfo, username: request.username, profilePic:request.profilePic }
+    if (request.myInfo.username != newProfile.username) {
+        const docRef = doc(db, "userInfo", request.myInfo.username)
         await deleteDoc(docRef)
     }
     await setDoc(doc(db, "userInfo", newProfile.username), newProfile)
-    myInfo = newProfile
     return null
 }
 

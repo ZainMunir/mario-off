@@ -1,33 +1,18 @@
 import React from "react";
-import {
-  useActionData,
-  useLoaderData,
-  useNavigation,
-  Form,
-  redirect,
-} from "react-router-dom";
-import { googleSignIn } from "../util-js/api";
+import { useLoaderData } from "react-router-dom";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { getAuth } from "@firebase/auth";
 
 export function loader({ request }) {
   return new URL(request.url).searchParams;
 }
 
-export async function action({ request }) {
-  const pathname =
-    new URL(request.url).searchParams.get("redirectTo") || "/competitions";
-
-  try {
-    const data = await googleSignIn();
-    return redirect(pathname);
-  } catch (err) {
-    return err.message;
-  }
-}
-
 export default function Login() {
-  const errorMessage = useActionData();
   const message = useLoaderData();
-  const navigation = useNavigation();
+
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(
+    getAuth()
+  );
 
   return (
     <div className="p-2">
@@ -39,24 +24,17 @@ export default function Login() {
           {message.get("message")}
         </h3>
       )}
-      {errorMessage && (
-        <h3 className="font-bold text-center text-lg text-red-600">
-          {errorMessage}
-        </h3>
-      )}
-
-      <Form method="post" className="flex flex-col items-center m-5" replace>
+      <div className="flex flex-col items-center m-5">
         <button
-          disabled={navigation.state === "submitting"}
+          disabled={loading}
           className={`${
-            navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"
+            loading ? "bg-gray-200" : "bg-blue-500"
           } text-white drop-shadow-xl rounded py-1 px-2 m-2 w-2/3`}
+          onClick={() => signInWithGoogle()}
         >
-          {navigation.state === "submitting"
-            ? "Logging in..."
-            : "Sign in with Google"}
+          {loading ? "Logging in..." : "Sign in with Google"}
         </button>
-      </Form>
+      </div>
     </div>
   );
 }
