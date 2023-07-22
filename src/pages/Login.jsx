@@ -1,5 +1,10 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import {
+  redirect,
+  useLoaderData,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { getAuth } from "@firebase/auth";
 
@@ -8,20 +13,27 @@ export function loader({ request }) {
 }
 
 export default function Login() {
-  const message = useLoaderData();
-
+  const searchParams = useLoaderData();
+  const { myInfo } = useOutletContext();
+  const navigate = useNavigate();
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(
     getAuth()
   );
+  React.useEffect(() => {
+    if (myInfo) {
+      const pathname = searchParams.get("redirectTo") || "/competitions";
+      return navigate(pathname);
+    }
+  }, [myInfo]);
 
   return (
     <div className="p-2">
       <h1 className="font-bold text-center text-2xl">
         Sign in to your account
       </h1>
-      {message && (
+      {searchParams.get("message") && (
         <h3 className="font-bold text-center text-xl text-red-600">
-          {message.get("message")}
+          {searchParams.get("message")}
         </h3>
       )}
       <div className="flex flex-col items-center m-5">

@@ -1,6 +1,6 @@
 import React from "react";
 import { requireAuth } from "../util-js/requireAuth";
-import { getCompetition, keepCompetitionUpdated } from "../util-js/api";
+import { getCompetition } from "../util-js/api";
 import {
   NavLink,
   Outlet,

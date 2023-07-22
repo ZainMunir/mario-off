@@ -1,18 +1,23 @@
 import React from "react";
 import { updateProfile } from "../util-js/api";
-import { useNavigation, useOutletContext } from "react-router-dom";
+import { useNavigate, useNavigation, useOutletContext } from "react-router-dom";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { getAuth } from "@firebase/auth";
 
 export default function Profile() {
   const navigation = useNavigation();
+  const navigate = useNavigate();
   const { myInfo } = useOutletContext();
   const [signOut, loading, error] = useSignOut(getAuth());
 
   const [data, setData] = React.useState({
-    username: myInfo.username,
-    profilePic: myInfo.profilePic,
+    username: myInfo && myInfo.username,
+    profilePic: myInfo && myInfo.profilePic,
   });
+
+  if (!myInfo) {
+    return navigate("/");
+  }
 
   function handleChange(event) {
     const { name, value } = event.target;
