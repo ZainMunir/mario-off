@@ -7,6 +7,7 @@ import { FaTrashAlt } from "react-icons/fa";
 export async function action({ request }) {
   const formData = await request.formData();
   const rule = formData.get("rule");
+  if (rule == "") return null;
   const pathname = new URL(request.url).pathname;
   try {
     await addRule({

@@ -86,7 +86,7 @@ export default function Friends() {
               {currentFriend.profilePic ? (
                 <img
                   src={currentFriend.profilePic}
-                  className="w-5 bg-gray-200 rounded-full"
+                  className="w-5 h-5 object-cover bg-gray-200 rounded-full"
                 />
               ) : (
                 <MdAccountCircle size={20} />

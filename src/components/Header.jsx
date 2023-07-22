@@ -45,13 +45,13 @@ export default function Header({ isLoggedIn, myInfo }) {
               ? (myInfo && myInfo.profilePic && (
                   <img
                     src={myInfo.profilePic}
-                    className="w-8 bg-gray-200 rounded-full border-2 border-black"
+                    className="w-8 h-8 object-cover bg-gray-200 rounded-full border-2 border-black"
                   />
                 )) || <MdAccountCircle size={32} />
               : (myInfo && myInfo.profilePic && (
                   <img
                     src={myInfo.profilePic}
-                    className="w-8 bg-gray-200 rounded-full border-2"
+                    className="w-8 h-8 object-cover bg-gray-200 rounded-full border-2"
                   />
                 )) || <MdOutlineAccountCircle size={32} />
           }

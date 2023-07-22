@@ -3,6 +3,7 @@ import { useNavigate, useNavigation, useOutletContext } from "react-router-dom";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { getAuth } from "@firebase/auth";
 import { updateProfile } from "../util-js/api";
+import { MdAccountCircle } from "react-icons/md";
 
 export default function Profile() {
   const navigation = useNavigation();
@@ -43,7 +44,14 @@ export default function Profile() {
     <div className="flex flex-col items-center h-full">
       <h3 className="font-bold text-center text-lg">Profile</h3>
       <div className="h-32">
-        <img src={data.profilePic} className="w-32 rounded-full" />
+        {data.profilePic ? (
+          <img
+            src={data.profilePic}
+            className="w-32 rounded-full h-32 object-cover"
+          />
+        ) : (
+          <MdAccountCircle size={128} />
+        )}
       </div>
       <div className="flex flex-col items-center w-full p-5 ">
         <label htmlFor="username">Username</label>
