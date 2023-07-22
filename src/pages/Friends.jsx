@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, useActionData, useNavigate, useNavigation, useRevalidator } from "react-router-dom";
 import { myInfo, addFriend, getFriends, acceptFriend, rejectFriend } from "../util-js/api"
+import EmptyProfile from "../assets/profile-pic.png"
 
 export async function action({ request }) {
     const formData = await request.formData()
@@ -33,7 +34,8 @@ export default function Friends() {
         }
         friends()
     }, [myInfo])
-    const sentElements = friendsInfo ? sentRequests.map(friend => {
+
+    const sentElements = friendsInfo.length ? sentRequests.map(friend => {
         const currentFriend = friendsInfo.find(x => x.userid == friend.userid)
         return (
             <div key={friend.userid}>
@@ -52,7 +54,7 @@ export default function Friends() {
         navigate(".")
     }
 
-    const receivedElements = friendsInfo ? receivedRequests.map(friend => {
+    const receivedElements = friendsInfo.length ? receivedRequests.map(friend => {
         const currentFriend = friendsInfo.find(x => x.userid == friend.userid)
         return (
             <div
@@ -78,10 +80,13 @@ export default function Friends() {
         )
     }) : []
 
-    const actualFriendsElements = friendsInfo ? actualFriends.map(friend => {
+    const actualFriendsElements = friendsInfo.length ? actualFriends.map(friend => {
         const currentFriend = friendsInfo.find(x => x.userid == friend.userid)
         return (
-            <div key={friend.userid}>
+            <div key={friend.userid} className="flex">
+                <img
+                    src={currentFriend.profilePic || EmptyProfile}
+                    className="w-5 self-center bg-gray-200 rounded-full mr-2" />
                 {currentFriend && currentFriend.username}
             </div>
         )
