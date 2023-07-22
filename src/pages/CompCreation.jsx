@@ -19,7 +19,7 @@ export default function CompCreation() {
     const [data, setData] = React.useState({
         name: "",
         image: "",
-        player2: "",
+        player2: "Select your Opponent",
         player2Id: "",
     })
 
@@ -96,7 +96,7 @@ export default function CompCreation() {
                     className="border-2 rounded p-1 m-2 w-5/6 text-center"
                     required
                 >
-                    <option value="" disabled selected>Select your option</option>
+                    <option disabled>Select your Opponent</option>
                     {friendOptions}
                 </select>
                 <button

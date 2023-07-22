@@ -43,11 +43,11 @@ export default function Login() {
             >
                 <button
                     disabled={navigation.state === "submitting"}
-                    className={`${navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"} text-white drop-shadow-xl rounded py-1 px-2 m-2 w-1/2`}
+                    className={`${navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"} text-white drop-shadow-xl rounded py-1 px-2 m-2 w-2/3`}
                 >
                     {navigation.state === "submitting"
                         ? "Logging in..."
-                        : "Google Log in"
+                        : "Sign in with Google"
                     }
                 </button>
             </Form>

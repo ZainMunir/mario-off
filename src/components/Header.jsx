@@ -34,7 +34,7 @@ export default function Header({ isLoggedIn }) {
                         </NavLink>
                         <NavLink
                             to="competitions"
-                            className="flex items-center"
+                            className="flex items-center w-24"
                             style={({ isActive }) => isActive ? activeStyles : null}
                             end
                         >
@@ -43,13 +43,13 @@ export default function Header({ isLoggedIn }) {
                     </>}
                 <NavLink
                     to={isLoggedIn ? "profile " : "login"}
-                    className="flex items-center ml-2 rounded-full"
-                    style={({ isActive }) => isActive ? activeStyles : null}
+                    className="flex items-center ml-2 mt-1 rounded-full h-8 w-8 border-2 border-transparent"
+                    style={({ isActive }) => isActive ? { border: "2px solid black" } : null}
                 >
                     <img src={(myInfo && myInfo.profilePic) || EmptyProfile} className="w-8 bg-gray-200 rounded-full" />
                 </NavLink>
             </div>
-        </header>
+        </header >
     )
 }
 

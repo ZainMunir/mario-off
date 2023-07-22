@@ -104,7 +104,7 @@ export async function updateProfile(request) {
         const data = querySnapshot.data()
         if (data) {
             if (data.userid != myInfo.userid) {
-                return "Username in use"
+                return "Username taken"
             }
         }
     } catch (err) {

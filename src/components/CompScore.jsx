@@ -12,7 +12,7 @@ export default function CompScore(props) {
             )
         }
         fetchPlayers();
-    }, [])
+    }, [props])
     if (!playerDeets[1]) {
         playerDeets[1] = { profilePic: "", username: "" }
     }
