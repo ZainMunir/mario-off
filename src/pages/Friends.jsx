@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Form,
-  useActionData,
-  useNavigate,
-  useNavigation,
-  useOutletContext,
-} from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import {
   addFriend,
   getFriends,
@@ -14,24 +8,8 @@ import {
 } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
 
-// export async function action({ request }) {
-//   const formData = await request.formData();
-//   const username = formData.get("username");
-//   if (!username) {
-//     return "Please enter something";
-//   }
-//   try {
-//     await addFriend(username);
-//     return null;
-//   } catch (err) {
-//     return err.message;
-//   }
-// }
-
 export default function Friends() {
-  const navigate = useNavigate();
   const { myInfo } = useOutletContext();
-
   const friends = myInfo.friends;
   const sentRequests = friends.filter((x) => !x.accepted && x.sender);
   const receivedRequests = friends.filter((x) => !x.accepted && !x.sender);
@@ -42,79 +20,82 @@ export default function Friends() {
 
   React.useEffect(() => {
     async function friends() {
-      setFriendsInfo(await getFriends());
+      setFriendsInfo(await getFriends(myInfo));
     }
     friends();
   }, [myInfo]);
 
-  const sentElements = friendsInfo.length
-    ? sentRequests.map((friend) => {
-        const currentFriend = friendsInfo.find(
-          (x) => x.userid == friend.userid
-        );
-        return (
-          <div key={friend.userid}>
-            {currentFriend && currentFriend.username}
-          </div>
-        );
-      })
-    : [];
+  const sentElements =
+    friendsInfo && friendsInfo.length != 0
+      ? sentRequests.map((friend) => {
+          const currentFriend = friendsInfo.find(
+            (x) => x.userid == friend.userid
+          );
+          return (
+            <div key={friend.userid}>
+              {currentFriend && currentFriend.username}
+            </div>
+          );
+        })
+      : [];
 
   async function accFriend(currFriend) {
-    await acceptFriend(currFriend);
-    navigate(".");
+    await acceptFriend(currFriend, myInfo);
   }
 
   async function rejFriend(currFriend) {
-    await rejectFriend(currFriend);
-    navigate(".");
+    await rejectFriend(currFriend, myInfo);
   }
 
-  const receivedElements = friendsInfo.length
-    ? receivedRequests.map((friend) => {
-        const currentFriend = friendsInfo.find(
-          (x) => x.userid == friend.userid
-        );
-        return (
-          <div key={friend.userid} className="flex">
-            <p className="mr-auto">{currentFriend && currentFriend.username}</p>
-            <button
-              onClick={() => rejFriend(currentFriend)}
-              className="text-red-600 mr-2"
-            >
-              x
-            </button>
-            <button
-              onClick={() => accFriend(currentFriend)}
-              className="text-green-600"
-            >
-              ✓
-            </button>
-          </div>
-        );
-      })
-    : [];
+  const receivedElements =
+    friendsInfo && friendsInfo.length != 0
+      ? receivedRequests.map((friend) => {
+          const currentFriend = friendsInfo.find(
+            (x) => x.userid == friend.userid
+          );
+          return (
+            <div key={friend.userid} className="flex">
+              <p className="mr-auto">
+                {currentFriend && currentFriend.username}
+              </p>
+              <button
+                onClick={() => rejFriend(currentFriend)}
+                className="text-red-600 mr-2"
+              >
+                x
+              </button>
+              <button
+                onClick={() => accFriend(currentFriend)}
+                className="text-green-600"
+              >
+                ✓
+              </button>
+            </div>
+          );
+        })
+      : [];
 
-  const actualFriendsElements = friendsInfo.length
-    ? actualFriends.map((friend) => {
-        const currentFriend = friendsInfo.find(
-          (x) => x.userid == friend.userid
-        );
-        return (
-          <div key={friend.userid} className="flex items-center">
-            {currentFriend.profilePic ? (
-              <img
-                src={currentFriend.profilePic}
-                className="w-5 bg-gray-200 rounded-full"
-              />
-            ) : (
-              <MdAccountCircle size={20} />
-            )}
-            <p className="ml-2">{currentFriend && currentFriend.username}</p>
-          </div>
-        );
-      })
-    : [];
+  const actualFriendsElements =
+    friendsInfo && friendsInfo.length != 0
+      ? actualFriends.map((friend) => {
+          const currentFriend = friendsInfo.find(
+            (x) => x.userid == friend.userid
+          );
+          return (
+            <div key={friend.userid} className="flex items-center">
+              {currentFriend.profilePic ? (
+                <img
+                  src={currentFriend.profilePic}
+                  className="w-5 bg-gray-200 rounded-full"
+                />
+              ) : (
+                <MdAccountCircle size={20} />
+              )}
+              <p className="ml-2">{currentFriend && currentFriend.username}</p>
+            </div>
+          );
+        })
+      : [];
 
   async function submit() {
     if (!username) {

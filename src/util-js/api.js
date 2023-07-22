@@ -16,14 +16,7 @@ import {
   setDoc,
   onSnapshot,
 } from "firebase/firestore";
-import {
-  GoogleAuthProvider,
-  getAdditionalUserInfo,
-  getAuth,
-  onAuthStateChanged,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBmBIk0-qSvkGSUSAs46Uxsw4mRtbrxinI",
@@ -40,18 +33,14 @@ const competitionsCollection = collection(db, "competitions");
 const userInfoCollection = collection(db, "userInfo");
 
 export const auth = getAuth();
-const provider = new GoogleAuthProvider();
 
 var loggedInStatus = false;
-export var myInfo = null;
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     loggedInStatus = true;
-    myInfo = await getPersonInfo(user.uid);
   } else {
     loggedInStatus = false;
-    myInfo = null;
   }
 });
 
@@ -144,7 +133,7 @@ export async function addFriend(username, myInfo) {
   }
 }
 
-export async function getActualFriends() {
+export async function getActualFriends(myInfo) {
   const friendIDs = myInfo.friends
     .filter((friend) => friend.accepted)
     .map((x) => x.userid);
@@ -158,7 +147,7 @@ export async function getActualFriends() {
   return dataArr || [];
 }
 
-export async function getFriends() {
+export async function getFriends(myInfo) {
   const friendIDs = myInfo.friends.map((x) => x.userid);
   if (!friendIDs.length) return;
   const q = await query(userInfoCollection, where("userid", "in", friendIDs));
@@ -170,7 +159,7 @@ export async function getFriends() {
   return dataArr || [];
 }
 
-export async function acceptFriend(request) {
+export async function acceptFriend(request, myInfo) {
   let myFriends = myInfo.friends.map((x) => {
     if (x.userid == request.userid) {
       return {
@@ -203,7 +192,7 @@ export async function acceptFriend(request) {
   return null;
 }
 
-export async function rejectFriend(request) {
+export async function rejectFriend(request, myInfo) {
   let myFriends = myInfo.friends.filter((x) => x.userid != request.userid);
   let theirFriends = request.friends.filter((x) => x.userid != myInfo.userid);
   try {
@@ -226,17 +215,18 @@ const emptyRound = {
   nestedRounds: [],
 };
 
-export async function getCompetitions() {
+export async function keepCompetitionsUpdated(myInfo, setCompetitions) {
   const q = await query(
     competitionsCollection,
     where("players", "array-contains", myInfo.userid)
   );
-  const querySnapshot = await getDocs(q);
-  const dataArr = querySnapshot.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  }));
-  return dataArr;
+  const unsub = await onSnapshot(q, (snapshot) => {
+    const dataArr = snapshot.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    setCompetitions(dataArr);
+  });
 }
 
 export async function getCompetition(compid) {
@@ -255,7 +245,7 @@ export async function getCompetition(compid) {
   };
 }
 
-export async function addCompetition(request) {
+export async function addCompetition(request, myInfo) {
   const newComp = {
     name: request.name,
     image: request.image,

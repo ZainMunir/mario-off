@@ -11,7 +11,7 @@ export default function CompCreation() {
 
   React.useEffect(() => {
     async function friends() {
-      setFriendsInfo(await getActualFriends());
+      setFriendsInfo(await getActualFriends(myInfo));
     }
     friends();
   }, [myInfo]);
@@ -39,28 +39,40 @@ export default function CompCreation() {
       };
     });
   }
-  const friendOptions = friendsInfo.map((friend) => {
-    return (
-      <option key={friend.userid} id={friend.userid}>
-        {friend.username}
-      </option>
-    );
-  });
+  const friendOptions = friendsInfo
+    ? friendsInfo.map((friend) => {
+        return (
+          <option key={friend.userid} id={friend.userid}>
+            {friend.username}
+          </option>
+        );
+      })
+    : [];
+
+  if (friendOptions.length == []) {
+    return <h1 className="my-1 mx-2">Please add some friends first!</h1>;
+  }
 
   async function submit() {
     if (data.name == "" || data.player2Id == "") return;
     try {
-      const id = await addCompetition({
-        name: data.name,
-        image: data.image,
-        player: data.player2Id,
-      });
+      const id = await addCompetition(
+        {
+          name: data.name,
+          image: data.image,
+          player: data.player2Id,
+        },
+        myInfo
+      );
       return navigate(`../competitions/${id}`);
     } catch (err) {
       return err.message;
     }
   }
 
+  if (friendOptions == []) {
+    return <h1>Please add some friends first!</h1>;
+  }
   return (
     <div className="flex flex-col items-center">
       <h3 className="font-bold text-center text-lg">Preview</h3>

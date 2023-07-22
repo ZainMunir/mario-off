@@ -1,18 +1,24 @@
 import React from "react";
-import { useLoaderData, Link, useSearchParams } from "react-router-dom";
+import {
+  useLoaderData,
+  Link,
+  useSearchParams,
+  useOutletContext,
+} from "react-router-dom";
 import { requireAuth } from "../util-js/requireAuth";
-import { getCompetitions } from "../util-js/api";
+import { keepCompetitionsUpdated } from "../util-js/api";
 import CompThumbnail from "../components/CompThumbnail";
 
 export async function loader({ request }) {
   await requireAuth(request);
-  return await getCompetitions();
+  return null;
 }
 
 export default function Competitions() {
-  const competitions = useLoaderData();
+  const [competitions, setCompetitions] = React.useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const statusFilter = searchParams.get("status");
+  const { myInfo } = useOutletContext();
 
   function clearFilter() {
     setSearchParams((prevParams) => {
@@ -20,6 +26,13 @@ export default function Competitions() {
       return prevParams;
     });
   }
+
+  React.useEffect(() => {
+    async function getComps() {
+      await keepCompetitionsUpdated(myInfo, setCompetitions);
+    }
+    getComps();
+  }, []);
 
   function handleFilterChange(event) {
     const { name, value } = event.target;

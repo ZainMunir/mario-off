@@ -1,7 +1,12 @@
 import React from "react";
 import { requireAuth } from "../util-js/requireAuth";
-import { getCompetition } from "../util-js/api";
-import { NavLink, Outlet, useLoaderData } from "react-router-dom";
+import { getCompetition, keepCompetitionUpdated } from "../util-js/api";
+import {
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useOutletContext,
+} from "react-router-dom";
 
 export async function loader({ params, request }) {
   await requireAuth(request);
