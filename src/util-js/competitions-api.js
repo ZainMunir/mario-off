@@ -10,6 +10,9 @@ import {
   arrayUnion,
   arrayRemove,
   onSnapshot,
+  getDocs,
+  or,
+  and,
 } from "firebase/firestore";
 import { competitionsCollection, db } from "./api";
 
@@ -81,6 +84,28 @@ export async function updateCompetition(request) {
     description: request.description,
     updatedDate: serverTimestamp(),
   });
+  calcFriendScore(docRef);
+}
+
+async function calcFriendScore(docRef) {
+  const result = await getDoc(docRef);
+  const players = result.data().players;
+  const q = query(
+    competitionsCollection,
+    or(
+      and(where("players", "==", players), where("status", "==", "complete")),
+      and(
+        where("players", "==", [players[1], players[0]]),
+        where("status", "==", "complete")
+      )
+    )
+  );
+  const querySnapshot = await getDocs(q);
+  const dataArr = querySnapshot.docs.map((doc) => ({
+    ...doc.data(),
+  }));
+  console.log(dataArr);
+  return null;
 }
 
 export async function addRule(request) {
