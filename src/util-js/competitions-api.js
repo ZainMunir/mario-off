@@ -132,14 +132,6 @@ export async function addRound(id) {
   });
 }
 
-export async function deleteRound(request) {
-  const docRef = doc(db, "competitions", request.id);
-  await updateDoc(docRef, {
-    rounds: arrayRemove(request.round),
-    updatedDate: serverTimestamp(),
-  });
-}
-
 export async function updateRounds(request) {
   const docRef = doc(db, "competitions", request.id);
   const { rounds, score } = calcScore(request.rounds, request.players);
@@ -175,15 +167,15 @@ function calcScore(rounds, players) {
     }
     if (score[0] > score[1]) {
       newRounds[j].winner = players[0];
-      if (!newRounds[j].valid) break;
+      if (!newRounds[j].valid) continue;
       overallScore[0]++;
     } else if (score[0] < score[1]) {
       newRounds[j].winner = players[1];
-      if (!newRounds[j].valid) break;
+      if (!newRounds[j].valid) continue;
       overallScore[1]++;
     } else {
       newRounds[j].winner = "draw";
-      if (!newRounds[j].valid) break;
+      if (!newRounds[j].valid) continue;
       overallScore[0]++;
       overallScore[1]++;
     }

@@ -3,13 +3,10 @@ import {
   useOutletContext,
   useNavigation,
   useRevalidator,
+  useSearchParams,
 } from "react-router-dom";
 import { getPersonInfo } from "../util-js/api";
-import {
-  addRound,
-  deleteRound,
-  updateRounds,
-} from "../util-js/competitions-api";
+import { addRound, updateRounds } from "../util-js/competitions-api";
 import CompScore from "../components/CompScore";
 import { FaTrashAlt } from "react-icons/fa";
 
@@ -18,6 +15,7 @@ export default function CompRounds() {
   const [playerDeets, setPlayerDeets] = React.useState([]);
   const navigation = useNavigation();
   const revalidator = useRevalidator();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   React.useEffect(() => {
     async function fetchPlayers() {
@@ -29,8 +27,8 @@ export default function CompRounds() {
     fetchPlayers();
   }, []);
 
-  const [selectedRound, setSelectedRound] = React.useState(1);
-  const currRound = currCompetition.rounds[selectedRound - 1];
+  const selectedRound = searchParams.get("round") || 1;
+
   React.useEffect(() => {
     revalidator.revalidate();
   }, [selectedRound]);
@@ -40,6 +38,7 @@ export default function CompRounds() {
     player: "draw",
     points: 1,
   });
+
   function handleChange(event) {
     const { name, value } = event.target;
     setData((prevData) => ({
@@ -47,6 +46,12 @@ export default function CompRounds() {
       [name]: value,
     }));
   }
+
+  if (selectedRound > currCompetition.rounds.length) {
+    return <h1>Round not found</h1>;
+  }
+
+  const currRound = currCompetition.rounds[selectedRound - 1];
 
   const roundOptions = [];
   for (let i = 0; i < currCompetition.rounds.length; i++) {
@@ -106,7 +111,14 @@ export default function CompRounds() {
   function setRound(event) {
     const { value } = event.target;
     let index = value.charAt(value.length - 1);
-    setSelectedRound(index);
+    setSearchParams((prevParams) => {
+      if (index == 1) {
+        prevParams.delete("round");
+      } else {
+        prevParams.set("round", index);
+      }
+      return prevParams;
+    });
   }
 
   async function newRound() {
@@ -115,11 +127,22 @@ export default function CompRounds() {
   }
 
   async function delRound() {
-    await deleteRound({
+    let rounds = [...currCompetition.rounds];
+    rounds.splice(selectedRound - 1, 1);
+    console.log(rounds);
+    await updateRounds({
       id: currCompetition.id,
-      round: currCompetition.rounds[selectedRound - 1],
+      players: currCompetition.players,
+      rounds: rounds,
     });
-    setSelectedRound((old) => (old - 1 > 1 ? old - 1 : 1));
+    setSearchParams((prevParams) => {
+      if (selectedRound > 2) {
+        prevParams.set("round", selectedRound - 1);
+      } else if (selectedRound == 2) {
+        prevParams.delete("round");
+      }
+      return prevParams;
+    });
     revalidator.revalidate();
   }
 
@@ -136,7 +159,7 @@ export default function CompRounds() {
     let rounds = [...currCompetition.rounds];
     let fixedData = { ...data };
     fixedData.player = convertUsernameToUid(fixedData.player);
-    rounds[currCompetition.rounds.indexOf(currRound)].nestedRounds = [
+    rounds[selectedRound - 1].nestedRounds = [
       ...currRound.nestedRounds,
       fixedData,
     ];
@@ -150,10 +173,7 @@ export default function CompRounds() {
 
   async function delSubRound(subIndex) {
     let rounds = [...currCompetition.rounds];
-    rounds[currCompetition.rounds.indexOf(currRound)].nestedRounds.splice(
-      subIndex,
-      1
-    );
+    rounds[selectedRound - 1].nestedRounds.splice(subIndex, 1);
     await updateRounds({
       id: currCompetition.id,
       players: currCompetition.players,
@@ -165,7 +185,7 @@ export default function CompRounds() {
   async function changeValidity(event) {
     const { checked } = event.target;
     let rounds = [...currCompetition.rounds];
-    rounds[currCompetition.rounds.indexOf(currRound)].valid = checked;
+    rounds[selectedRound - 1].valid = checked;
     await updateRounds({
       id: currCompetition.id,
       players: currCompetition.players,

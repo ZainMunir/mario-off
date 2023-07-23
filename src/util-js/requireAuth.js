@@ -1,15 +1,15 @@
-import { redirect } from "react-router-dom"
-import { isLoggedIn } from "./api"
+import { redirect } from "react-router-dom";
+import { isLoggedIn } from "./api";
 
 export async function requireAuth(request) {
-    const pathname = new URL(request.url).pathname
-    const loggedIn = await isLoggedIn()
+  const url = new URL(request.url);
+  const redirectTo = url.pathname + url.search;
+  const loggedIn = await isLoggedIn();
 
-    if (!loggedIn) {
-        throw redirect(
-            `/login?message=You must log in first.&redirectTo=${pathname}`
-        )
-    }
-    return null
+  if (!loggedIn) {
+    throw redirect(
+      `/login?message=You must log in first.&redirectTo=${redirectTo}`
+    );
+  }
+  return null;
 }
-
