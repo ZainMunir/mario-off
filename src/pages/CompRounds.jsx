@@ -129,7 +129,6 @@ export default function CompRounds() {
   async function delRound() {
     let rounds = [...currCompetition.rounds];
     rounds.splice(selectedRound - 1, 1);
-    console.log(rounds);
     await updateRounds({
       id: currCompetition.id,
       players: currCompetition.players,

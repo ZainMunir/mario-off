@@ -1,5 +1,10 @@
 import React from "react";
-import { NavLink, Outlet, useLoaderData } from "react-router-dom";
+import {
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useSearchParams,
+} from "react-router-dom";
 import { requireAuth } from "../util-js/requireAuth";
 import { getCompetition } from "../util-js/competitions-api";
 
@@ -10,7 +15,8 @@ export async function loader({ params, request }) {
 
 export default function CompDetails() {
   const currCompetition = useLoaderData();
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const round = searchParams.get("round");
   const activeStyles = {
     textDecoration: "underline",
     fontWeight: "500",
@@ -22,7 +28,7 @@ export default function CompDetails() {
       <div className="flex flex-col bg-gray-100 flex-grow">
         <div className="w-full flex justify-around border-b-2 border-b-gray-300">
           <NavLink
-            to="."
+            to={`./${round ? `?round=${round}` : ""}`}
             className="w-20 text-center"
             style={({ isActive }) => (isActive ? activeStyles : null)}
             end
@@ -30,14 +36,14 @@ export default function CompDetails() {
             Info
           </NavLink>
           <NavLink
-            to="rules"
+            to={`rules${round ? `?round=${round}` : ""}`}
             className="w-20 text-center"
             style={({ isActive }) => (isActive ? activeStyles : null)}
           >
             Rules
           </NavLink>
           <NavLink
-            to="rounds"
+            to={`rounds${round ? `?round=${round}` : ""}`}
             className="w-20 text-center"
             style={({ isActive }) => (isActive ? activeStyles : null)}
           >
