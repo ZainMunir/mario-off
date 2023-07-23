@@ -22,15 +22,15 @@ export default function Layout() {
     getInfo();
   }, [user]);
 
-  if (loading || (user && !myInfo)) {
-    return <h1>Loading...</h1>;
-  }
-
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <Header isLoggedIn={user && true} myInfo={myInfo} />
       <main className="flex-grow w-80 overflow-y-auto no-scrollbar relative border-x-2 border-gray-300">
-        <Outlet context={{ myInfo }} />
+        {loading || (user && !myInfo) ? (
+          <h1 className="m-2 text-xl">Loading...</h1>
+        ) : (
+          <Outlet context={{ myInfo }} />
+        )}
       </main>
       <Footer />
     </div>

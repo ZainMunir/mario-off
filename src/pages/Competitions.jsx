@@ -3,6 +3,7 @@ import { Link, useSearchParams, useOutletContext } from "react-router-dom";
 import { requireAuth } from "../util-js/requireAuth";
 import { keepCompetitionsUpdated } from "../util-js/competitions-api";
 import CompThumbnail from "../components/CompThumbnail";
+import { getActualFriends } from "../util-js/friends-api";
 
 export async function loader({ request }) {
   await requireAuth(request);
@@ -13,11 +14,21 @@ export default function Competitions() {
   const [competitions, setCompetitions] = React.useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const statusFilter = searchParams.get("status");
+  const friendFilter = searchParams.get("friend");
   const { myInfo } = useOutletContext();
+  const [friendsInfo, setFriendsInfo] = React.useState([]);
+
+  React.useEffect(() => {
+    async function friends() {
+      setFriendsInfo(await getActualFriends(myInfo));
+    }
+    friends();
+  }, [myInfo]);
 
   function clearFilter() {
     setSearchParams((prevParams) => {
       prevParams.delete("status");
+      prevParams.delete("friend");
       return prevParams;
     });
   }
@@ -41,11 +52,38 @@ export default function Competitions() {
     });
   }
 
-  const displayedCompetitions = statusFilter
+  function handleFriendFilterChange(event) {
+    const { name, value } = event.target;
+    setSearchParams((prevParams) => {
+      if (value === "") {
+        prevParams.delete(name);
+      } else {
+        prevParams.set(name, event.target[event.target.selectedIndex].id);
+      }
+      return prevParams;
+    });
+  }
+
+  const friendOptions = friendsInfo
+    ? friendsInfo.map((friend) => {
+        return (
+          <option key={friend.userid} id={friend.userid}>
+            {friend.username}
+          </option>
+        );
+      })
+    : [];
+
+  let displayedCompetitions = statusFilter
     ? competitions.filter(
         (competitions) => competitions.status === statusFilter
       )
     : competitions;
+  displayedCompetitions = friendFilter
+    ? displayedCompetitions.filter((competition) =>
+        competition.players.includes(friendFilter)
+      )
+    : displayedCompetitions;
 
   let competitionsElements = displayedCompetitions
     .sort((b, a) => a.updatedDate - b.updatedDate)
@@ -62,7 +100,7 @@ export default function Competitions() {
         </Link>
       );
     });
-  if (competitionsElements.length == 0 && !statusFilter)
+  if (competitionsElements.length == 0 && !statusFilter && !friendFilter)
     competitionsElements = null;
 
   const selectColor =
@@ -80,7 +118,7 @@ export default function Competitions() {
         <div className="mb-2 flex flex-row gap-2 text-sm justify-between">
           <select
             name="status"
-            className={`w-26 rounded-xl p-1 ${selectColor}`}
+            className={`w-28 rounded-xl p-1 ${selectColor}`}
             value={statusFilter || "Status"}
             onChange={handleFilterChange}
           >
@@ -98,7 +136,19 @@ export default function Competitions() {
             </option>
           </select>
 
-          {statusFilter && (
+          <select
+            name="friend"
+            className={`w-24 rounded-xl p-1 mr-auto ${
+              friendFilter ? "bg-black text-white" : "bg-gray-100"
+            }`}
+            value={friendFilter || "Friend"}
+            onChange={handleFriendFilterChange}
+          >
+            <option disabled>Friend</option>
+            {friendOptions}
+          </select>
+
+          {(statusFilter || friendFilter) && (
             <button onClick={clearFilter} className="">
               Clear filters
             </button>
