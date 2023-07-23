@@ -6,6 +6,7 @@ import {
   doc,
   updateDoc,
   arrayUnion,
+  onSnapshot,
 } from "firebase/firestore";
 import { db, userInfoCollection, getPersonInfo } from "./api";
 
@@ -47,30 +48,30 @@ export async function addFriend(username, myInfo) {
   }
 }
 
-export async function getActualFriends(myInfo) {
+export async function getActualFriends(myInfo, setFriendsInfo) {
   const friendIDs = myInfo.friends
     .filter((friend) => friend.accepted)
     .map((x) => x.userid);
   if (!friendIDs.length) return;
   const q = await query(userInfoCollection, where("userid", "in", friendIDs));
-  const querySnapshot = await getDocs(q);
-  const dataArr = querySnapshot.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  }));
-  return dataArr || [];
+  const unsub = await onSnapshot(q, (snapshot) => {
+    const dataArr = snapshot.docs.map((doc) => ({
+      ...doc.data(),
+    }));
+    setFriendsInfo(dataArr);
+  });
 }
 
-export async function getFriends(myInfo) {
+export async function getFriends(myInfo, setFriendsInfo) {
   const friendIDs = myInfo.friends.map((x) => x.userid);
   if (!friendIDs.length) return;
   const q = await query(userInfoCollection, where("userid", "in", friendIDs));
-  const querySnapshot = await getDocs(q);
-  const dataArr = querySnapshot.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  }));
-  return dataArr || [];
+  const unsub = await onSnapshot(q, (snapshot) => {
+    const dataArr = snapshot.docs.map((doc) => ({
+      ...doc.data(),
+    }));
+    setFriendsInfo(dataArr);
+  });
 }
 
 export async function acceptFriend(request, myInfo) {
@@ -93,13 +94,12 @@ export async function acceptFriend(request, myInfo) {
     return x;
   });
   try {
-    await updateDoc(doc(db, "userInfo", myInfo.username), {
-      friends: myFriends,
-    });
     await updateDoc(doc(db, "userInfo", request.username), {
       friends: theirFriends,
     });
-    myInfo = await getPersonInfo(myInfo.userid);
+    await updateDoc(doc(db, "userInfo", myInfo.username), {
+      friends: myFriends,
+    });
   } catch (err) {
     throw err;
   }
@@ -110,15 +110,18 @@ export async function rejectFriend(request, myInfo) {
   let myFriends = myInfo.friends.filter((x) => x.userid != request.userid);
   let theirFriends = request.friends.filter((x) => x.userid != myInfo.userid);
   try {
-    await updateDoc(doc(db, "userInfo", myInfo.username), {
-      friends: myFriends,
-    });
     await updateDoc(doc(db, "userInfo", request.username), {
       friends: theirFriends,
     });
-    myInfo = await getPersonInfo(myInfo.userid);
+    await updateDoc(doc(db, "userInfo", myInfo.username), {
+      friends: myFriends,
+    });
   } catch (err) {
     throw err;
   }
   return null;
+}
+
+export async function deleteFriend(request, myInfo) {
+  await rejectFriend(request, myInfo);
 }

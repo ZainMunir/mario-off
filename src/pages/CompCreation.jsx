@@ -12,7 +12,7 @@ export default function CompCreation() {
 
   React.useEffect(() => {
     async function friends() {
-      setFriendsInfo(await getActualFriends(myInfo));
+      await getActualFriends(myInfo, setFriendsInfo);
     }
     friends();
   }, [myInfo]);

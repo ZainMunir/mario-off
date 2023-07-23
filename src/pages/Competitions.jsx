@@ -20,7 +20,7 @@ export default function Competitions() {
 
   React.useEffect(() => {
     async function friends() {
-      setFriendsInfo(await getActualFriends(myInfo));
+      await getActualFriends(myInfo, setFriendsInfo);
     }
     friends();
   }, [myInfo]);
@@ -62,6 +62,11 @@ export default function Competitions() {
       }
       return prevParams;
     });
+  }
+
+  function convertUidToUsername(uid) {
+    if (!uid) return null;
+    return friendsInfo.find((x) => x.userid == uid).username;
   }
 
   const friendOptions = friendsInfo
@@ -141,10 +146,10 @@ export default function Competitions() {
             className={`w-24 rounded-xl p-1 mr-auto ${
               friendFilter ? "bg-black text-white" : "bg-gray-100"
             }`}
-            value={friendFilter || "Friend"}
+            value={convertUidToUsername(friendFilter) || "Friend"}
             onChange={handleFriendFilterChange}
           >
-            <option disabled>Friend</option>
+            <option value="">Friend</option>
             {friendOptions}
           </select>
 

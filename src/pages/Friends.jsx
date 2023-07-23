@@ -5,8 +5,10 @@ import {
   getFriends,
   acceptFriend,
   rejectFriend,
+  deleteFriend,
 } from "../util-js/friends-api";
 import { MdAccountCircle } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
 
 export default function Friends() {
   const { myInfo } = useOutletContext();
@@ -20,7 +22,7 @@ export default function Friends() {
   const [errorMessage, setErrorMessage] = React.useState(null);
   React.useEffect(() => {
     async function friends() {
-      setFriendsInfo(await getFriends(myInfo));
+      await getFriends(myInfo, setFriendsInfo);
     }
     friends();
   }, [myInfo]);
@@ -75,6 +77,10 @@ export default function Friends() {
         })
       : [];
 
+  async function delFriend(currFriend) {
+    await deleteFriend(currFriend, myInfo);
+  }
+
   const actualFriendsElements =
     friendsInfo && friendsInfo.length != 0
       ? actualFriends.map((friend) => {
@@ -82,7 +88,10 @@ export default function Friends() {
             (x) => x.userid == friend.userid
           );
           return (
-            <div key={friend.userid} className="flex items-center">
+            <div
+              key={friend.userid}
+              className="flex items-center group relative"
+            >
               {currentFriend.profilePic ? (
                 <img
                   src={currentFriend.profilePic}
@@ -92,6 +101,12 @@ export default function Friends() {
                 <MdAccountCircle size={20} />
               )}
               <p className="ml-2">{currentFriend && currentFriend.username}</p>
+              <button
+                className="right-0 top-1 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-100"
+                onClick={() => delFriend(currentFriend)}
+              >
+                <FaTrashAlt />
+              </button>
             </div>
           );
         })
