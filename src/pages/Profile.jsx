@@ -18,7 +18,7 @@ export default function Profile() {
   const [errorMessage, setErrorMessage] = React.useState(null);
 
   if (!myInfo) {
-    return navigate("/");
+    return navigate("/", { replace: true });
   }
 
   function handleChange(event) {

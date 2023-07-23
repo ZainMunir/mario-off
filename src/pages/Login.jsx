@@ -19,7 +19,7 @@ export default function Login() {
   React.useEffect(() => {
     if (myInfo) {
       const pathname = searchParams.get("redirectTo") || "/competitions";
-      return navigate(pathname);
+      return navigate(pathname, { replace: true });
     }
   }, [myInfo]);
 

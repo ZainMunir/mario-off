@@ -71,7 +71,7 @@ export default function CompCreation() {
         },
         myInfo
       );
-      return navigate(`../competitions/${id}`);
+      return navigate(`../competitions/${id}`, { replace: true });
     } catch (err) {
       setErrorMessage(err.message);
     }

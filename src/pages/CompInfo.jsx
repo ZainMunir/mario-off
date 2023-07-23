@@ -58,7 +58,7 @@ export default function CompInfo() {
 
   async function deleteComp() {
     await deleteCompetition(currCompetition.id);
-    navigate("../competitions");
+    navigate("../competitions", { replace: true });
   }
 
   const [data, setData] = React.useState({
