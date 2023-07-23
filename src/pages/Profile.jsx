@@ -28,7 +28,8 @@ export default function Profile() {
     }));
   }
 
-  async function submit() {
+  async function submit(event) {
+    event.preventDefault();
     try {
       await updateProfile({
         myInfo: myInfo,
@@ -53,7 +54,7 @@ export default function Profile() {
           <MdAccountCircle size={128} />
         )}
       </div>
-      <div className="flex flex-col items-center w-full p-5 ">
+      <form type="post" className="flex flex-col items-center w-full p-5 ">
         <label htmlFor="username">Username</label>
         <input
           type="text"
@@ -77,11 +78,11 @@ export default function Profile() {
           className={`${
             navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"
           } text-white drop-shadow-xl rounded py-1 px-2 m-2 w-1/2`}
-          onClick={submit}
+          onClick={(event) => submit(event)}
         >
           {navigation.state === "submitting" ? "Updating..." : "Update Profile"}
         </button>
-      </div>
+      </form>
       <button
         className="mt-auto mb-2 p-1 px-3 text-lg mx-auto bg-red-500 rounded-full drop-shadow-md text-white cursor-pointer"
         onClick={async () => await signOut()}

@@ -54,7 +54,8 @@ export default function CompCreation() {
     return <h1 className="my-1 mx-2">Please add some friends first!</h1>;
   }
 
-  async function submit() {
+  async function submit(event) {
+    event.preventDefault();
     if (data.name == "" || data.player2Id == "") return;
     try {
       const id = await addCompetition(
@@ -84,7 +85,7 @@ export default function CompCreation() {
         players={[myInfo.userid, data.player2Id]}
         currentScore={[0, 0]}
       />
-      <div className="flex flex-col items-center w-full p-5 ">
+      <form type="post" className="flex flex-col items-center w-full p-5 ">
         <input
           type="text"
           name="name"
@@ -117,11 +118,11 @@ export default function CompCreation() {
           className={`${
             navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"
           } text-white drop-shadow-xl rounded py-1 px-2 m-2 w-1/2`}
-          onClick={submit}
+          onClick={(event) => submit(event)}
         >
           {navigation.state === "submitting" ? "Creating..." : "Create"}
         </button>
-      </div>
+      </form>
     </div>
   );
 }

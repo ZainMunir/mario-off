@@ -97,7 +97,8 @@ export default function Friends() {
         })
       : [];
 
-  async function submit() {
+  async function submit(event) {
+    event.preventDefault();
     if (!username) {
       return;
     }
@@ -115,7 +116,7 @@ export default function Friends() {
           {errorMessage}
         </h3>
       )} */}
-      <div className="flex flex-row justify-between mt-2">
+      <form type="post" className="flex flex-row justify-between mt-2">
         <input
           type="text"
           name="username"
@@ -126,11 +127,11 @@ export default function Friends() {
         />
         <button
           className="bg-teal-500 rounded-full drop-shadow-md text-white place-content-center flex text-md px-1 w-24"
-          onClick={submit}
+          onClick={(event) => submit(event)}
         >
           Send
         </button>
-      </div>
+      </form>
       <div className="flex flex-col flex-grow">
         {receivedElements.length > 0 && (
           <>
