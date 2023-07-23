@@ -12,6 +12,7 @@ import {
   updateCompetition,
 } from "../util-js/competitions-api";
 import CompScore from "../components/CompScore";
+import { LuSwords } from "react-icons/lu";
 import "./CompInfo.css";
 
 export async function action({ request }) {
@@ -84,7 +85,7 @@ export default function CompInfo() {
       : "bg-red-500";
 
   return (
-    <Form method="post" className="flex flex-col h-full ">
+    <Form method="post" className="flex flex-col h-full" replace>
       {errorMessage && (
         <h3 className="font-bold text-center text-lg text-red-600">
           {errorMessage}
@@ -118,11 +119,15 @@ export default function CompInfo() {
       </ReactModal>
       <div className="flex flex-row mb-2 ">
         <div className="h-48 w-1/2 flex flex-wrap place-content-center">
-          <img
-            src={data.image}
-            alt={data.name}
-            className="max-h-48 w-auto h-fit rounded"
-          />
+          {data.image ? (
+            <img
+              src={data.image}
+              alt={data.name}
+              className="max-h-48 w-auto h-fit rounded"
+            />
+          ) : (
+            <LuSwords size={80} />
+          )}
         </div>
         <div className="flex flex-col align-middle w-1/2 text-center text-sm p-2">
           <div className="mb-3">Started: {creationDate}</div>

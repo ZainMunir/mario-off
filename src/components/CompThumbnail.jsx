@@ -1,5 +1,6 @@
 import React from "react";
 import CompScore from "./CompScore";
+import { LuSwords } from "react-icons/lu";
 
 export default function CompThumbnail(props) {
   const color =
@@ -15,12 +16,19 @@ export default function CompThumbnail(props) {
       >
         {props.status}
       </p>
-      <div className="flex-grow flex flex-wrap place-content-center m-1">
-        <img
-          src={props.image}
-          alt={props.name}
-          className="max-h-44 w-auto h-fit"
-        />
+      <div className="flex-grow flex flex-col flex-wrap place-content-center m-1 items-center ">
+        {props.image ? (
+          <img
+            src={props.image}
+            alt={props.name}
+            className="max-h-44 w-auto h-fit"
+          />
+        ) : (
+          <>
+            <LuSwords size={50} />
+            <p className="text-center">{props.name}</p>
+          </>
+        )}
       </div>
       <CompScore players={props.players} currentScore={props.currentScore} />
     </div>
