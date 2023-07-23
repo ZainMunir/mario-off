@@ -46,7 +46,6 @@ export async function isLoggedIn() {
 }
 
 export async function addNewUser(user) {
-  console.log(user);
   const newInfo = {
     username: "",
     profilePic: user.photoURL,
@@ -99,7 +98,10 @@ export async function updateProfile(request) {
   if (request.myInfo.username != newProfile.username) {
     const docRef = doc(db, "userInfo", request.myInfo.username);
     await deleteDoc(docRef);
+    await setDoc(doc(db, "userInfo", newProfile.username), newProfile);
+  } else {
+    const docRef = doc(db, "userInfo", request.myInfo.username);
+    await updateDoc(docRef, newProfile);
   }
-  await setDoc(doc(db, "userInfo", newProfile.username), newProfile);
   return null;
 }

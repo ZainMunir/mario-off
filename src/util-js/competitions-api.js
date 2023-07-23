@@ -74,17 +74,13 @@ export async function deleteCompetition(id) {
 
 export async function updateCompetition(request) {
   const docRef = doc(db, "competitions", request.id);
-  await updateDoc(
-    docRef,
-    {
-      name: request.name,
-      image: request.image,
-      status: request.status,
-      description: request.description,
-      updatedDate: serverTimestamp(),
-    },
-    { merge: true }
-  );
+  await updateDoc(docRef, {
+    name: request.name,
+    image: request.image,
+    status: request.status,
+    description: request.description,
+    updatedDate: serverTimestamp(),
+  });
 }
 
 export async function addRule(request) {
@@ -135,6 +131,7 @@ export async function updateRounds(request) {
     updatedDate: serverTimestamp(),
   });
 }
+
 function calcScore(rounds, players) {
   let overallScore = [0, 0];
   const newRounds = [...rounds];
