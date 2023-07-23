@@ -4,7 +4,6 @@ import {
   addFriend,
   getFriends,
   acceptFriend,
-  rejectFriend,
   deleteFriend,
 } from "../util-js/friends-api";
 import { MdAccountCircle } from "react-icons/md";
@@ -27,28 +26,13 @@ export default function Friends() {
     friends();
   }, [myInfo]);
 
-  const sentElements =
-    friendsInfo && friendsInfo.length != 0
-      ? sentRequests.map((friend) => {
-          const currentFriend = friendsInfo.find(
-            (x) => x.userid == friend.userid
-          );
-          return (
-            <div key={friend.userid}>
-              {currentFriend && currentFriend.username}
-            </div>
-          );
-        })
-      : [];
-
   async function accFriend(currFriend) {
     await acceptFriend(currFriend, myInfo);
   }
 
-  async function rejFriend(currFriend) {
-    await rejectFriend(currFriend, myInfo);
+  async function delFriend(currFriend) {
+    await deleteFriend(currFriend, myInfo);
   }
-
   const receivedElements =
     friendsInfo && friendsInfo.length != 0
       ? receivedRequests.map((friend) => {
@@ -61,7 +45,7 @@ export default function Friends() {
                 {currentFriend && currentFriend.username}
               </p>
               <button
-                onClick={() => rejFriend(currentFriend)}
+                onClick={() => delFriend(currentFriend)}
                 className="text-red-600 mr-2"
               >
                 x
@@ -76,10 +60,6 @@ export default function Friends() {
           );
         })
       : [];
-
-  async function delFriend(currFriend) {
-    await deleteFriend(currFriend, myInfo);
-  }
 
   const actualFriendsElements =
     friendsInfo && friendsInfo.length != 0
@@ -101,6 +81,26 @@ export default function Friends() {
                 <MdAccountCircle size={20} />
               )}
               <p className="ml-2">{currentFriend && currentFriend.username}</p>
+              <button
+                className="right-0 top-1 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-100"
+                onClick={() => delFriend(currentFriend)}
+              >
+                <FaTrashAlt />
+              </button>
+            </div>
+          );
+        })
+      : [];
+
+  const sentElements =
+    friendsInfo && friendsInfo.length != 0
+      ? sentRequests.map((friend) => {
+          const currentFriend = friendsInfo.find(
+            (x) => x.userid == friend.userid
+          );
+          return (
+            <div key={friend.userid} className="relative group">
+              <p>{currentFriend && currentFriend.username}</p>
               <button
                 className="right-0 top-1 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-100"
                 onClick={() => delFriend(currentFriend)}

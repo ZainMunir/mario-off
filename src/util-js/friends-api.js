@@ -32,6 +32,7 @@ export async function addFriend(username, myInfo) {
         sender: false,
         accepted: false,
         userid: myInfo.userid,
+        score: [0, 0],
       }),
     });
 
@@ -40,6 +41,7 @@ export async function addFriend(username, myInfo) {
         sender: true,
         accepted: false,
         userid: data.userid,
+        score: [0, 0],
       }),
     });
     return null;
@@ -106,7 +108,7 @@ export async function acceptFriend(request, myInfo) {
   return null;
 }
 
-export async function rejectFriend(request, myInfo) {
+export async function deleteFriend(request, myInfo) {
   let myFriends = myInfo.friends.filter((x) => x.userid != request.userid);
   let theirFriends = request.friends.filter((x) => x.userid != myInfo.userid);
   try {
@@ -120,8 +122,4 @@ export async function rejectFriend(request, myInfo) {
     throw err;
   }
   return null;
-}
-
-export async function deleteFriend(request, myInfo) {
-  await rejectFriend(request, myInfo);
 }
