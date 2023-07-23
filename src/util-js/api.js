@@ -10,6 +10,8 @@ import {
   deleteDoc,
   setDoc,
   onSnapshot,
+  addDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -41,6 +43,20 @@ onAuthStateChanged(auth, async (user) => {
 
 export async function isLoggedIn() {
   return loggedInStatus;
+}
+
+export async function addNewUser(user) {
+  console.log(user);
+  const newInfo = {
+    username: "",
+    profilePic: user.photoURL,
+    userid: user.uid,
+    friends: [],
+  };
+  const docRef = await addDoc(userInfoCollection, newInfo);
+  await updateDoc(docRef, {
+    username: docRef.id,
+  });
 }
 
 export async function keepMyInfoUpdated(userId, setMyInfo) {

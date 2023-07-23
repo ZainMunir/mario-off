@@ -1,7 +1,8 @@
 import React from "react";
 import { useLoaderData, useNavigate, useOutletContext } from "react-router-dom";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { getAuth } from "@firebase/auth";
+import { getAdditionalUserInfo, getAuth } from "firebase/auth";
+import { addNewUser } from "../util-js/api";
 
 export function loader({ request }) {
   return new URL(request.url).searchParams;
@@ -14,12 +15,22 @@ export default function Login() {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(
     getAuth()
   );
+
   React.useEffect(() => {
     if (myInfo) {
       const pathname = searchParams.get("redirectTo") || "/competitions";
       return navigate(pathname);
     }
   }, [myInfo]);
+
+  async function signIn() {
+    signInWithGoogle().then(async (result) => {
+      const details = getAdditionalUserInfo(result);
+      if (details.isNewUser) {
+        await addNewUser(result.user);
+      }
+    });
+  }
 
   return (
     <div className="p-2">
@@ -37,7 +48,7 @@ export default function Login() {
           className={`${
             loading ? "bg-gray-200" : "bg-blue-500"
           } text-white drop-shadow-xl rounded py-1 px-2 m-2 w-2/3`}
-          onClick={() => signInWithGoogle()}
+          onClick={signIn}
         >
           {loading ? "Logging in..." : "Sign in with Google"}
         </button>
