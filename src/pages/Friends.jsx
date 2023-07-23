@@ -114,6 +114,10 @@ export default function Friends() {
 
   async function submit(event) {
     event.preventDefault();
+    if (username == "Friend" || username == "draw") {
+      setErrorMessage("Forbidden friends 🐰🥚");
+      return;
+    }
     const message = await addFriend(username, myInfo);
     setErrorMessage(message);
   }

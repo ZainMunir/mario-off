@@ -72,7 +72,11 @@ export default function Competitions() {
   const friendOptions = friendsInfo
     ? friendsInfo.map((friend) => {
         return (
-          <option key={friend.userid} id={friend.userid}>
+          <option
+            key={friend.userid}
+            id={friend.userid}
+            className="bg-black text-white"
+          >
             {friend.username}
           </option>
         );
@@ -144,12 +148,14 @@ export default function Competitions() {
           <select
             name="friend"
             className={`w-24 rounded-xl p-1 mr-auto ${
-              friendFilter ? "bg-black text-white" : "bg-gray-100"
+              friendFilter ? "bg-black text-white" : "bg-gray-100 "
             }`}
             value={convertUidToUsername(friendFilter) || "Friend"}
             onChange={handleFriendFilterChange}
           >
-            <option value="">Friend</option>
+            <option value="" className="bg-gray-100 text-black">
+              Friend
+            </option>
             {friendOptions}
           </select>
 
