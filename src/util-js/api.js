@@ -79,12 +79,13 @@ export async function getPersonInfo(userId) {
 
 export async function updateProfile(request) {
   try {
+    if (!request.username) throw "Username needs to filled";
     const docRef = doc(db, "userInfo", request.username);
     const querySnapshot = await getDoc(docRef);
     const data = querySnapshot.data();
     if (data) {
       if (data.userid != request.myInfo.userid) {
-        return "Username taken";
+        throw "Username taken";
       }
     }
   } catch (err) {

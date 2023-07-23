@@ -1,5 +1,10 @@
 import React from "react";
-import { Form, useNavigation, useRevalidator } from "react-router-dom";
+import {
+  Form,
+  useActionData,
+  useNavigation,
+  useRevalidator,
+} from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/competitions-api";
 import { FaTrashAlt } from "react-icons/fa";
@@ -7,7 +12,7 @@ import { FaTrashAlt } from "react-icons/fa";
 export async function action({ request }) {
   const formData = await request.formData();
   const rule = formData.get("rule");
-  if (rule == "") return null;
+  if (rule == "") return "Please enter something";
   const pathname = new URL(request.url).pathname;
   try {
     await addRule({
@@ -24,6 +29,7 @@ export default function CompRules() {
   const { currCompetition } = useOutletContext();
   const navigation = useNavigation();
   const revalidator = useRevalidator();
+  const errorMessage = useActionData();
 
   async function delRule(rule) {
     await deleteRule({
@@ -50,6 +56,11 @@ export default function CompRules() {
   });
   return (
     <div className="flex flex-col h-full">
+      {errorMessage && (
+        <h3 className="font-bold text-center text-lg text-red-600">
+          {errorMessage}
+        </h3>
+      )}
       <div>{ruleElements}</div>
       {currCompetition.status === "ongoing" && (
         <Form method="post" className="flex flex-col justify-center mt-auto">

@@ -22,6 +22,7 @@ export async function action({ request }) {
   const status = formData.get("status");
   const description = formData.get("description");
   const pathname = new URL(request.url).pathname;
+  if (!name) return "Competitions should have names";
   try {
     await updateCompetition({
       id: pathname.split("/")[2],
@@ -85,7 +86,7 @@ export default function CompInfo() {
       : "bg-red-500";
 
   return (
-    <Form method="post" className="flex flex-col h-full" replace>
+    <Form method="post" className="flex flex-col h-full">
       {errorMessage && (
         <h3 className="font-bold text-center text-lg text-red-600">
           {errorMessage}

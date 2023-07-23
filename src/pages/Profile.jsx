@@ -15,6 +15,7 @@ export default function Profile() {
     username: myInfo && myInfo.username,
     profilePic: myInfo && myInfo.profilePic,
   });
+  const [errorMessage, setErrorMessage] = React.useState(null);
 
   if (!myInfo) {
     return navigate("/");
@@ -30,20 +31,22 @@ export default function Profile() {
 
   async function submit(event) {
     event.preventDefault();
-    try {
-      await updateProfile({
-        myInfo: myInfo,
-        username: data.username,
-        profilePic: data.profilePic,
-      });
-    } catch (err) {
-      return err.message;
-    }
+    const message = await updateProfile({
+      myInfo: myInfo,
+      username: data.username,
+      profilePic: data.profilePic,
+    });
+    setErrorMessage(message);
   }
 
   return (
     <div className="flex flex-col items-center h-full">
-      <h3 className="font-bold text-center text-lg">Profile</h3>
+      {errorMessage && (
+        <h3 className="font-bold text-center text-lg text-red-600">
+          {errorMessage}
+        </h3>
+      )}
+      <h3 className="font-bold text-center text-2xl">Profile</h3>
       <div className="h-32">
         {data.profilePic ? (
           <img

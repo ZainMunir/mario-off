@@ -215,12 +215,7 @@ export default function CompRounds() {
       <CompScore players={currCompetition.players} currentScore={score} />
       <div className="mt-5">{roundDetails}</div>
       {currCompetition.status === "ongoing" && (
-        <form
-          type="post"
-          className={`flex flex-col justify-center ${
-            roundDetails.length == 0 ? "" : "mt-auto"
-          } `}
-        >
+        <form type="post" className="flex flex-col justify-center mt-auto">
           <div className="flex flex-row w-full my-2">
             <input
               type="text"
