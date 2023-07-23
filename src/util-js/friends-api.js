@@ -10,24 +10,21 @@ import {
 import { db, userInfoCollection, getPersonInfo } from "./api";
 
 export async function addFriend(username, myInfo) {
-  if (username == myInfo.username) {
-    throw {
-      message: "That's you!",
-    };
-  }
   try {
+    if (!username) {
+      throw "Please enter something";
+    }
+    if (username == myInfo.username) {
+      throw "That's you!";
+    }
     const docRef = doc(db, "userInfo", username);
     const querySnapshot = await getDoc(docRef);
     const data = querySnapshot.data();
     if (!data) {
-      throw {
-        message: "No user with that exact name",
-      };
+      throw "No user with that exact name";
     }
     if (myInfo.friends.find((x) => x.userid == data.userid) != undefined) {
-      throw {
-        message: "Invite already sent / Friends already",
-      };
+      throw "Invite already sent / Friends already";
     }
     await updateDoc(docRef, {
       friends: arrayUnion({
@@ -44,8 +41,9 @@ export async function addFriend(username, myInfo) {
         userid: data.userid,
       }),
     });
+    return null;
   } catch (err) {
-    throw err;
+    return err;
   }
 }
 

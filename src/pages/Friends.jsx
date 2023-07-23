@@ -17,7 +17,7 @@ export default function Friends() {
   const [friendsInfo, setFriendsInfo] = React.useState([]);
 
   const [username, setUsername] = React.useState("");
-
+  const [errorMessage, setErrorMessage] = React.useState(null);
   React.useEffect(() => {
     async function friends() {
       setFriendsInfo(await getFriends(myInfo));
@@ -99,23 +99,16 @@ export default function Friends() {
 
   async function submit(event) {
     event.preventDefault();
-    if (!username) {
-      return;
-    }
-    try {
-      await addFriend(username, myInfo);
-      return null;
-    } catch (err) {
-      return err.message;
-    }
+    const message = await addFriend(username, myInfo);
+    setErrorMessage(message);
   }
   return (
     <div className="mx-2 flex flex-col h-full">
-      {/* {errorMessage && (
+      {errorMessage && (
         <h3 className="font-bold text-center text-lg text-red-600">
           {errorMessage}
         </h3>
-      )} */}
+      )}
       <form type="post" className="flex flex-row justify-between mt-2">
         <input
           type="text"
