@@ -24,6 +24,8 @@ export default function CompCreation() {
     player2Id: "",
   });
 
+  const [errorMessage, setErrorMessage] = React.useState(null);
+
   function handleChange(event) {
     const { name, value } = event.target;
     setData((prevData) => {
@@ -56,7 +58,10 @@ export default function CompCreation() {
 
   async function submit(event) {
     event.preventDefault();
-    if (data.name == "" || data.player2Id == "") return;
+    if (data.name == "" || data.player2Id == "") {
+      setErrorMessage("Name and Opponent Needed");
+      return;
+    }
     try {
       const id = await addCompetition(
         {
@@ -68,7 +73,7 @@ export default function CompCreation() {
       );
       return navigate(`../competitions/${id}`);
     } catch (err) {
-      return err.message;
+      setErrorMessage(err.message);
     }
   }
 
@@ -77,6 +82,12 @@ export default function CompCreation() {
   }
   return (
     <div className="flex flex-col items-center">
+      {errorMessage && (
+        <h3 className="font-bold text-center text-lg text-red-600">
+          {errorMessage}
+        </h3>
+      )}
+
       <h3 className="font-bold text-center text-lg">Preview</h3>
       <CompThumbnail
         status="ongoing"

@@ -80,6 +80,11 @@ export async function getPersonInfo(userId) {
 export async function updateProfile(request) {
   try {
     if (!request.username) throw "Username needs to filled";
+    if (
+      request.username == request.myInfo.username &&
+      request.profilePic == request.myInfo.profilePic
+    )
+      throw "Nothing's changed";
     const docRef = doc(db, "userInfo", request.username);
     const querySnapshot = await getDoc(docRef);
     const data = querySnapshot.data();
