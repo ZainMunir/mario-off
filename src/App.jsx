@@ -5,22 +5,22 @@ import {
   Route,
   createHashRouter,
 } from "react-router-dom";
+import NotFound from "./components/NotFound";
+import Error from "./components/Error";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import NotFound from "./components/NotFound";
 import Login, { loader as loginLoader } from "./pages/Login";
+import Profile from "./pages/Profile";
 import Competitions, {
   loader as competitionsLoader,
 } from "./pages/Competitions";
-import Error from "./components/Error";
 import CompDetails, { loader as compDetailsLoader } from "./pages/CompDetails";
-import CompCreation from "./pages/CompCreation";
 import CompInfo, { action as compInfoAction } from "./pages/CompInfo";
 import CompRules, { action as compRulesAction } from "./pages/CompRules";
 import CompRounds from "./pages/CompRounds";
-import { requireAuth } from "./util-js/requireAuth";
-import Profile from "./pages/Profile";
+import CompCreation from "./pages/CompCreation";
 import Friends from "./pages/Friends";
+import { requireAuth } from "./util-js/requireAuth";
 
 const router = createHashRouter(
   createRoutesFromElements(

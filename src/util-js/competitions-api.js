@@ -15,8 +15,6 @@ import {
   and,
 } from "firebase/firestore";
 import { competitionsCollection, db, getPersonInfo } from "./api";
-import { data } from "autoprefixer";
-import { FaZhihu } from "react-icons/fa";
 
 const emptyRound = {
   valid: false,
