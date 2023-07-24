@@ -12,14 +12,11 @@ export default function Layout() {
   const [user, loading, error] = useAuthState(getAuth());
 
   React.useEffect(() => {
-    async function getInfo() {
-      if (user) {
-        await keepMyInfoUpdated(user.uid, setMyInfo);
-      } else {
-        setMyInfo(null);
-      }
+    if (user) {
+      return keepMyInfoUpdated(user.uid, setMyInfo);
+    } else {
+      setMyInfo(null);
     }
-    getInfo();
   }, [user]);
 
   return (

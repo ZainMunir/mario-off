@@ -58,18 +58,19 @@ export async function addNewUser(user) {
   });
 }
 
-export async function keepMyInfoUpdated(userId, setMyInfo) {
+export function keepMyInfoUpdated(userId, setMyInfo) {
   const q = query(userInfoCollection, where("userid", "==", userId));
-  const unsub = await onSnapshot(q, (snapshot) => {
+  const unsub = onSnapshot(q, (snapshot) => {
     const data = snapshot.docs.map((doc) => ({
       ...doc.data(),
     }))[0];
     setMyInfo(data);
   });
+  return unsub;
 }
 
 export async function getPersonInfo(userId) {
-  const q = await query(userInfoCollection, where("userid", "==", userId));
+  const q = query(userInfoCollection, where("userid", "==", userId));
   const querySnapshot = await getDocs(q);
   const dataArr = querySnapshot.docs.map((doc) => ({
     ...doc.data(),

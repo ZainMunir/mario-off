@@ -22,10 +22,7 @@ export default function Friends() {
   const [username, setUsername] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState(null);
   React.useEffect(() => {
-    async function friends() {
-      await getFriends(myInfo, setFriendsInfo);
-    }
-    friends();
+    return getFriends(myInfo, setFriendsInfo);
   }, [myInfo]);
 
   async function accFriend(currFriend) {

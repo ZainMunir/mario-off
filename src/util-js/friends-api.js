@@ -50,30 +50,32 @@ export async function addFriend(username, myInfo) {
   }
 }
 
-export async function getActualFriends(myInfo, setFriendsInfo) {
+export function getActualFriends(myInfo, setFriendsInfo) {
   const friendIDs = myInfo.friends
     .filter((friend) => friend.accepted)
     .map((x) => x.userid);
   if (!friendIDs.length) return;
-  const q = await query(userInfoCollection, where("userid", "in", friendIDs));
-  const unsub = await onSnapshot(q, (snapshot) => {
+  const q = query(userInfoCollection, where("userid", "in", friendIDs));
+  const unsub = onSnapshot(q, (snapshot) => {
     const dataArr = snapshot.docs.map((doc) => ({
       ...doc.data(),
     }));
     setFriendsInfo(dataArr);
   });
+  return unsub;
 }
 
-export async function getFriends(myInfo, setFriendsInfo) {
+export function getFriends(myInfo, setFriendsInfo) {
   const friendIDs = myInfo.friends.map((x) => x.userid);
   if (!friendIDs.length) return;
-  const q = await query(userInfoCollection, where("userid", "in", friendIDs));
-  const unsub = await onSnapshot(q, (snapshot) => {
+  const q = query(userInfoCollection, where("userid", "in", friendIDs));
+  const unsub = onSnapshot(q, (snapshot) => {
     const dataArr = snapshot.docs.map((doc) => ({
       ...doc.data(),
     }));
     setFriendsInfo(dataArr);
   });
+  return unsub;
 }
 
 export async function acceptFriend(request, myInfo) {

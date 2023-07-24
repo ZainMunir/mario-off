@@ -1,21 +1,27 @@
 import React from "react";
-import {
-  NavLink,
-  Outlet,
-  useLoaderData,
-  useSearchParams,
-} from "react-router-dom";
+import { NavLink, Outlet, useParams, useSearchParams } from "react-router-dom";
 import { requireAuth } from "../util-js/requireAuth";
-import { getCompetition } from "../util-js/competitions-api";
+import { keepCompetitionUpdated } from "../util-js/competitions-api";
 
-export async function loader({ params, request }) {
+export async function loader({ request }) {
   await requireAuth(request);
-  return await getCompetition(params.id);
+  return null;
 }
 
 export default function CompDetails() {
-  const currCompetition = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [currCompetition, setCompetition] = React.useState(null);
+
+  const { id } = useParams();
+
+  React.useEffect(() => {
+    return keepCompetitionUpdated(id, setCompetition);
+  }, []);
+
+  if (!currCompetition) {
+    return <h1>Loading...</h1>;
+  }
+
   const round = searchParams.get("round");
   const activeStyles = {
     textDecoration: "underline",

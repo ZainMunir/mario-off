@@ -22,34 +22,33 @@ const emptyRound = {
   nestedRounds: [],
 };
 
-export async function keepCompetitionsUpdated(myInfo, setCompetitions) {
-  const q = await query(
+export function keepCompetitionsUpdated(myInfo, setCompetitions) {
+  const q = query(
     competitionsCollection,
     where("players", "array-contains", myInfo.userid)
   );
-  const unsub = await onSnapshot(q, (snapshot) => {
+  const unsub = onSnapshot(q, (snapshot) => {
     const dataArr = snapshot.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
     setCompetitions(dataArr);
   });
+  return unsub;
 }
 
-export async function getCompetition(compid) {
+export function keepCompetitionUpdated(compid, setCompetition) {
   const docRef = doc(db, "competitions", compid);
-  const querySnapshot = await getDoc(docRef);
-  if (querySnapshot.data()) {
-    return {
-      ...querySnapshot.data(),
-      id: querySnapshot.id,
-    };
-  }
-  throw {
-    message: "Competition not found",
-    statusText: "Error",
-    status: 404,
-  };
+  const unsub = onSnapshot(docRef, (snapshot) => {
+    if (snapshot.data()) {
+      const data = {
+        ...snapshot.data(),
+        id: snapshot.id,
+      };
+      setCompetition(data);
+    }
+  });
+  return unsub;
 }
 
 export async function addCompetition(request, myInfo) {

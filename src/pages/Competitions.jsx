@@ -19,10 +19,7 @@ export default function Competitions() {
   const [friendsInfo, setFriendsInfo] = React.useState([]);
 
   React.useEffect(() => {
-    async function friends() {
-      await getActualFriends(myInfo, setFriendsInfo);
-    }
-    friends();
+    return getActualFriends(myInfo, setFriendsInfo);
   }, [myInfo]);
 
   function clearFilter() {
@@ -34,10 +31,7 @@ export default function Competitions() {
   }
 
   React.useEffect(() => {
-    async function getComps() {
-      await keepCompetitionsUpdated(myInfo, setCompetitions);
-    }
-    getComps();
+    return keepCompetitionsUpdated(myInfo, setCompetitions);
   }, []);
 
   function handleFilterChange(event) {
