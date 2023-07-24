@@ -67,6 +67,9 @@ export default function Friends() {
           const currentFriend = friendsInfo.find(
             (x) => x.userid == friend.userid
           );
+          const myInfoOnThem = myInfo.friends.find(
+            (x) => x.userid == currentFriend.userid
+          );
           return (
             <div
               key={friend.userid}
@@ -81,6 +84,9 @@ export default function Friends() {
                 <MdAccountCircle size={20} />
               )}
               <p className="ml-2">{currentFriend && currentFriend.username}</p>
+              <p className="ml-auto mr-8">
+                {myInfoOnThem.score[1]} - {myInfoOnThem.score[0]}{" "}
+              </p>
               <button
                 className="right-0 top-1 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-100"
                 onClick={() => delFriend(currentFriend)}

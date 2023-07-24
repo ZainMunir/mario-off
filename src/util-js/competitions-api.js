@@ -14,11 +14,13 @@ import {
   or,
   and,
 } from "firebase/firestore";
-import { competitionsCollection, db } from "./api";
+import { competitionsCollection, db, getPersonInfo } from "./api";
+import { data } from "autoprefixer";
+import { FaZhihu } from "react-icons/fa";
 
 const emptyRound = {
   valid: false,
-  winner: "",
+  winner: "draw",
   nestedRounds: [],
 };
 
@@ -84,7 +86,7 @@ export async function updateCompetition(request) {
     description: request.description,
     updatedDate: serverTimestamp(),
   });
-  calcFriendScore(docRef);
+  await calcFriendScore(docRef);
 }
 
 async function calcFriendScore(docRef) {
@@ -104,7 +106,59 @@ async function calcFriendScore(docRef) {
   const dataArr = querySnapshot.docs.map((doc) => ({
     ...doc.data(),
   }));
-  console.log(dataArr);
+  const wins = [0, 0];
+
+  for (let i = 0; i < dataArr.length; i++) {
+    if (dataArr[i].winner == players[0]) {
+      wins[0]++;
+    } else if (dataArr[i].winner == players[1]) {
+      wins[1]++;
+    } else {
+      wins[0]++;
+      wins[1]++;
+    }
+  }
+  const info0 = await getPersonInfo(players[0]);
+  const info1 = await getPersonInfo(players[1]);
+
+  let unnecessary = false;
+
+  let friends0 = info0.friends.map((x) => {
+    if (x.userid == info1.userid) {
+      if (x.score[0] == wins[0] && x.score[1] == wins[1]) unnecessary = true;
+      return {
+        ...x,
+        score: wins,
+      };
+    }
+    return x;
+  });
+
+  if (unnecessary) {
+    return null;
+  }
+
+  let friends1 = info1.friends.map((x) => {
+    if (x.userid == info0.userid) {
+      return {
+        ...x,
+        score: [wins[1], wins[0]],
+      };
+    }
+    return x;
+  });
+
+  try {
+    await updateDoc(doc(db, "userInfo", info0.username), {
+      friends: friends0,
+    });
+    await updateDoc(doc(db, "userInfo", info1.username), {
+      friends: friends1,
+    });
+  } catch (err) {
+    throw err;
+  }
+
   return null;
 }
 
