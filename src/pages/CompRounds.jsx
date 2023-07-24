@@ -2,7 +2,6 @@ import React from "react";
 import {
   useOutletContext,
   useNavigation,
-  useRevalidator,
   useSearchParams,
 } from "react-router-dom";
 import { getPersonInfo } from "../util-js/api";
@@ -14,7 +13,6 @@ export default function CompRounds() {
   const { currCompetition } = useOutletContext();
   const [playerDeets, setPlayerDeets] = React.useState([]);
   const navigation = useNavigation();
-  const revalidator = useRevalidator();
   const [searchParams, setSearchParams] = useSearchParams();
 
   React.useEffect(() => {
@@ -28,10 +26,6 @@ export default function CompRounds() {
   }, []);
 
   const selectedRound = searchParams.get("round") || 1;
-
-  React.useEffect(() => {
-    revalidator.revalidate();
-  }, [selectedRound]);
 
   const [data, setData] = React.useState({
     name: "",
@@ -138,7 +132,6 @@ export default function CompRounds() {
 
   async function newRound() {
     await addRound(currCompetition.id);
-    revalidator.revalidate();
   }
 
   async function delRound() {
@@ -157,7 +150,6 @@ export default function CompRounds() {
       }
       return prevParams;
     });
-    revalidator.revalidate();
   }
 
   function convertUsernameToUid(username) {
@@ -182,7 +174,6 @@ export default function CompRounds() {
       players: currCompetition.players,
       rounds: rounds,
     });
-    revalidator.revalidate();
   }
 
   async function delSubRound(subIndex) {
@@ -193,7 +184,6 @@ export default function CompRounds() {
       players: currCompetition.players,
       rounds: rounds,
     });
-    revalidator.revalidate();
   }
 
   async function changeValidity(event) {
@@ -205,7 +195,6 @@ export default function CompRounds() {
       players: currCompetition.players,
       rounds: rounds,
     });
-    revalidator.revalidate();
   }
 
   return (

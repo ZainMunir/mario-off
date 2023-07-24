@@ -70,6 +70,15 @@ export default function CompInfo() {
     status: currCompetition.status,
   });
 
+  React.useEffect(() => {
+    setData({
+      name: currCompetition.name,
+      image: currCompetition.image,
+      description: currCompetition.description,
+      status: currCompetition.status,
+    });
+  }, [currCompetition]);
+
   function handleChange(event) {
     const { name, value } = event.target;
     setData((prevData) => ({

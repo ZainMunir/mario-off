@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Form,
-  useActionData,
-  useNavigation,
-  useRevalidator,
-} from "react-router-dom";
+import { Form, useActionData, useNavigation } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/competitions-api";
 import { FaTrashAlt } from "react-icons/fa";
@@ -28,7 +23,6 @@ export async function action({ request }) {
 export default function CompRules() {
   const { currCompetition } = useOutletContext();
   const navigation = useNavigation();
-  const revalidator = useRevalidator();
   const errorMessage = useActionData();
 
   async function delRule(rule) {
@@ -36,7 +30,6 @@ export default function CompRules() {
       id: currCompetition.id,
       rule: rule,
     });
-    revalidator.revalidate();
   }
 
   const ruleElements = currCompetition.rules.map((rule) => {
