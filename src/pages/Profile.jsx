@@ -4,6 +4,8 @@ import { useSignOut } from "react-firebase-hooks/auth";
 import { getAuth } from "@firebase/auth";
 import { updateProfile } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
+import ReactImageFallback from "react-image-fallback";
+import NotFound from "../assets/image-not-found.png";
 
 export default function Profile() {
   const navigation = useNavigation();
@@ -49,9 +51,10 @@ export default function Profile() {
       <h3 className="font-bold text-center text-2xl">Profile</h3>
       <div className="h-32">
         {data.profilePic ? (
-          <img
+          <ReactImageFallback
             src={data.profilePic}
-            className="w-32 rounded-full h-32 object-cover"
+            fallbackImage={NotFound}
+            className="w-32 rounded-full h-32 object-cover bg-gray-100 border-2"
           />
         ) : (
           <MdAccountCircle size={128} />

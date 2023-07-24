@@ -8,6 +8,8 @@ import {
 } from "../util-js/friends-api";
 import { MdAccountCircle } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
+import ReactImageFallback from "react-image-fallback";
+import NotFound from "../assets/image-not-found.png";
 
 export default function Friends() {
   const { myInfo } = useOutletContext();
@@ -76,8 +78,10 @@ export default function Friends() {
               className="flex items-center group relative"
             >
               {currentFriend.profilePic ? (
-                <img
+                <ReactImageFallback
                   src={currentFriend.profilePic}
+                  fallbackImage={NotFound}
+                  alt={currentFriend.username}
                   className="w-5 h-5 object-cover bg-gray-200 rounded-full"
                 />
               ) : (

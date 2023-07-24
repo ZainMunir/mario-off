@@ -1,6 +1,8 @@
 import React from "react";
 import CompScore from "./CompScore";
 import { LuSwords } from "react-icons/lu";
+import ReactImageFallback from "react-image-fallback";
+import NotFound from "../assets/image-not-found.png";
 
 export default function CompThumbnail(props) {
   const color =
@@ -18,8 +20,9 @@ export default function CompThumbnail(props) {
       </p>
       <div className="flex-grow flex flex-col flex-wrap place-content-center m-1 items-center ">
         {props.image ? (
-          <img
+          <ReactImageFallback
             src={props.image}
+            fallbackImage={NotFound}
             alt={props.name}
             className="max-h-44 object-contain"
           />

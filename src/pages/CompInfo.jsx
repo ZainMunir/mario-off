@@ -14,6 +14,8 @@ import {
 import CompScore from "../components/CompScore";
 import { LuSwords } from "react-icons/lu";
 import "./CompInfo.css";
+import ReactImageFallback from "react-image-fallback";
+import NotFound from "../assets/image-not-found.png";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -121,8 +123,9 @@ export default function CompInfo() {
       <div className="flex flex-row mb-2 ">
         <div className="h-48 w-1/2 flex flex-wrap place-content-center">
           {data.image ? (
-            <img
+            <ReactImageFallback
               src={data.image}
+              fallbackImage={NotFound}
               alt={data.name}
               className="max-h-48 object-contain rounded"
             />

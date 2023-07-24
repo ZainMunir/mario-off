@@ -2,6 +2,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { MdAccountCircle, MdOutlineAccountCircle } from "react-icons/md";
+import ReactImageFallback from "react-image-fallback";
+import NotFound from "../assets/image-not-found.png";
 
 export default function Header({ isLoggedIn, myInfo }) {
   const activeStyles = {
@@ -43,14 +45,18 @@ export default function Header({ isLoggedIn, myInfo }) {
           {({ isActive }) =>
             isActive
               ? (myInfo && myInfo.profilePic && (
-                  <img
+                  <ReactImageFallback
                     src={myInfo.profilePic}
+                    fallbackImage={NotFound}
+                    alt={myInfo.username}
                     className="w-8 h-8 object-cover bg-gray-200 rounded-full border-2 border-black"
                   />
                 )) || <MdAccountCircle size={32} />
               : (myInfo && myInfo.profilePic && (
-                  <img
+                  <ReactImageFallback
                     src={myInfo.profilePic}
+                    fallbackImage={NotFound}
+                    alt={myInfo.username}
                     className="w-8 h-8 object-cover bg-gray-200 rounded-full border-2"
                   />
                 )) || <MdOutlineAccountCircle size={32} />

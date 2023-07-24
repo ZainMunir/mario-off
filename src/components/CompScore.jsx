@@ -1,6 +1,8 @@
 import React from "react";
 import { getPersonInfo } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
+import ReactImageFallback from "react-image-fallback";
+import NotFound from "../assets/image-not-found.png";
 
 export default function CompScore(props) {
   const [playerDeets, setPlayerDeets] = React.useState([]);
@@ -23,8 +25,10 @@ export default function CompScore(props) {
     <div className="flex flex-row w-full place-content-center">
       <abbr className="self-center mr-2" title={playerDeets[0].username}>
         {playerDeets[0].profilePic ? (
-          <img
+          <ReactImageFallback
             src={playerDeets[0].profilePic}
+            fallbackImage={NotFound}
+            alt={playerDeets[0].username}
             className="w-5 h-5 object-cover bg-gray-200 rounded-full"
           />
         ) : (
@@ -34,8 +38,10 @@ export default function CompScore(props) {
       {props.currentScore[0]} - {props.currentScore[1]}
       <abbr className="self-center ml-2" title={playerDeets[1].username}>
         {playerDeets[1].profilePic ? (
-          <img
+          <ReactImageFallback
             src={playerDeets[1].profilePic}
+            fallbackImage={NotFound}
+            alt={playerDeets[1].username}
             className="w-5 bg-gray-200 rounded-full"
           />
         ) : (
