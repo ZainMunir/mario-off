@@ -48,7 +48,22 @@ export default function CompRounds() {
   }
 
   if (selectedRound > currCompetition.rounds.length) {
-    return <h1>Round not found</h1>;
+    return (
+      <>
+        <h1>Round not found</h1>
+        <button
+          className="bg-teal-500 rounded-full drop-shadow-md text-white place-content-center flex text-xs p-1 px-2"
+          onClick={() =>
+            setSearchParams((prevParams) => {
+              prevParams.delete("round");
+              return prevParams;
+            })
+          }
+        >
+          Back to safety
+        </button>
+      </>
+    );
   }
 
   const currRound = currCompetition.rounds[selectedRound - 1];
