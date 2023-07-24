@@ -19,7 +19,11 @@ export default function CompDetails() {
   }, []);
 
   if (!currCompetition) {
-    return <h1>Loading...</h1>;
+    return <h1 className="m-2 text-xl">Loading...</h1>;
+  }
+
+  if (currCompetition.message) {
+    throw currCompetition;
   }
 
   const round = searchParams.get("round");

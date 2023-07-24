@@ -39,15 +39,21 @@ export function keepCompetitionsUpdated(myInfo, setCompetitions) {
 
 export function keepCompetitionUpdated(compid, setCompetition) {
   const docRef = doc(db, "competitions", compid);
-  const unsub = onSnapshot(docRef, (snapshot) => {
-    if (snapshot.data()) {
-      const data = {
-        ...snapshot.data(),
-        id: snapshot.id,
-      };
-      setCompetition(data);
+  const unsub = onSnapshot(
+    docRef,
+    (snapshot) => {
+      if (snapshot.data()) {
+        const data = {
+          ...snapshot.data(),
+          id: snapshot.id,
+        };
+        setCompetition(data);
+      }
+    },
+    (error) => {
+      setCompetition(error);
     }
-  });
+  );
   return unsub;
 }
 
