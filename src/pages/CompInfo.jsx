@@ -124,7 +124,7 @@ export default function CompInfo() {
             <img
               src={data.image}
               alt={data.name}
-              className="max-h-48 w-auto h-fit rounded"
+              className="max-h-48 object-contain rounded"
             />
           ) : (
             <LuSwords size={80} />

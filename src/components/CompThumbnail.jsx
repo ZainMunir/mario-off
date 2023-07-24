@@ -21,7 +21,7 @@ export default function CompThumbnail(props) {
           <img
             src={props.image}
             alt={props.name}
-            className="max-h-44 w-auto h-fit"
+            className="max-h-44 object-contain"
           />
         ) : (
           <>
