@@ -74,7 +74,10 @@ export async function addCompetition(request, myInfo) {
 
 export async function deleteCompetition(id) {
   const docRef = doc(db, "competitions", id);
+  const result = await getDoc(docRef);
+  const players = result.data().players;
   await deleteDoc(docRef);
+  await calcFriendScore(players);
 }
 
 export async function updateCompetition(request) {
@@ -86,12 +89,12 @@ export async function updateCompetition(request) {
     description: request.description,
     updatedDate: serverTimestamp(),
   });
-  await calcFriendScore(docRef);
-}
-
-async function calcFriendScore(docRef) {
   const result = await getDoc(docRef);
   const players = result.data().players;
+  await calcFriendScore(players);
+}
+
+async function calcFriendScore(players) {
   const q = query(
     competitionsCollection,
     or(
