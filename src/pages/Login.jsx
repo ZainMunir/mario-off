@@ -42,6 +42,11 @@ export default function Login() {
           {searchParams.get("message")}
         </h3>
       )}
+      {error && (
+        <h4 className="font-bold text-center text-md text-red-600">
+          {error.message}
+        </h4>
+      )}
       <div className="flex flex-col items-center m-5">
         <button
           disabled={loading}
