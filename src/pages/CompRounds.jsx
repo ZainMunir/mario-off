@@ -9,8 +9,11 @@ import { addRound, updateRounds } from "../util-js/competitions-api";
 import CompScore from "../components/CompScore";
 import { FaTrashAlt } from "react-icons/fa";
 
-export default function CompRounds() {
-  const { currCompetition } = useOutletContext();
+export default function CompRounds(props) {
+  let { currCompetition } = useOutletContext();
+  if (!currCompetition) {
+    currCompetition = props.currCompetition;
+  }
   const [playerDeets, setPlayerDeets] = React.useState([]);
   const navigation = useNavigation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -269,7 +272,7 @@ export default function CompRounds() {
           <button
             className={`${
               navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
-            } text-md mx-auto mb-2 flex w-32 place-content-center rounded-full p-1 text-white drop-shadow-md`}
+            } text-md mx-auto mb-2 flex w-32 place-content-center rounded-full p-1 text-white drop-shadow-md lg:w-48`}
             onClick={(event) => addSubRound(event)}
           >
             {navigation.state === "submitting" ? "Adding..." : "Add Sub-round"}

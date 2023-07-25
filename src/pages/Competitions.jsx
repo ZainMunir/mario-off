@@ -92,7 +92,7 @@ export default function Competitions() {
     .sort((b, a) => a.updatedDate - b.updatedDate)
     .map((competition) => {
       return (
-        <Link to={competition.id} key={competition.id} className="w-full">
+        <Link to={`${competition.id}/`} key={competition.id} className="w-full">
           <CompThumbnail
             status={competition.status}
             image={competition.image}
@@ -116,7 +116,7 @@ export default function Competitions() {
       : "bg-gray-100";
 
   return (
-    <div className="no-scrollbar flex h-full flex-col overflow-y-auto p-1">
+    <div className="no-scrollbar mx-auto flex h-full max-w-screen-lg flex-col overflow-y-auto p-1">
       {competitionsElements && (
         <div className="mb-2 flex flex-row gap-2 text-sm">
           <select

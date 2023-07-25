@@ -39,8 +39,11 @@ export async function action({ request }) {
   }
 }
 
-export default function CompInfo() {
-  const { currCompetition } = useOutletContext();
+export default function CompInfo(props) {
+  let { currCompetition } = useOutletContext();
+  if (!currCompetition) {
+    currCompetition = props.currCompetition;
+  }
   const navigate = useNavigate();
   const errorMessage = useActionData();
   const navigation = useNavigation();

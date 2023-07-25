@@ -20,8 +20,11 @@ export async function action({ request }) {
   }
 }
 
-export default function CompRules() {
-  const { currCompetition } = useOutletContext();
+export default function CompRules(props) {
+  let { currCompetition } = useOutletContext();
+  if (!currCompetition) {
+    currCompetition = props.currCompetition;
+  }
   const navigation = useNavigation();
   const errorMessage = useActionData();
 
@@ -66,7 +69,7 @@ export default function CompRules() {
           <button
             className={`${
               navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
-            } text-md mx-auto mb-2 flex w-20 place-content-center rounded-full p-1 text-white drop-shadow-md`}
+            } text-md mx-auto mb-2 flex w-20 place-content-center rounded-full p-1 text-white drop-shadow-md lg:w-32`}
           >
             {navigation.state === "submitting" ? "Adding..." : "Add rule"}
           </button>
