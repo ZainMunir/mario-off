@@ -53,7 +53,7 @@ export default function CompDetails() {
       {width < 1024 ? (
         <div className="mx-auto flex w-full max-w-2xl flex-grow">
           <div className="flex w-full flex-grow flex-col ">
-            <div className="flex w-full justify-around border-b-2 border-b-gray-300">
+            <div className="flex w-full justify-around border-b-2 border-b-gray-300 dark:border-gray-700">
               <NavLink
                 to={`./${round ? `?round=${round}` : ""}`}
                 className="w-20 text-center sm:text-xl"
@@ -83,20 +83,20 @@ export default function CompDetails() {
           </div>
         </div>
       ) : (
-        <div className="flex w-full flex-grow flex-col ">
-          <div className="mx-auto flex w-full justify-around border-b-2 px-2 pt-2">
-            <h1 className="w-1/3 text-center text-2xl">Rules</h1>
-            <h1 className="w-1/3 text-center text-2xl">Info</h1>
-            <h1 className="w-1/3 text-center text-2xl">Rounds</h1>
+        <div className="flex w-full flex-grow flex-col">
+          <div className="mx-auto flex w-full justify-around border-b-2 px-2 pt-2  dark:border-gray-700">
+            <h1 className="w-1/3 text-center text-3xl">Rules</h1>
+            <h1 className="w-1/3 text-center text-3xl">Info</h1>
+            <h1 className="w-1/3 text-center text-3xl">Rounds</h1>
           </div>
           <div className="flex flex-grow text-2xl">
-            <div className="mx-auto flex w-1/3 flex-grow border-r-2 px-2 pt-2 ">
+            <div className="mx-auto flex w-1/3 flex-grow border-r-2 px-2 pt-2  dark:border-gray-700">
               <CompRules currCompetition={currCompetition} />
             </div>
             <div className="mx-auto flex w-1/3 flex-grow px-2 pt-2">
               <CompInfo currCompetition={currCompetition} />
             </div>
-            <div className="mx-auto flex w-1/3 flex-grow border-l-2 px-2 pt-2">
+            <div className="mx-auto flex w-1/3 flex-grow border-l-2 px-2 pt-2  dark:border-gray-700">
               <CompRounds currCompetition={currCompetition} />
             </div>
           </div>
