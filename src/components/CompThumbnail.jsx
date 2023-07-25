@@ -18,13 +18,13 @@ export default function CompThumbnail(props) {
       >
         {props.status}
       </p>
-      <div className="m-1 flex flex-grow flex-col flex-wrap place-content-center items-center ">
+      <div className="m-1 flex flex-grow flex-col flex-wrap place-content-center items-center object-contain">
         {props.image ? (
           <ReactImageFallback
             src={props.image}
             fallbackImage={NotFound}
             alt={props.name}
-            className="max-h-full object-contain"
+            className="aspect-[3/4] w-full object-contain"
           />
         ) : (
           <>
