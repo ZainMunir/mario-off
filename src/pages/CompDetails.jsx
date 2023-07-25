@@ -89,11 +89,11 @@ export default function CompDetails() {
             <h1 className="w-1/3 text-center text-2xl">Info</h1>
             <h1 className="w-1/3 text-center text-2xl">Rounds</h1>
           </div>
-          <div className="flex flex-grow text-xl">
-            <div className="mx-auto w-1/3 flex-grow px-2 pt-2">
+          <div className="flex flex-grow text-2xl">
+            <div className="mx-auto w-1/3 flex-grow border-r-2 px-2 pt-2 ">
               <CompRules currCompetition={currCompetition} />
             </div>
-            <div className="mx-auto w-1/3 flex-grow border-r-2 px-2 pt-2 ">
+            <div className="mx-auto w-1/3 flex-grow px-2 pt-2">
               <CompInfo currCompetition={currCompetition} />
             </div>
             <div className="mx-auto w-1/3 flex-grow border-l-2 px-2 pt-2">
