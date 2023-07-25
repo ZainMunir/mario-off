@@ -78,7 +78,7 @@ export default function CompCreation() {
     return <h1>Please add some friends first!</h1>;
   }
   return (
-    <div className="flex flex-col items-center">
+    <div className="mx-auto flex max-w-xl flex-grow flex-col items-center border-x-2">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}

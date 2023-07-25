@@ -87,7 +87,7 @@ export default function CompRounds(props) {
         key={`${selectedRound - 1}-${i + 1}`}
         className="group  flex flex-row justify-between"
       >
-        <div className="mr-auto w-32 text-left">
+        <div className="mr-auto w-5/12 text-left">
           {currRound.nestedRounds[i].name}
         </div>
         <div className="relative">
@@ -105,7 +105,7 @@ export default function CompRounds(props) {
             </div>
           )}
         </div>
-        <div className="ml-auto w-32 text-right">
+        <div className="ml-auto w-5/12 text-right">
           {convertUidToUsername(currRound.nestedRounds[i].player)}
         </div>
       </div>
@@ -201,7 +201,7 @@ export default function CompRounds(props) {
   }
 
   return (
-    <div className="flex h-full flex-col text-center">
+    <div className="flex flex-grow flex-col text-center">
       <div className="mb-1 flex flex-row justify-around">
         {currCompetition.status === "ongoing" && (
           <button
@@ -239,9 +239,9 @@ export default function CompRounds(props) {
         )}
       </div>
       <CompScore players={currCompetition.players} currentScore={score} />
-      <div className="mt-5">{roundDetails}</div>
+      <div className="mt-5 flex-grow overflow-y-auto">{roundDetails}</div>
       {currCompetition.status === "ongoing" && (
-        <form type="post" className="mt-auto flex flex-col justify-center">
+        <form type="post" className="h-22 mt-auto flex flex-col justify-center">
           <div className="my-2 flex w-full flex-row">
             <input
               type="text"

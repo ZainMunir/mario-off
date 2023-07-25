@@ -59,7 +59,7 @@ export default function CompRules(props) {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-grow flex-col">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}

@@ -42,7 +42,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="flex h-full flex-col items-center">
+    <div className="mx-auto flex h-full max-w-xl flex-grow flex-col items-center border-x-2 ">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}

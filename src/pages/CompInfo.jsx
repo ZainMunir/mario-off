@@ -98,7 +98,7 @@ export default function CompInfo(props) {
   }
 
   return (
-    <form method="post" className="flex h-full flex-col">
+    <form method="post" className="flex h-full flex-grow flex-col">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}

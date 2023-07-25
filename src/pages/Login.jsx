@@ -33,7 +33,7 @@ export default function Login() {
   }
 
   return (
-    <div className="p-2">
+    <div className="mx-auto max-w-xl flex-grow p-2">
       <h1 className="text-center text-2xl font-bold sm:text-4xl">
         Sign in to your account
       </h1>

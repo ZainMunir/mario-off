@@ -46,7 +46,7 @@ export default function CompDetails() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col bg-gray-100">
+    <div className="flex w-full flex-grow flex-col bg-gray-100">
       <h1 className="bg-white py-1 text-center text-2xl font-bold sm:py-2 sm:text-3xl lg:text-4xl">
         {currCompetition.name}
       </h1>
@@ -77,7 +77,7 @@ export default function CompDetails() {
                 Rounds
               </NavLink>
             </div>
-            <div className="mx-auto w-full max-w-md flex-grow px-2 pt-2">
+            <div className="mx-auto flex w-full max-w-md flex-grow px-2 pt-2">
               <Outlet context={{ currCompetition }} />
             </div>
           </div>
@@ -90,13 +90,13 @@ export default function CompDetails() {
             <h1 className="w-1/3 text-center text-2xl">Rounds</h1>
           </div>
           <div className="flex flex-grow text-2xl">
-            <div className="mx-auto w-1/3 flex-grow border-r-2 px-2 pt-2 ">
+            <div className="mx-auto flex w-1/3 flex-grow border-r-2 px-2 pt-2 ">
               <CompRules currCompetition={currCompetition} />
             </div>
-            <div className="mx-auto w-1/3 flex-grow px-2 pt-2">
+            <div className="mx-auto flex w-1/3 flex-grow px-2 pt-2">
               <CompInfo currCompetition={currCompetition} />
             </div>
-            <div className="mx-auto w-1/3 flex-grow border-l-2 px-2 pt-2">
+            <div className="mx-auto flex w-1/3 flex-grow border-l-2 px-2 pt-2">
               <CompRounds currCompetition={currCompetition} />
             </div>
           </div>
