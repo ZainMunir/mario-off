@@ -18,7 +18,7 @@ export default function CompThumbnail(props) {
       >
         {props.status}
       </p>
-      <div className="m-1 flex flex-grow flex-col flex-wrap place-content-center items-center object-contain">
+      <div className="m-1 flex w-full flex-grow flex-col flex-wrap place-content-center items-center object-contain">
         {props.image ? (
           <ReactImageFallback
             src={props.image}
@@ -29,7 +29,9 @@ export default function CompThumbnail(props) {
         ) : (
           <>
             <LuSwords size={50} />
-            <p className="text-center">{props.name}</p>
+            <p className="aspect-[5/3.5] w-full overflow-hidden text-center">
+              {props.name}
+            </p>
           </>
         )}
       </div>
