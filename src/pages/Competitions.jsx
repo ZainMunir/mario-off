@@ -92,7 +92,7 @@ export default function Competitions() {
     .sort((b, a) => a.updatedDate - b.updatedDate)
     .map((competition) => {
       return (
-        <Link to={competition.id} key={competition.id}>
+        <Link to={competition.id} key={competition.id} className="w-full">
           <CompThumbnail
             status={competition.status}
             image={competition.image}
@@ -118,7 +118,7 @@ export default function Competitions() {
   return (
     <div className="no-scrollbar flex h-full flex-col overflow-y-auto p-1">
       {competitionsElements && (
-        <div className="mb-2 flex flex-row justify-between gap-2 text-sm">
+        <div className="mb-2 flex flex-row gap-2 text-sm">
           <select
             name="status"
             className={`w-28 rounded-xl p-1 ${selectColor}`}
@@ -141,7 +141,7 @@ export default function Competitions() {
 
           <select
             name="friend"
-            className={`mr-auto w-24 rounded-xl p-1 ${
+            className={`w-24 rounded-xl p-1 ${
               friendFilter ? "bg-black text-white" : "bg-gray-100 "
             }`}
             value={convertUidToUsername(friendFilter) || "Friend"}
@@ -160,7 +160,7 @@ export default function Competitions() {
           )}
         </div>
       )}
-      <div className="grid w-full grid-cols-2 gap-5 scroll-auto">
+      <div className="grid min-h-min w-full grid-cols-2 place-items-center gap-5 scroll-auto sm:grid-cols-3 md:grid-cols-4">
         {competitionsElements}
       </div>
       <div

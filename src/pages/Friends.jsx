@@ -129,7 +129,7 @@ export default function Friends() {
     setErrorMessage(message);
   }
   return (
-    <div className="mx-2 flex h-full flex-col">
+    <div className="mx-auto flex h-full w-full max-w-xl flex-col p-2 sm:text-3xl ">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
@@ -145,7 +145,7 @@ export default function Friends() {
           onChange={(event) => setUsername(event.target.value)}
         />
         <button
-          className="text-md flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-white drop-shadow-md"
+          className="text-md flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-white drop-shadow-md sm:w-32 sm:py-1"
           onClick={(event) => submit(event)}
         >
           Send

@@ -22,27 +22,29 @@ export default function CompScore(props) {
     playerDeets[0] = { profilePic: "", username: "" };
   }
   return (
-    <div className="flex w-full flex-row place-content-center">
+    <div className="mb-1 flex max-h-10 w-full flex-row place-content-center">
       <abbr className="mr-2 self-center" title={playerDeets[0].username}>
         {playerDeets[0].profilePic ? (
           <ReactImageFallback
             src={playerDeets[0].profilePic}
             fallbackImage={NotFound}
             alt={playerDeets[0].username}
-            className="h-5 w-5 rounded-full bg-gray-200 object-cover"
+            className="aspect-square h-8 rounded-full bg-gray-200 object-cover sm:h-10"
           />
         ) : (
           <MdAccountCircle size={20} />
         )}
       </abbr>
-      {props.currentScore[0]} - {props.currentScore[1]}
+      <p className="self-center text-xl sm:text-2xl">
+        {props.currentScore[0]} - {props.currentScore[1]}
+      </p>
       <abbr className="ml-2 self-center" title={playerDeets[1].username}>
         {playerDeets[1].profilePic ? (
           <ReactImageFallback
             src={playerDeets[1].profilePic}
             fallbackImage={NotFound}
             alt={playerDeets[1].username}
-            className="w-5 rounded-full bg-gray-200"
+            className="aspect-square h-8 rounded-full bg-gray-200 object-cover sm:h-10"
           />
         ) : (
           <MdAccountCircle size={20} />

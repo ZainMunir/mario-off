@@ -199,7 +199,7 @@ export default function CompRounds() {
 
   return (
     <div className="flex h-full flex-col text-center">
-      <div className="flex flex-row justify-around">
+      <div className="mb-1 flex flex-row justify-around">
         {currCompetition.status === "ongoing" && (
           <button
             onClick={delRound}

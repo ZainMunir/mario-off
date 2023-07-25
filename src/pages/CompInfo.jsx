@@ -129,7 +129,7 @@ export default function CompInfo() {
           </div>
         </div>
       </ReactModal>
-      <div className="mb-2 flex flex-row ">
+      <div className="mb-2 flex w-full flex-row ">
         <div className="flex h-48 w-1/2 flex-wrap place-content-center">
           {data.image ? (
             <ReactImageFallback
@@ -179,7 +179,7 @@ export default function CompInfo() {
           placeholder="Competition Name"
           value={data.name}
           onChange={handleChange}
-          className="m-2 w-full rounded border-2 p-1"
+          className="m-2 w-full max-w-md rounded border-2 p-1"
         />
         <input
           type="url"
@@ -187,11 +187,11 @@ export default function CompInfo() {
           placeholder="Thumbnail picture"
           value={data.image}
           onChange={handleChange}
-          className="m-2 w-full rounded border-2 p-1 text-center"
+          className="m-2 w-full max-w-md rounded border-2 p-1 text-center"
         />
         <textarea
           placeholder="Description"
-          className="m-2 h-32 w-full rounded border-2 p-1"
+          className="m-2 h-32 w-full max-w-md rounded border-2 p-1"
           name="description"
           value={data.description}
           onChange={handleChange}

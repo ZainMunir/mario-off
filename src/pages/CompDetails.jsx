@@ -33,35 +33,39 @@ export default function CompDetails() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <h1 className="text-center text-xl font-bold">{currCompetition.name}</h1>
-      <div className="flex flex-grow flex-col bg-gray-100">
-        <div className="flex w-full justify-around border-b-2 border-b-gray-300">
-          <NavLink
-            to={`./${round ? `?round=${round}` : ""}`}
-            className="w-20 text-center"
-            style={({ isActive }) => (isActive ? activeStyles : null)}
-            end
-          >
-            Info
-          </NavLink>
-          <NavLink
-            to={`rules${round ? `?round=${round}` : ""}`}
-            className="w-20 text-center"
-            style={({ isActive }) => (isActive ? activeStyles : null)}
-          >
-            Rules
-          </NavLink>
-          <NavLink
-            to={`rounds${round ? `?round=${round}` : ""}`}
-            className="w-20 text-center"
-            style={({ isActive }) => (isActive ? activeStyles : null)}
-          >
-            Rounds
-          </NavLink>
-        </div>
-        <div className="flex-grow px-2 pt-2">
-          <Outlet context={{ currCompetition }} />
+    <div className="flex h-full w-full flex-col bg-gray-100">
+      <h1 className="bg-white py-1 text-center text-2xl font-bold sm:py-2 sm:text-3xl lg:text-4xl">
+        {currCompetition.name}
+      </h1>
+      <div className="mx-auto flex w-full max-w-2xl flex-grow">
+        <div className="flex w-full flex-grow flex-col ">
+          <div className="flex w-full justify-around border-b-2 border-b-gray-300">
+            <NavLink
+              to={`./${round ? `?round=${round}` : ""}`}
+              className="w-20 text-center sm:text-xl"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+              end
+            >
+              Info
+            </NavLink>
+            <NavLink
+              to={`rules${round ? `?round=${round}` : ""}`}
+              className="w-20 text-center sm:text-xl"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              Rules
+            </NavLink>
+            <NavLink
+              to={`rounds${round ? `?round=${round}` : ""}`}
+              className="w-20 text-center sm:text-xl"
+              style={({ isActive }) => (isActive ? activeStyles : null)}
+            >
+              Rounds
+            </NavLink>
+          </div>
+          <div className="mx-auto w-full max-w-md flex-grow px-2 pt-2">
+            <Outlet context={{ currCompetition }} />
+          </div>
         </div>
       </div>
     </div>

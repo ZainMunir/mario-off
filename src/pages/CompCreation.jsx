@@ -86,13 +86,15 @@ export default function CompCreation() {
       )}
 
       <h3 className="text-center text-lg font-bold">Preview</h3>
-      <CompThumbnail
-        status="ongoing"
-        image={data.image}
-        name={data.name}
-        players={[myInfo.userid, data.player2Id]}
-        currentScore={[0, 0]}
-      />
+      <div className="w-1/3 max-w-xs">
+        <CompThumbnail
+          status="ongoing"
+          image={data.image}
+          name={data.name}
+          players={[myInfo.userid, data.player2Id]}
+          currentScore={[0, 0]}
+        />
+      </div>
       <form type="post" className="flex w-full flex-col items-center p-5 ">
         <input
           type="text"
@@ -100,7 +102,7 @@ export default function CompCreation() {
           placeholder="Competition Name"
           value={data.name}
           onChange={handleChange}
-          className="m-2 w-5/6 rounded border-2 p-1 text-center"
+          className="m-2 w-5/6 max-w-lg rounded border-2 p-1 text-center"
         />
         <input
           type="url"
@@ -108,14 +110,14 @@ export default function CompCreation() {
           placeholder="Thumbnail picture"
           value={data.image}
           onChange={handleChange}
-          className="m-2 w-5/6 rounded border-2 p-1 text-center"
+          className="m-2 w-5/6  max-w-lg rounded border-2 p-1 text-center"
         />
         <select
           name="player2"
           placeholder="Other player"
           value={data.player2}
           onChange={handleChange}
-          className="m-2 w-5/6 rounded border-2 p-1 text-center"
+          className="m-2 w-5/6  max-w-lg rounded border-2 p-1 text-center"
           required
         >
           <option disabled>Select your Opponent</option>
@@ -125,7 +127,7 @@ export default function CompCreation() {
           disabled={navigation.state === "submitting"}
           className={`${
             navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"
-          } m-2 w-1/2 rounded px-2 py-1 text-white drop-shadow-xl`}
+          } m-2 w-1/2  max-w-xs rounded px-2 py-1 text-white drop-shadow-xl`}
           onClick={(event) => submit(event)}
         >
           {navigation.state === "submitting" ? "Creating..." : "Create"}

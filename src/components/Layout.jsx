@@ -22,7 +22,7 @@ export default function Layout() {
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center">
       <Header isLoggedIn={user && true} myInfo={myInfo} />
-      <main className="no-scrollbar relative w-80 flex-grow overflow-y-auto border-x-2 border-gray-300">
+      <main className="no-scrollbar relative w-full max-w-screen-lg flex-grow overflow-y-auto border-x-2 border-gray-300">
         {loading || (user && !myInfo) ? (
           <h1 className="m-2 text-xl">Loading...</h1>
         ) : (

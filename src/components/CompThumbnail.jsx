@@ -12,7 +12,7 @@ export default function CompThumbnail(props) {
       ? "bg-orange-400"
       : "bg-red-500";
   return (
-    <div className="font flex h-60 w-36 flex-col items-center rounded-lg bg-slate-300 text-lg drop-shadow-md">
+    <div className="font flex aspect-[3/5] w-full flex-col items-center rounded-lg bg-slate-300 text-lg drop-shadow-md sm:text-2xl">
       <p
         className={`max-h-8 w-full rounded-lg text-center capitalize ${color}`}
       >
@@ -24,7 +24,7 @@ export default function CompThumbnail(props) {
             src={props.image}
             fallbackImage={NotFound}
             alt={props.name}
-            className="max-h-44 object-contain"
+            className="max-h-full object-contain"
           />
         ) : (
           <>

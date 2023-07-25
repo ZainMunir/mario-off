@@ -34,7 +34,7 @@ export default function Login() {
 
   return (
     <div className="p-2">
-      <h1 className="text-center text-2xl font-bold">
+      <h1 className="text-center text-2xl font-bold sm:text-4xl">
         Sign in to your account
       </h1>
       {searchParams.get("message") && (
@@ -47,12 +47,12 @@ export default function Login() {
           {error.message}
         </h4>
       )}
-      <div className="m-5 flex flex-col items-center">
+      <div className="m-5 flex flex-col items-center sm:text-xl">
         <button
           disabled={loading}
           className={`${
             loading ? "bg-gray-200" : "bg-blue-500"
-          } m-2 w-2/3 rounded px-2 py-1 text-white drop-shadow-xl`}
+          } m-2 w-2/3 max-w-xs rounded px-2 py-1 text-white drop-shadow-xl`}
           onClick={signIn}
         >
           {loading ? "Logging in..." : "Sign in with Google"}
