@@ -19,14 +19,24 @@ export default function Layout() {
     }
   }, [user]);
 
+  const [darkMode, setDarkMode] = React.useState(
+    localStorage.darkMode === true ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+  );
+
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center">
+    <div
+      className={`flex h-screen w-screen flex-col items-center justify-center ${
+        darkMode ? "dark" : ""
+      }`}
+    >
       <Header isLoggedIn={user && true} myInfo={myInfo} />
       <main className="no-scrollbar relative flex w-full flex-grow overflow-y-auto border-x-2 border-gray-300">
         {loading || (user && !myInfo) ? (
           <h1 className="m-2 text-xl">Loading...</h1>
         ) : (
-          <Outlet context={{ myInfo }} />
+          <Outlet context={{ myInfo, setDarkMode }} />
         )}
       </main>
       <Footer />

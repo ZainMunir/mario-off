@@ -29,9 +29,11 @@ export default function CompThumbnail(props) {
         ) : (
           <>
             <LuSwords size={50} />
-            <p className="aspect-[5/3.5] w-full overflow-hidden text-center">
-              {props.name}
-            </p>
+            {props.name && (
+              <p className="aspect-[5/3.5] w-full overflow-hidden text-center">
+                {props.name}
+              </p>
+            )}
           </>
         )}
       </div>

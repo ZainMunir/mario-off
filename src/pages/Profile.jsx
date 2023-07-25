@@ -10,7 +10,7 @@ import NotFound from "../assets/image-not-found.png";
 export default function Profile() {
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const { myInfo } = useOutletContext();
+  const { myInfo, setDarkMode } = useOutletContext();
   const [signOut, loading, error] = useSignOut(getAuth());
 
   const [data, setData] = React.useState({
@@ -39,6 +39,22 @@ export default function Profile() {
       profilePic: data.profilePic,
     });
     setErrorMessage(message);
+  }
+
+  const darkValue = localStorage.getItem("theme") || "system";
+
+  function handleDarkMode(event) {
+    const { value } = event.target;
+    if (value === "system") {
+      localStorage.removeItem("theme");
+      setDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    } else if (value === "dark") {
+      localStorage.setItem("theme", "dark");
+      setDarkMode(true);
+    } else if (value === "light") {
+      localStorage.setItem("theme", "light");
+      setDarkMode(false);
+    }
   }
 
   return (
@@ -94,6 +110,16 @@ export default function Profile() {
           {navigation.state === "submitting" ? "Updating..." : "Update Profile"}
         </button>
       </form>
+      <select
+        name="status"
+        className={`w-28 rounded-xl bg-gray-100 p-1`}
+        defaultValue={darkValue}
+        onChange={handleDarkMode}
+      >
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
       <button
         className="mx-auto mb-2 mt-auto cursor-pointer rounded-full bg-red-500 p-1 px-3 text-lg text-white drop-shadow-md sm:p-2 sm:text-2xl"
         onClick={async () => await signOut()}
