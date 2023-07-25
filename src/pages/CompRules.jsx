@@ -4,29 +4,19 @@ import { useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/competitions-api";
 import { FaTrashAlt } from "react-icons/fa";
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const rule = formData.get("rule");
-  if (rule == "") return "Please enter something";
-  const pathname = new URL(request.url).pathname;
-  try {
-    await addRule({
-      id: pathname.split("/")[2],
-      rule: rule,
-    });
-    return null;
-  } catch (err) {
-    return err.message;
-  }
-}
-
 export default function CompRules(props) {
   let { currCompetition } = useOutletContext();
   if (!currCompetition) {
     currCompetition = props.currCompetition;
   }
   const navigation = useNavigation();
-  const errorMessage = useActionData();
+
+  const [errorMessage, setErrorMessage] = React.useState(null);
+  const [newRule, setNewRule] = React.useState("");
+
+  function handleChange(event) {
+    setNewRule(event.target.value);
+  }
 
   async function delRule(rule) {
     await deleteRule({
@@ -50,6 +40,24 @@ export default function CompRules(props) {
       </div>
     );
   });
+
+  async function submit(event) {
+    event.preventDefault();
+    if (newRule == "") {
+      setErrorMessage("Please enter something");
+      return;
+    }
+    try {
+      await addRule({
+        id: currCompetition.id,
+        rule: newRule,
+      });
+      setErrorMessage(null);
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
+  }
+
   return (
     <div className="flex h-full flex-col">
       {errorMessage && (
@@ -59,21 +67,24 @@ export default function CompRules(props) {
       )}
       <div>{ruleElements}</div>
       {currCompetition.status === "ongoing" && (
-        <Form method="post" className="mt-auto flex flex-col justify-center">
+        <form method="post" className="mt-auto flex flex-col justify-center">
           <input
             type="text"
             name="rule"
             placeholder="New Rule"
+            value={newRule}
+            onChange={handleChange}
             className="my-2 w-full rounded border-2 p-1"
           />
           <button
             className={`${
               navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
             } text-md mx-auto mb-2 flex w-20 place-content-center rounded-full p-1 text-white drop-shadow-md lg:w-32`}
+            onClick={(event) => submit(event)}
           >
             {navigation.state === "submitting" ? "Adding..." : "Add rule"}
           </button>
-        </Form>
+        </form>
       )}
     </div>
   );

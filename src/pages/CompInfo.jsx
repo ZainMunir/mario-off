@@ -3,7 +3,6 @@ import ReactModal from "react-modal";
 import {
   Form,
   useOutletContext,
-  useActionData,
   useNavigate,
   useNavigation,
 } from "react-router-dom";
@@ -17,36 +16,15 @@ import "./CompInfo.css";
 import ReactImageFallback from "react-image-fallback";
 import NotFound from "../assets/image-not-found.png";
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const name = formData.get("name");
-  const image = formData.get("image");
-  const status = formData.get("status");
-  const description = formData.get("description");
-  const pathname = new URL(request.url).pathname;
-  if (!name) return "Competitions should have names";
-  try {
-    await updateCompetition({
-      id: pathname.split("/")[2],
-      name: name,
-      image: image,
-      status: status,
-      description: description,
-    });
-    return null;
-  } catch (err) {
-    return err.message;
-  }
-}
-
 export default function CompInfo(props) {
   let { currCompetition } = useOutletContext();
   if (!currCompetition) {
     currCompetition = props.currCompetition;
   }
   const navigate = useNavigate();
-  const errorMessage = useActionData();
   const navigation = useNavigation();
+
+  const [errorMessage, setErrorMessage] = React.useState(null);
 
   function formatDate(date) {
     var d = new Date(date),
@@ -99,8 +77,28 @@ export default function CompInfo(props) {
       ? "bg-orange-400"
       : "bg-red-500";
 
+  async function submit(event) {
+    event.preventDefault();
+    if (!data.name) {
+      setErrorMessage("Competitions should have names");
+      return;
+    }
+    try {
+      await updateCompetition({
+        id: currCompetition.id,
+        name: data.name,
+        image: data.image,
+        status: data.status,
+        description: data.description,
+      });
+      setErrorMessage(null);
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
+  }
+
   return (
-    <Form method="post" className="flex h-full flex-col">
+    <form method="post" className="flex h-full flex-col">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
@@ -203,10 +201,11 @@ export default function CompInfo(props) {
           className={`${
             navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
           } mb-2 flex w-24 place-content-center rounded-full p-2 text-lg text-white drop-shadow-md`}
+          onClick={(event) => submit(event)}
         >
           {navigation.state === "submitting" ? "Saving" : "Save info"}
         </button>
       </div>
-    </Form>
+    </form>
   );
 }

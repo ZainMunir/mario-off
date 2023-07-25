@@ -15,8 +15,8 @@ import Competitions, {
   loader as competitionsLoader,
 } from "./pages/Competitions";
 import CompDetails, { loader as compDetailsLoader } from "./pages/CompDetails";
-import CompInfo, { action as compInfoAction } from "./pages/CompInfo";
-import CompRules, { action as compRulesAction } from "./pages/CompRules";
+import CompInfo from "./pages/CompInfo";
+import CompRules from "./pages/CompRules";
 import CompRounds from "./pages/CompRounds";
 import CompCreation from "./pages/CompCreation";
 import Friends from "./pages/Friends";
@@ -56,14 +56,12 @@ const router = createHashRouter(
           element={<CompInfo />}
           errorElement={<Error />}
           loader={async ({ request }) => await requireAuth(request)}
-          action={compInfoAction}
         />
         <Route
           path="rules"
           element={<CompRules />}
           errorElement={<Error />}
           loader={async ({ request }) => await requireAuth(request)}
-          action={compRulesAction}
         />
         <Route
           path="rounds"
