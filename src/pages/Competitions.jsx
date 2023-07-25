@@ -4,6 +4,7 @@ import { requireAuth } from "../util-js/requireAuth";
 import { keepCompetitionsUpdated } from "../util-js/competitions-api";
 import { getActualFriends } from "../util-js/friends-api";
 import CompThumbnail from "../components/CompThumbnail";
+import CompCreation from "./CompCreation";
 
 export async function loader({ request }) {
   await requireAuth(request);
@@ -21,6 +22,16 @@ export default function Competitions() {
   React.useEffect(() => {
     return getActualFriends(myInfo, setFriendsInfo);
   }, [myInfo]);
+
+  const [width, setWidth] = React.useState(window.innerWidth);
+
+  React.useEffect(() => {
+    function updateWidth() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   function clearFilter() {
     setSearchParams((prevParams) => {
@@ -116,70 +127,75 @@ export default function Competitions() {
       : "bg-gray-100";
 
   return (
-    <div className="no-scrollbar mx-auto flex h-full max-w-screen-lg flex-col overflow-y-auto p-1">
-      {competitionsElements && (
-        <div className="mb-2 flex flex-row gap-2 text-sm">
-          <select
-            name="status"
-            className={`w-28 rounded-xl p-1 ${selectColor}`}
-            value={statusFilter || "Status"}
-            onChange={handleFilterChange}
-          >
-            <option value="" className="bg-gray-100">
-              Status
-            </option>
-            <option value="abandoned" className="bg-red-500  ">
-              Abandoned
-            </option>
-            <option value="ongoing" className="bg-orange-400">
-              Ongoing
-            </option>
-            <option value="complete" className="bg-green-400">
-              Complete
-            </option>
-          </select>
+    <>
+      <div className="no-scrollbar mx-auto flex h-full max-w-screen-lg flex-col overflow-y-auto p-1">
+        {competitionsElements && (
+          <div className="mb-2 flex flex-row gap-2 text-sm">
+            <select
+              name="status"
+              className={`w-28 rounded-xl p-1 ${selectColor}`}
+              value={statusFilter || "Status"}
+              onChange={handleFilterChange}
+            >
+              <option value="" className="bg-gray-100">
+                Status
+              </option>
+              <option value="abandoned" className="bg-red-500  ">
+                Abandoned
+              </option>
+              <option value="ongoing" className="bg-orange-400">
+                Ongoing
+              </option>
+              <option value="complete" className="bg-green-400">
+                Complete
+              </option>
+            </select>
 
-          <select
-            name="friend"
-            className={`w-24 rounded-xl p-1 ${
-              friendFilter ? "bg-black text-white" : "bg-gray-100 "
-            }`}
-            value={convertUidToUsername(friendFilter) || "Friend"}
-            onChange={handleFriendFilterChange}
-          >
-            <option value="" className="bg-gray-100 text-black">
-              Friend
-            </option>
-            {friendOptions}
-          </select>
+            <select
+              name="friend"
+              className={`w-24 rounded-xl p-1 ${
+                friendFilter ? "bg-black text-white" : "bg-gray-100 "
+              }`}
+              value={convertUidToUsername(friendFilter) || "Friend"}
+              onChange={handleFriendFilterChange}
+            >
+              <option value="" className="bg-gray-100 text-black">
+                Friend
+              </option>
+              {friendOptions}
+            </select>
 
-          {(statusFilter || friendFilter) && (
-            <button onClick={clearFilter} className="">
-              Clear filters
-            </button>
-          )}
+            {(statusFilter || friendFilter) && (
+              <button onClick={clearFilter} className="">
+                Clear filters
+              </button>
+            )}
+          </div>
+        )}
+        <div className="grid min-h-min w-full grid-cols-2 place-items-center gap-5 scroll-auto sm:grid-cols-3 md:grid-cols-4">
+          {competitionsElements}
         </div>
-      )}
-      <div className="grid min-h-min w-full grid-cols-2 place-items-center gap-5 scroll-auto sm:grid-cols-3 md:grid-cols-4">
-        {competitionsElements}
-      </div>
-      <div
-        className={`flex pt-1 ${
-          competitionsElements
-            ? "absolute bottom-4 right-4 mt-auto justify-end"
-            : "place-content-center"
-        }`}
-      >
-        <Link to="../competition-creation" className="flex items-center">
-          <button
-            className={`mb-2 flex place-content-center rounded-full bg-teal-500 text-white drop-shadow-md ${
-              competitionsElements ? "h-10 w-10 text-3xl" : "p-2 text-lg"
+        {width < 1600 && (
+          <div
+            className={`flex pt-1 ${
+              competitionsElements
+                ? "absolute bottom-4 right-4 mt-auto justify-end"
+                : "place-content-center"
             }`}
           >
-            {competitionsElements ? "+" : "Create Competition"}
-          </button>
-        </Link>
+            <Link to="../competition-creation" className="flex items-center">
+              <button
+                className={`mb-2 flex place-content-center rounded-full bg-teal-500 text-white drop-shadow-md ${
+                  competitionsElements ? "h-10 w-10 text-3xl" : "p-2 text-lg"
+                }`}
+              >
+                {competitionsElements ? "+" : "Create Competition"}
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
-    </div>
+      {width >= 1600 && <CompCreation keepHistory={true} />}
+    </>
   );
 }

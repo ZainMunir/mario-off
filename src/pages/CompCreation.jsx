@@ -4,7 +4,7 @@ import { addCompetition } from "../util-js/competitions-api";
 import { getActualFriends } from "../util-js/friends-api";
 import CompThumbnail from "../components/CompThumbnail";
 
-export default function CompCreation() {
+export default function CompCreation(props) {
   const navigation = useNavigation();
   const navigate = useNavigate();
   const { myInfo } = useOutletContext();
@@ -68,7 +68,9 @@ export default function CompCreation() {
         },
         myInfo
       );
-      return navigate(`../competitions/${id}`, { replace: true });
+      return navigate(`../competitions/${id}`, {
+        replace: props.keepHistory ? false : true,
+      });
     } catch (err) {
       setErrorMessage(err.message);
     }
