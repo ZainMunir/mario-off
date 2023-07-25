@@ -97,9 +97,9 @@ export default function CompInfo() {
       : "bg-red-500";
 
   return (
-    <Form method="post" className="flex flex-col h-full">
+    <Form method="post" className="flex h-full flex-col">
       {errorMessage && (
-        <h3 className="font-bold text-center text-lg text-red-600">
+        <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
         </h3>
       )}
@@ -107,7 +107,7 @@ export default function CompInfo() {
         isOpen={isModalOpen}
         contentLabel="DeleteModal"
         overlayClassName="bg-opacity-50 bg-black w-screen h-screen fixed top-0 left-0 z-20"
-        className="w-72 h-40 centerModal flex flex-col place-content-center text-center bg-gray-200 p-4 justify-between rounded-xl drop-shadow-xl "
+        className="centerModal flex h-40 w-72 flex-col place-content-center justify-between rounded-xl bg-gray-200 p-4 text-center drop-shadow-xl "
         appElement={document.getElementById("root")}
       >
         <p>
@@ -116,33 +116,33 @@ export default function CompInfo() {
         </p>
         <div className="flex flex-row ">
           <div
-            className="mt-auto text-md w-24 mx-auto bg-green-400 rounded-full drop-shadow-md text-white cursor-pointer"
+            className="text-md mx-auto mt-auto w-24 cursor-pointer rounded-full bg-green-400 text-white drop-shadow-md"
             onClick={() => setIsModalOpen(false)}
           >
             Cancel
           </div>
           <div
-            className="mt-auto text-md w-24 mx-auto bg-red-500 rounded-full drop-shadow-md text-white cursor-pointer"
+            className="text-md mx-auto mt-auto w-24 cursor-pointer rounded-full bg-red-500 text-white drop-shadow-md"
             onClick={deleteComp}
           >
             Delete
           </div>
         </div>
       </ReactModal>
-      <div className="flex flex-row mb-2 ">
-        <div className="h-48 w-1/2 flex flex-wrap place-content-center">
+      <div className="mb-2 flex flex-row ">
+        <div className="flex h-48 w-1/2 flex-wrap place-content-center">
           {data.image ? (
             <ReactImageFallback
               src={data.image}
               fallbackImage={NotFound}
               alt={data.name}
-              className="max-h-48 object-contain rounded"
+              className="max-h-48 rounded object-contain"
             />
           ) : (
             <LuSwords size={80} />
           )}
         </div>
-        <div className="flex flex-col align-middle w-1/2 text-center text-sm p-2">
+        <div className="flex w-1/2 flex-col p-2 text-center align-middle text-sm">
           <div className="mb-3">Started: {creationDate}</div>
           <CompScore
             players={currCompetition.players}
@@ -150,7 +150,7 @@ export default function CompInfo() {
           />
           <select
             name="status"
-            className={`mt-8 mx-auto w-28 rounded-xl p-1 ${selectColor}`}
+            className={`mx-auto mt-8 w-28 rounded-xl p-1 ${selectColor}`}
             value={data.status}
             onChange={handleChange}
           >
@@ -165,21 +165,21 @@ export default function CompInfo() {
             </option>
           </select>
           <div
-            className="mt-auto text-lg w-20 mx-auto bg-red-500 rounded-full drop-shadow-md text-white cursor-pointer"
+            className="mx-auto mt-auto w-20 cursor-pointer rounded-full bg-red-500 text-lg text-white drop-shadow-md"
             onClick={() => setIsModalOpen(true)}
           >
             Delete
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center flex-grow">
+      <div className="flex flex-grow flex-col items-center">
         <input
           type="text"
           name="name"
           placeholder="Competition Name"
           value={data.name}
           onChange={handleChange}
-          className="border-2 rounded p-1 m-2 w-full"
+          className="m-2 w-full rounded border-2 p-1"
         />
         <input
           type="url"
@@ -187,11 +187,11 @@ export default function CompInfo() {
           placeholder="Thumbnail picture"
           value={data.image}
           onChange={handleChange}
-          className="border-2 rounded p-1 m-2 w-full text-center"
+          className="m-2 w-full rounded border-2 p-1 text-center"
         />
         <textarea
           placeholder="Description"
-          className="border-2 rounded p-1 m-2 w-full h-32"
+          className="m-2 h-32 w-full rounded border-2 p-1"
           name="description"
           value={data.description}
           onChange={handleChange}
@@ -199,7 +199,7 @@ export default function CompInfo() {
         <button
           className={`${
             navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
-          } rounded-full drop-shadow-md text-white mb-2 place-content-center flex text-lg p-2 w-24`}
+          } mb-2 flex w-24 place-content-center rounded-full p-2 text-lg text-white drop-shadow-md`}
         >
           {navigation.state === "submitting" ? "Saving" : "Save info"}
         </button>

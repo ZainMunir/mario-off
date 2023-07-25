@@ -3,7 +3,7 @@ import React from "react";
 export default function Home() {
   return (
     <div className="m-2">
-      <h1 className="font-bold text-2xl">
+      <h1 className="text-2xl font-bold">
         Welcome to the Mario-Off Competitions app!
       </h1>
       <p>

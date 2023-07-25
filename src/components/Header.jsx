@@ -11,9 +11,9 @@ export default function Header({ isLoggedIn, myInfo }) {
     fontWeight: "500",
   };
   return (
-    <header className="h-12 p-4 w-screen flex justify-center items-center bg-gray-400 sticky top-0  z-10">
-      <div className="w-80 flex justify-between ">
-        <NavLink to="/" className="flex items-center mr-auto" end>
+    <header className="sticky top-0 z-10 flex h-12 w-screen items-center justify-center bg-gray-400  p-4">
+      <div className="flex w-80 justify-between ">
+        <NavLink to="/" className="mr-auto flex items-center" end>
           {({ isActive }) =>
             isActive ? <AiFillHome size={30} /> : <AiOutlineHome size={30} />
           }
@@ -22,7 +22,7 @@ export default function Header({ isLoggedIn, myInfo }) {
           <>
             <NavLink
               to="friends"
-              className="flex items-center mr-2"
+              className="mr-2 flex items-center"
               style={({ isActive }) => (isActive ? activeStyles : null)}
               end
             >
@@ -30,7 +30,7 @@ export default function Header({ isLoggedIn, myInfo }) {
             </NavLink>
             <NavLink
               to="competitions"
-              className="flex items-center w-24"
+              className="flex w-24 items-center"
               style={({ isActive }) => (isActive ? activeStyles : null)}
               end
             >
@@ -40,7 +40,7 @@ export default function Header({ isLoggedIn, myInfo }) {
         )}
         <NavLink
           to={isLoggedIn ? "profile " : "login"}
-          className="flex items-center ml-2"
+          className="ml-2 flex items-center"
         >
           {({ isActive }) =>
             isActive
@@ -49,7 +49,7 @@ export default function Header({ isLoggedIn, myInfo }) {
                     src={myInfo.profilePic}
                     fallbackImage={NotFound}
                     alt={myInfo.username}
-                    className="w-8 h-8 object-cover bg-gray-200 rounded-full border-2 border-black"
+                    className="h-8 w-8 rounded-full border-2 border-black bg-gray-200 object-cover"
                   />
                 )) || <MdAccountCircle size={32} />
               : (myInfo && myInfo.profilePic && (
@@ -57,7 +57,7 @@ export default function Header({ isLoggedIn, myInfo }) {
                     src={myInfo.profilePic}
                     fallbackImage={NotFound}
                     alt={myInfo.username}
-                    className="w-8 h-8 object-cover bg-gray-200 rounded-full border-2"
+                    className="h-8 w-8 rounded-full border-2 bg-gray-200 object-cover"
                   />
                 )) || <MdOutlineAccountCircle size={32} />
           }

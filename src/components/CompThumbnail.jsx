@@ -12,13 +12,13 @@ export default function CompThumbnail(props) {
       ? "bg-orange-400"
       : "bg-red-500";
   return (
-    <div className="flex flex-col items-center font text-lg w-36 h-60 drop-shadow-md bg-slate-300 rounded-lg">
+    <div className="font flex h-60 w-36 flex-col items-center rounded-lg bg-slate-300 text-lg drop-shadow-md">
       <p
-        className={`w-full max-h-8 rounded-lg text-center capitalize ${color}`}
+        className={`max-h-8 w-full rounded-lg text-center capitalize ${color}`}
       >
         {props.status}
       </p>
-      <div className="flex-grow flex flex-col flex-wrap place-content-center m-1 items-center ">
+      <div className="m-1 flex flex-grow flex-col flex-wrap place-content-center items-center ">
         {props.image ? (
           <ReactImageFallback
             src={props.image}

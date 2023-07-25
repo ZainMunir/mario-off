@@ -3,8 +3,8 @@ import { AiFillGithub, AiOutlineForm } from "react-icons/ai";
 
 export default function Footer() {
   return (
-    <footer className="min-h-min w-screen flex items-center justify-center mt-auto bg-gray-200 ">
-      <div className="h-6 w-80 flex justify-end items-center">
+    <footer className="mt-auto flex min-h-min w-screen items-center justify-center bg-gray-200 ">
+      <div className="flex h-6 w-80 items-center justify-end">
         <p className="ml-2 mr-auto text-xs">Mario-off</p>
         <a
           href="https://github.com/ZainMunir/mario-off/issues"

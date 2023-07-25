@@ -50,7 +50,7 @@ export default function CompCreation() {
     : [];
 
   if (friendOptions.length == []) {
-    return <h1 className="my-1 mx-2">Please add some friends first!</h1>;
+    return <h1 className="mx-2 my-1">Please add some friends first!</h1>;
   }
 
   async function submit(event) {
@@ -80,12 +80,12 @@ export default function CompCreation() {
   return (
     <div className="flex flex-col items-center">
       {errorMessage && (
-        <h3 className="font-bold text-center text-lg text-red-600">
+        <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
         </h3>
       )}
 
-      <h3 className="font-bold text-center text-lg">Preview</h3>
+      <h3 className="text-center text-lg font-bold">Preview</h3>
       <CompThumbnail
         status="ongoing"
         image={data.image}
@@ -93,14 +93,14 @@ export default function CompCreation() {
         players={[myInfo.userid, data.player2Id]}
         currentScore={[0, 0]}
       />
-      <form type="post" className="flex flex-col items-center w-full p-5 ">
+      <form type="post" className="flex w-full flex-col items-center p-5 ">
         <input
           type="text"
           name="name"
           placeholder="Competition Name"
           value={data.name}
           onChange={handleChange}
-          className="border-2 rounded p-1 m-2 w-5/6 text-center"
+          className="m-2 w-5/6 rounded border-2 p-1 text-center"
         />
         <input
           type="url"
@@ -108,14 +108,14 @@ export default function CompCreation() {
           placeholder="Thumbnail picture"
           value={data.image}
           onChange={handleChange}
-          className="border-2 rounded p-1 m-2 w-5/6 text-center"
+          className="m-2 w-5/6 rounded border-2 p-1 text-center"
         />
         <select
           name="player2"
           placeholder="Other player"
           value={data.player2}
           onChange={handleChange}
-          className="border-2 rounded p-1 m-2 w-5/6 text-center"
+          className="m-2 w-5/6 rounded border-2 p-1 text-center"
           required
         >
           <option disabled>Select your Opponent</option>
@@ -125,7 +125,7 @@ export default function CompCreation() {
           disabled={navigation.state === "submitting"}
           className={`${
             navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"
-          } text-white drop-shadow-xl rounded py-1 px-2 m-2 w-1/2`}
+          } m-2 w-1/2 rounded px-2 py-1 text-white drop-shadow-xl`}
           onClick={(event) => submit(event)}
         >
           {navigation.state === "submitting" ? "Creating..." : "Create"}

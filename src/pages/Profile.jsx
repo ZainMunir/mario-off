@@ -42,25 +42,25 @@ export default function Profile() {
   }
 
   return (
-    <div className="flex flex-col items-center h-full">
+    <div className="flex h-full flex-col items-center">
       {errorMessage && (
-        <h3 className="font-bold text-center text-lg text-red-600">
+        <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
         </h3>
       )}
-      <h3 className="font-bold text-center text-2xl">Profile</h3>
+      <h3 className="text-center text-2xl font-bold">Profile</h3>
       <div className="h-32">
         {data.profilePic ? (
           <ReactImageFallback
             src={data.profilePic}
             fallbackImage={NotFound}
-            className="w-32 rounded-full h-32 object-cover bg-gray-100 border-2"
+            className="h-32 w-32 rounded-full border-2 bg-gray-100 object-cover"
           />
         ) : (
           <MdAccountCircle size={128} />
         )}
       </div>
-      <form type="post" className="flex flex-col items-center w-full p-5 ">
+      <form type="post" className="flex w-full flex-col items-center p-5 ">
         <label htmlFor="username">Username</label>
         <input
           type="text"
@@ -68,7 +68,7 @@ export default function Profile() {
           placeholder="Username"
           value={data.username}
           onChange={handleChange}
-          className="border-2 rounded p-1 m-2 w-5/6 text-center"
+          className="m-2 w-5/6 rounded border-2 p-1 text-center"
         />
         <label htmlFor="profilpic">Profile Pic</label>
         <input
@@ -77,20 +77,20 @@ export default function Profile() {
           placeholder="Profile Picture"
           value={data.profilePic}
           onChange={handleChange}
-          className="border-2 rounded p-1 m-2 w-5/6 text-center"
+          className="m-2 w-5/6 rounded border-2 p-1 text-center"
         />
         <button
           disabled={navigation.state === "submitting"}
           className={`${
             navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"
-          } text-white drop-shadow-xl rounded py-1 px-2 m-2 w-1/2`}
+          } m-2 w-1/2 rounded px-2 py-1 text-white drop-shadow-xl`}
           onClick={(event) => submit(event)}
         >
           {navigation.state === "submitting" ? "Updating..." : "Update Profile"}
         </button>
       </form>
       <button
-        className="mt-auto mb-2 p-1 px-3 text-lg mx-auto bg-red-500 rounded-full drop-shadow-md text-white cursor-pointer"
+        className="mx-auto mb-2 mt-auto cursor-pointer rounded-full bg-red-500 p-1 px-3 text-lg text-white drop-shadow-md"
         onClick={async () => await signOut()}
       >
         Sign out

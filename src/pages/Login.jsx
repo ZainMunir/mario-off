@@ -34,25 +34,25 @@ export default function Login() {
 
   return (
     <div className="p-2">
-      <h1 className="font-bold text-center text-2xl">
+      <h1 className="text-center text-2xl font-bold">
         Sign in to your account
       </h1>
       {searchParams.get("message") && (
-        <h3 className="font-bold text-center text-xl text-red-600">
+        <h3 className="text-center text-xl font-bold text-red-600">
           {searchParams.get("message")}
         </h3>
       )}
       {error && (
-        <h4 className="font-bold text-center text-md text-red-600">
+        <h4 className="text-md text-center font-bold text-red-600">
           {error.message}
         </h4>
       )}
-      <div className="flex flex-col items-center m-5">
+      <div className="m-5 flex flex-col items-center">
         <button
           disabled={loading}
           className={`${
             loading ? "bg-gray-200" : "bg-blue-500"
-          } text-white drop-shadow-xl rounded py-1 px-2 m-2 w-2/3`}
+          } m-2 w-2/3 rounded px-2 py-1 text-white drop-shadow-xl`}
           onClick={signIn}
         >
           {loading ? "Logging in..." : "Sign in with Google"}

@@ -45,7 +45,7 @@ export default function Friends() {
               </p>
               <button
                 onClick={() => delFriend(currentFriend)}
-                className="text-red-600 mr-2"
+                className="mr-2 text-red-600"
               >
                 x
               </button>
@@ -72,14 +72,14 @@ export default function Friends() {
           return (
             <div
               key={friend.userid}
-              className="flex items-center group relative"
+              className="group relative flex items-center"
             >
               {currentFriend.profilePic ? (
                 <ReactImageFallback
                   src={currentFriend.profilePic}
                   fallbackImage={NotFound}
                   alt={currentFriend.username}
-                  className="w-5 h-5 object-cover bg-gray-200 rounded-full"
+                  className="h-5 w-5 rounded-full bg-gray-200 object-cover"
                 />
               ) : (
                 <MdAccountCircle size={20} />
@@ -89,7 +89,7 @@ export default function Friends() {
                 {myInfoOnThem.score[1]} - {myInfoOnThem.score[0]}{" "}
               </p>
               <button
-                className="right-0 top-1 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-100"
+                className="absolute right-0 top-1 opacity-0 transition-opacity duration-100 group-hover:opacity-100"
                 onClick={() => delFriend(currentFriend)}
               >
                 <FaTrashAlt />
@@ -106,10 +106,10 @@ export default function Friends() {
             (x) => x.userid == friend.userid
           );
           return (
-            <div key={friend.userid} className="relative group">
+            <div key={friend.userid} className="group relative">
               <p>{currentFriend && currentFriend.username}</p>
               <button
-                className="right-0 top-1 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-100"
+                className="absolute right-0 top-1 opacity-0 transition-opacity duration-100 group-hover:opacity-100"
                 onClick={() => delFriend(currentFriend)}
               >
                 <FaTrashAlt />
@@ -129,29 +129,29 @@ export default function Friends() {
     setErrorMessage(message);
   }
   return (
-    <div className="mx-2 flex flex-col h-full">
+    <div className="mx-2 flex h-full flex-col">
       {errorMessage && (
-        <h3 className="font-bold text-center text-lg text-red-600">
+        <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
         </h3>
       )}
-      <form type="post" className="flex flex-row justify-between mt-2">
+      <form type="post" className="mt-2 flex flex-row justify-between">
         <input
           type="text"
           name="username"
           placeholder="Add friend (username)"
-          className="border-2 rounded px-1 w-3/5"
+          className="w-3/5 rounded border-2 px-1"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
         <button
-          className="bg-teal-500 rounded-full drop-shadow-md text-white place-content-center flex text-md px-1 w-24"
+          className="text-md flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-white drop-shadow-md"
           onClick={(event) => submit(event)}
         >
           Send
         </button>
       </form>
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-grow flex-col">
         {receivedElements.length > 0 && (
           <>
             <h1 className="mt-2 font-bold">Friend Requests</h1>

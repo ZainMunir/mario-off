@@ -46,7 +46,7 @@ export default function CompRounds() {
       <>
         <h1>Round not found</h1>
         <button
-          className="bg-teal-500 rounded-full drop-shadow-md text-white place-content-center flex text-xs p-1 px-2"
+          className="flex place-content-center rounded-full bg-teal-500 p-1 px-2 text-xs text-white drop-shadow-md"
           onClick={() =>
             setSearchParams((prevParams) => {
               prevParams.delete("round");
@@ -88,13 +88,13 @@ export default function CompRounds() {
           {currRound.nestedRounds[i].name}
         </div>
         <div className="relative">
-          <div className="group-hover:opacity-0 transition-opacity duration-100">
+          <div className="transition-opacity duration-100 group-hover:opacity-0">
             {currRound.nestedRounds[i].points}
           </div>
           {currCompetition.status === "ongoing" && (
-            <div className="absolute inset-0 h-full w-full flex justify-center">
+            <div className="absolute inset-0 flex h-full w-full justify-center">
               <button
-                className="self-center opacity-0 group-hover:opacity-100 transition-opacity duration-100"
+                className="self-center opacity-0 transition-opacity duration-100 group-hover:opacity-100"
                 onClick={() => delSubRound(i)}
               >
                 <FaTrashAlt size={16} />
@@ -198,22 +198,22 @@ export default function CompRounds() {
   }
 
   return (
-    <div className="flex flex-col h-full text-center">
+    <div className="flex h-full flex-col text-center">
       <div className="flex flex-row justify-around">
         {currCompetition.status === "ongoing" && (
           <button
             onClick={delRound}
-            className="mr-auto text-sm px-1 w-24 bg-red-500 rounded-full drop-shadow-md text-white disabled:grayscale"
+            className="mr-auto w-24 rounded-full bg-red-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale"
             disabled={currCompetition.rounds.length == 1}
           >
             Delete Round
           </button>
         )}
-        <div className="flex flex-row w-24 mx-2 justify-around ">
+        <div className="mx-2 flex w-24 flex-row justify-around ">
           <select
             value={`Round ${selectedRound}`}
             onChange={setRound}
-            className="rounded-md bg-black text-white text-sm h-full"
+            className="h-full rounded-md bg-black text-sm text-white"
           >
             {roundOptions}
           </select>
@@ -228,7 +228,7 @@ export default function CompRounds() {
         {currCompetition.status === "ongoing" && (
           <button
             onClick={newRound}
-            className="bg-teal-500 rounded-full drop-shadow-md text-white place-content-center flex text-sm px-1 w-24 ml-auto disabled:grayscale"
+            className="ml-auto flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale"
             disabled={currRound.nestedRounds.length == 0}
           >
             Add Round
@@ -238,26 +238,26 @@ export default function CompRounds() {
       <CompScore players={currCompetition.players} currentScore={score} />
       <div className="mt-5">{roundDetails}</div>
       {currCompetition.status === "ongoing" && (
-        <form type="post" className="flex flex-col justify-center mt-auto">
-          <div className="flex flex-row w-full my-2">
+        <form type="post" className="mt-auto flex flex-col justify-center">
+          <div className="my-2 flex w-full flex-row">
             <input
               type="text"
               name="name"
               placeholder="Sub-round name"
-              className="border-2 rounded p-1 w-1/2"
+              className="w-1/2 rounded border-2 p-1"
               value={data.name}
               onChange={handleChange}
             />
             <input
               type="number"
               name="points"
-              className="border-2 rounded p-1 w-1/6"
+              className="w-1/6 rounded border-2 p-1"
               value={data.points}
               onChange={handleChange}
             />
             <select
               name="player"
-              className="border-2 rounded ml-auto p-1 w-1/3"
+              className="ml-auto w-1/3 rounded border-2 p-1"
               value={data.player}
               onChange={handleChange}
             >
@@ -269,7 +269,7 @@ export default function CompRounds() {
           <button
             className={`${
               navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
-            } rounded-full drop-shadow-md text-white mb-2 place-content-center flex text-md p-1 w-32 mx-auto`}
+            } text-md mx-auto mb-2 flex w-32 place-content-center rounded-full p-1 text-white drop-shadow-md`}
             onClick={(event) => addSubRound(event)}
           >
             {navigation.state === "submitting" ? "Adding..." : "Add Sub-round"}

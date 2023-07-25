@@ -20,9 +20,9 @@ export default function Layout() {
   }, [user]);
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center">
+    <div className="flex h-screen w-screen flex-col items-center justify-center">
       <Header isLoggedIn={user && true} myInfo={myInfo} />
-      <main className="flex-grow w-80 overflow-y-auto no-scrollbar relative border-x-2 border-gray-300">
+      <main className="no-scrollbar relative w-80 flex-grow overflow-y-auto border-x-2 border-gray-300">
         {loading || (user && !myInfo) ? (
           <h1 className="m-2 text-xl">Loading...</h1>
         ) : (

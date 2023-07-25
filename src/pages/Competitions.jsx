@@ -116,9 +116,9 @@ export default function Competitions() {
       : "bg-gray-100";
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto no-scrollbar p-1">
+    <div className="no-scrollbar flex h-full flex-col overflow-y-auto p-1">
       {competitionsElements && (
-        <div className="mb-2 flex flex-row gap-2 text-sm justify-between">
+        <div className="mb-2 flex flex-row justify-between gap-2 text-sm">
           <select
             name="status"
             className={`w-28 rounded-xl p-1 ${selectColor}`}
@@ -141,7 +141,7 @@ export default function Competitions() {
 
           <select
             name="friend"
-            className={`w-24 rounded-xl p-1 mr-auto ${
+            className={`mr-auto w-24 rounded-xl p-1 ${
               friendFilter ? "bg-black text-white" : "bg-gray-100 "
             }`}
             value={convertUidToUsername(friendFilter) || "Friend"}
@@ -160,20 +160,20 @@ export default function Competitions() {
           )}
         </div>
       )}
-      <div className="grid grid-cols-2 w-full gap-5 scroll-auto">
+      <div className="grid w-full grid-cols-2 gap-5 scroll-auto">
         {competitionsElements}
       </div>
       <div
         className={`flex pt-1 ${
           competitionsElements
-            ? "justify-end mt-auto absolute bottom-4 right-4"
+            ? "absolute bottom-4 right-4 mt-auto justify-end"
             : "place-content-center"
         }`}
       >
         <Link to="../competition-creation" className="flex items-center">
           <button
-            className={`rounded-full bg-teal-500 drop-shadow-md text-white mb-2 place-content-center flex ${
-              competitionsElements ? "text-3xl w-10 h-10" : "text-lg p-2"
+            className={`mb-2 flex place-content-center rounded-full bg-teal-500 text-white drop-shadow-md ${
+              competitionsElements ? "h-10 w-10 text-3xl" : "p-2 text-lg"
             }`}
           >
             {competitionsElements ? "+" : "Create Competition"}
