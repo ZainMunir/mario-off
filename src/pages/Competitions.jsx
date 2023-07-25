@@ -119,34 +119,40 @@ export default function Competitions() {
 
   const selectColor =
     statusFilter == "complete"
-      ? "bg-green-400"
+      ? "bg-green-400 dark:bg-green-700"
       : statusFilter == "ongoing"
-      ? "bg-orange-400"
+      ? "bg-orange-400 dark:bg-orange-600"
       : statusFilter == "abandoned"
-      ? "bg-red-500"
-      : "bg-gray-100";
+      ? "bg-red-500 dark:bg-red-700"
+      : "bg-gray-100 dark:bg-gray-700";
 
   return (
     <>
-      <div className="no-scrollbar mx-auto flex h-full max-w-screen-lg flex-col overflow-y-auto p-1">
+      <div className="no-scrollbar mx-auto flex h-full w-full max-w-screen-lg flex-col overflow-y-auto p-1">
         {competitionsElements && (
           <div className="mb-2 flex flex-row gap-2 text-sm">
             <select
               name="status"
-              className={`w-28 rounded-xl p-1 ${selectColor}`}
+              className={`w-28 rounded-xl p-1 ${selectColor}  dark:bg-gray-700`}
               value={statusFilter || "Status"}
               onChange={handleFilterChange}
             >
-              <option value="" className="bg-gray-100">
+              <option value="" className="bg-gray-100 dark:bg-gray-800 ">
                 Status
               </option>
-              <option value="abandoned" className="bg-red-500  ">
+              <option value="abandoned" className="bg-red-500 dark:bg-red-700 ">
                 Abandoned
               </option>
-              <option value="ongoing" className="bg-orange-400">
+              <option
+                value="ongoing"
+                className="bg-orange-400  dark:bg-orange-600"
+              >
                 Ongoing
               </option>
-              <option value="complete" className="bg-green-400">
+              <option
+                value="complete"
+                className="bg-green-400 dark:bg-green-700"
+              >
                 Complete
               </option>
             </select>
@@ -154,12 +160,17 @@ export default function Competitions() {
             <select
               name="friend"
               className={`w-24 rounded-xl p-1 ${
-                friendFilter ? "bg-black text-white" : "bg-gray-100 "
+                friendFilter
+                  ? "bg-black text-white dark:bg-zinc-800"
+                  : "bg-gray-100 dark:bg-gray-700 "
               }`}
               value={convertUidToUsername(friendFilter) || "Friend"}
               onChange={handleFriendFilterChange}
             >
-              <option value="" className="bg-gray-100 text-black">
+              <option
+                value=""
+                className="bg-gray-100 text-black dark:bg-gray-700 dark:text-white"
+              >
                 Friend
               </option>
               {friendOptions}
@@ -185,7 +196,7 @@ export default function Competitions() {
           >
             <Link to="../competition-creation" className="flex items-center">
               <button
-                className={`mb-2 flex place-content-center rounded-full bg-teal-500 text-white drop-shadow-md ${
+                className={`mb-2 flex place-content-center rounded-full bg-teal-500 text-white drop-shadow-md dark:bg-teal-800 ${
                   competitionsElements ? "h-10 w-10 text-3xl" : "p-2 text-lg"
                 }`}
               >

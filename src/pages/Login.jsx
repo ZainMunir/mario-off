@@ -51,8 +51,8 @@ export default function Login() {
         <button
           disabled={loading}
           className={`${
-            loading ? "bg-gray-200" : "bg-blue-500"
-          } m-2 w-2/3 max-w-xs rounded px-2 py-1 text-white drop-shadow-xl`}
+            loading ? "bg-gray-700" : "dark:bg-blue-900"
+          } m-2 w-2/3 max-w-xs rounded px-2 py-1 text-white drop-shadow-xl `}
           onClick={signIn}
         >
           {loading ? "Logging in..." : "Sign in with Google"}

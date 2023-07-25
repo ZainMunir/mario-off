@@ -58,13 +58,15 @@ export default function Profile() {
   }
 
   return (
-    <div className="mx-auto flex h-full max-w-xl flex-grow flex-col items-center border-x-2 ">
+    <div className="mx-auto flex h-full max-w-xl flex-grow flex-col items-center border-x-2 dark:border-gray-700">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
         </h3>
       )}
-      <h3 className="text-center text-2xl font-bold sm:text-5xl">Profile</h3>
+      <h3 className="mb-2 text-center text-2xl font-bold sm:text-5xl">
+        Profile
+      </h3>
       <div className="aspect-square w-1/3 max-w-xs">
         {data.profilePic ? (
           <ReactImageFallback
@@ -89,7 +91,7 @@ export default function Profile() {
           placeholder="Username"
           value={data.username}
           onChange={handleChange}
-          className="m-2 w-5/6 max-w-md rounded border-2 p-1 text-center"
+          className="m-2 w-5/6 max-w-md rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
         />
         <label htmlFor="profilpic">Profile Pic</label>
         <input
@@ -98,13 +100,11 @@ export default function Profile() {
           placeholder="Profile Picture"
           value={data.profilePic}
           onChange={handleChange}
-          className="m-2 w-5/6  max-w-md rounded border-2 p-1 text-center"
+          className="m-2 w-5/6 max-w-md rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
         />
         <button
           disabled={navigation.state === "submitting"}
-          className={`${
-            navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"
-          } m-2 w-1/2 max-w-xs rounded px-2 py-1 text-white drop-shadow-xl`}
+          className="m-2 w-1/2 max-w-xs rounded bg-blue-500 px-2 py-1 text-white drop-shadow-xl dark:bg-blue-900"
           onClick={(event) => submit(event)}
         >
           {navigation.state === "submitting" ? "Updating..." : "Update Profile"}
@@ -112,7 +112,7 @@ export default function Profile() {
       </form>
       <select
         name="status"
-        className={`w-28 rounded-xl bg-gray-100 p-1`}
+        className="w-28 rounded-xl bg-gray-100 p-1 dark:bg-gray-700"
         defaultValue={darkValue}
         onChange={handleDarkMode}
       >
@@ -121,7 +121,7 @@ export default function Profile() {
         <option value="dark">Dark</option>
       </select>
       <button
-        className="mx-auto mb-2 mt-auto cursor-pointer rounded-full bg-red-500 p-1 px-3 text-lg text-white drop-shadow-md sm:p-2 sm:text-2xl"
+        className="mx-auto mb-2 mt-auto cursor-pointer rounded-full bg-red-500 p-1 px-3 text-lg text-white drop-shadow-md dark:bg-red-900 sm:p-2 sm:text-2xl"
         onClick={async () => await signOut()}
       >
         Sign out

@@ -74,11 +74,13 @@ export default function CompRules(props) {
             placeholder="New Rule"
             value={newRule}
             onChange={handleChange}
-            className="my-2 w-full rounded border-2 p-1"
+            className="my-2 w-full rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
           />
           <button
             className={`${
-              navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
+              navigation.state === "submitting"
+                ? "bg-gray-300 dark:bg-gray-700"
+                : "bg-teal-500 dark:bg-teal-800"
             } text-md mx-auto mb-2 flex w-20 place-content-center rounded-full p-1 text-white drop-shadow-md lg:w-32`}
             onClick={(event) => submit(event)}
           >

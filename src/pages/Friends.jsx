@@ -79,7 +79,7 @@ export default function Friends() {
                   src={currentFriend.profilePic}
                   fallbackImage={NotFound}
                   alt={currentFriend.username}
-                  className="h-5 w-5 rounded-full bg-gray-200 object-cover"
+                  className="aspect-square w-5 rounded-full bg-gray-200 object-cover sm:w-8"
                 />
               ) : (
                 <MdAccountCircle size={20} />
@@ -129,7 +129,7 @@ export default function Friends() {
     setErrorMessage(message);
   }
   return (
-    <div className="mx-auto flex h-full w-full max-w-xl flex-col border-x-2 p-2 sm:text-3xl">
+    <div className="mx-auto flex h-full w-full max-w-xl flex-col border-x-2 p-2 dark:border-gray-700 sm:text-3xl">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
@@ -140,12 +140,12 @@ export default function Friends() {
           type="text"
           name="username"
           placeholder="Add friend (username)"
-          className="w-3/5 rounded border-2 px-1"
+          className="w-3/5 rounded border-2 px-1 dark:border-gray-600 dark:bg-gray-700"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
         <button
-          className="text-md flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-white drop-shadow-md sm:w-32 sm:py-1"
+          className="text-md flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-white drop-shadow-md dark:bg-teal-800 sm:w-32 sm:py-1"
           onClick={(event) => submit(event)}
         >
           Send

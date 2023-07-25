@@ -206,7 +206,7 @@ export default function CompRounds(props) {
         {currCompetition.status === "ongoing" && (
           <button
             onClick={delRound}
-            className="mr-auto w-24 rounded-full bg-red-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale"
+            className="mr-auto w-24 rounded-full bg-red-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-red-800"
             disabled={currCompetition.rounds.length == 1}
           >
             Delete Round
@@ -216,7 +216,7 @@ export default function CompRounds(props) {
           <select
             value={`Round ${selectedRound}`}
             onChange={setRound}
-            className="h-full rounded-md bg-black text-sm text-white"
+            className="h-full rounded-md bg-black text-sm text-white dark:bg-zinc-800"
           >
             {roundOptions}
           </select>
@@ -231,7 +231,7 @@ export default function CompRounds(props) {
         {currCompetition.status === "ongoing" && (
           <button
             onClick={newRound}
-            className="ml-auto flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale"
+            className="ml-auto flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-teal-800"
             disabled={currRound.nestedRounds.length == 0}
           >
             Add Round
@@ -247,20 +247,20 @@ export default function CompRounds(props) {
               type="text"
               name="name"
               placeholder="Sub-round name"
-              className="w-1/2 rounded border-2 p-1"
+              className="w-1/2 rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
               value={data.name}
               onChange={handleChange}
             />
             <input
               type="number"
               name="points"
-              className="w-1/6 rounded border-2 p-1"
+              className="w-1/6 rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
               value={data.points}
               onChange={handleChange}
             />
             <select
               name="player"
-              className="ml-auto w-1/3 rounded border-2 p-1"
+              className="ml-auto w-1/3 rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
               value={data.player}
               onChange={handleChange}
             >
@@ -271,7 +271,9 @@ export default function CompRounds(props) {
           </div>
           <button
             className={`${
-              navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
+              navigation.state === "submitting"
+                ? "bg-gray-300 dark:bg-gray-700"
+                : "bg-teal-500 dark:bg-teal-800"
             } text-md mx-auto mb-2 flex w-32 place-content-center rounded-full p-1 text-white drop-shadow-md lg:w-48`}
             onClick={(event) => addSubRound(event)}
           >

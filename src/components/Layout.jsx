@@ -32,7 +32,7 @@ export default function Layout() {
       }`}
     >
       <Header isLoggedIn={user && true} myInfo={myInfo} />
-      <main className="no-scrollbar relative flex w-full flex-grow overflow-y-auto border-x-2 border-gray-300">
+      <main className="no-scrollbar relative flex w-full flex-grow overflow-y-auto dark:bg-black dark:text-white">
         {loading || (user && !myInfo) ? (
           <h1 className="m-2 text-xl">Loading...</h1>
         ) : (

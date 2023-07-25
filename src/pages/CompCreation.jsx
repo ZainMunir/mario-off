@@ -80,14 +80,14 @@ export default function CompCreation(props) {
     return <h1>Please add some friends first!</h1>;
   }
   return (
-    <div className="mx-auto flex max-w-xl flex-grow flex-col items-center border-x-2">
+    <div className="mx-auto flex max-w-xl flex-grow flex-col items-center border-x-2 dark:border-gray-700">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
         </h3>
       )}
 
-      <h3 className="text-center text-lg font-bold">Preview</h3>
+      <h3 className="text-center text-xl font-bold">Preview</h3>
       <div className="w-1/3 max-w-xs">
         <CompThumbnail
           status="ongoing"
@@ -104,7 +104,7 @@ export default function CompCreation(props) {
           placeholder="Competition Name"
           value={data.name}
           onChange={handleChange}
-          className="m-2 w-5/6 max-w-lg rounded border-2 p-1 text-center"
+          className="m-2 w-5/6 max-w-lg rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
         />
         <input
           type="url"
@@ -112,14 +112,14 @@ export default function CompCreation(props) {
           placeholder="Thumbnail picture"
           value={data.image}
           onChange={handleChange}
-          className="m-2 w-5/6  max-w-lg rounded border-2 p-1 text-center"
+          className="m-2 w-5/6  max-w-lg rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
         />
         <select
           name="player2"
           placeholder="Other player"
           value={data.player2}
           onChange={handleChange}
-          className="m-2 w-5/6  max-w-lg rounded border-2 p-1 text-center"
+          className="m-2 w-5/6 max-w-lg rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
           required
         >
           <option disabled>Select your Opponent</option>
@@ -128,7 +128,9 @@ export default function CompCreation(props) {
         <button
           disabled={navigation.state === "submitting"}
           className={`${
-            navigation.state === "submitting" ? "bg-gray-200" : "bg-blue-500"
+            navigation.state === "submitting"
+              ? "bg-gray-200 dark:bg-gray-700"
+              : "bg-teal-500 dark:bg-teal-800"
           } m-2 w-1/2  max-w-xs rounded px-2 py-1 text-white drop-shadow-xl`}
           onClick={(event) => submit(event)}
         >

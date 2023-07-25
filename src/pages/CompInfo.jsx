@@ -72,10 +72,10 @@ export default function CompInfo(props) {
 
   const selectColor =
     data.status == "complete"
-      ? "bg-green-400"
+      ? "bg-green-400 dark:bg-green-700"
       : data.status == "ongoing"
-      ? "bg-orange-400"
-      : "bg-red-500";
+      ? "bg-orange-400 dark:bg-orange-600"
+      : "bg-red-500 dark:bg-red-700";
 
   async function submit(event) {
     event.preventDefault();
@@ -117,13 +117,13 @@ export default function CompInfo(props) {
         </p>
         <div className="flex flex-row ">
           <div
-            className="text-md mx-auto mt-auto w-24 cursor-pointer rounded-full bg-green-400 text-white drop-shadow-md"
+            className="text-md mx-auto mt-auto w-24 cursor-pointer rounded-full bg-green-400 text-white drop-shadow-md "
             onClick={() => setIsModalOpen(false)}
           >
             Cancel
           </div>
           <div
-            className="text-md mx-auto mt-auto w-24 cursor-pointer rounded-full bg-red-500 text-white drop-shadow-md"
+            className="text-md mx-auto mt-auto w-24 cursor-pointer rounded-full bg-red-500 text-white  drop-shadow-md "
             onClick={deleteComp}
           >
             Delete
@@ -155,18 +155,21 @@ export default function CompInfo(props) {
             value={data.status}
             onChange={handleChange}
           >
-            <option value="abandoned" className="bg-red-500  ">
+            <option value="abandoned" className="bg-red-500 dark:bg-red-700">
               Abandoned
             </option>
-            <option value="ongoing" className="bg-orange-400">
+            <option
+              value="ongoing"
+              className="bg-orange-400 dark:bg-orange-600"
+            >
               Ongoing
             </option>
-            <option value="complete" className="bg-green-400">
+            <option value="complete" className="bg-green-400 dark:bg-green-700">
               Complete
             </option>
           </select>
           <div
-            className="mx-auto mt-auto w-20 cursor-pointer rounded-full bg-red-500 text-lg text-white drop-shadow-md"
+            className="mx-auto mt-auto w-20 cursor-pointer rounded-full bg-red-500 text-lg  text-white drop-shadow-md dark:bg-red-900"
             onClick={() => setIsModalOpen(true)}
           >
             Delete
@@ -180,7 +183,7 @@ export default function CompInfo(props) {
           placeholder="Competition Name"
           value={data.name}
           onChange={handleChange}
-          className="m-2 w-full max-w-md rounded border-2 p-1"
+          className="m-2 w-full max-w-md rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
         />
         <input
           type="url"
@@ -188,18 +191,20 @@ export default function CompInfo(props) {
           placeholder="Thumbnail picture"
           value={data.image}
           onChange={handleChange}
-          className="m-2 w-full max-w-md rounded border-2 p-1 text-center"
+          className="m-2 w-full max-w-md rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
         />
         <textarea
           placeholder="Description"
-          className="m-2 h-32 w-full max-w-md rounded border-2 p-1"
+          className="m-2 h-32 w-full max-w-md rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
           name="description"
           value={data.description}
           onChange={handleChange}
         />
         <button
           className={`${
-            navigation.state === "submitting" ? "bg-gray-300" : "bg-teal-500"
+            navigation.state === "submitting"
+              ? "bg-gray-300 dark:bg-gray-700"
+              : "bg-teal-500 dark:bg-teal-800"
           } mb-2 flex w-24 place-content-center rounded-full p-2 text-lg text-white drop-shadow-md`}
           onClick={(event) => submit(event)}
         >

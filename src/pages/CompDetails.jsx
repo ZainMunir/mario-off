@@ -46,8 +46,8 @@ export default function CompDetails() {
   };
 
   return (
-    <div className="flex w-full flex-grow flex-col bg-gray-100">
-      <h1 className="bg-white py-1 text-center text-2xl font-bold sm:py-2 sm:text-3xl lg:text-4xl">
+    <div className="bg-gray-1 flex w-full flex-grow flex-col dark:bg-gray-950">
+      <h1 className="bg-white py-1 text-center text-2xl font-bold dark:bg-black sm:py-2 sm:text-3xl lg:text-4xl">
         {currCompetition.name}
       </h1>
       {width < 1024 ? (
