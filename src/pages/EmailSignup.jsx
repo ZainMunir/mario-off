@@ -4,7 +4,7 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { addNewEmailUser } from "../util-js/api";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
-export default function Signup() {
+export default function EmailSignup() {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(getAuth());
   const [errorMessage, setErrorMessage] = React.useState(null);
@@ -36,17 +36,12 @@ export default function Signup() {
       setErrorMessage("Please enter both fields");
       return;
     }
-    console.log(data.password);
     await createUserWithEmailAndPassword(data.email, data.password).then(
       async (result) => {
-        console.log(result);
+        if (!result) return;
         await addNewEmailUser(result.user.uid);
       }
     );
-    if (error) {
-      setErrorMessage(error.message);
-      return;
-    }
   }
 
   return (

@@ -5,11 +5,8 @@ import {
   useNavigate,
   useOutletContext,
 } from "react-router-dom";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { getAdditionalUserInfo, getAuth } from "firebase/auth";
-import { addNewUser } from "../util-js/api";
 import EmainSignin from "../components/EmailSignin";
-
+import GoogleSignIn from "../components/GoogleSignIn";
 export function loader({ request }) {
   return new URL(request.url).searchParams;
 }
@@ -18,9 +15,7 @@ export default function Login() {
   const searchParams = useLoaderData();
   const { myInfo } = useOutletContext();
   const navigate = useNavigate();
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(
-    getAuth()
-  );
+  const [errorMessage, setErrorMessage] = React.useState(null);
 
   React.useEffect(() => {
     if (myInfo) {
@@ -28,15 +23,6 @@ export default function Login() {
       return navigate(pathname, { replace: true });
     }
   }, [myInfo]);
-
-  async function signIn() {
-    signInWithGoogle().then(async (result) => {
-      const details = getAdditionalUserInfo(result);
-      if (details.isNewUser) {
-        await addNewUser(result.user);
-      }
-    });
-  }
 
   return (
     <div className="mx-auto flex max-w-xl flex-grow flex-col items-center p-2">
@@ -48,12 +34,15 @@ export default function Login() {
           {searchParams.get("message")}
         </h3>
       )}
-      {error && (
+      {errorMessage && (
         <h4 className="text-md text-center font-bold text-red-600">
-          {error.message}
+          {errorMessage}
         </h4>
       )}
-      <EmainSignin />
+      <EmainSignin
+        setErrorMessage={setErrorMessage}
+        errorMessage={errorMessage}
+      />
       <h4>
         Don't have an account yet?{" "}
         <Link to="/signup" className="underline">
@@ -63,17 +52,10 @@ export default function Login() {
       <h4 className="mt-2 text-sm">
         Or you can sign in with one of the following:
       </h4>
-      <div className="m-5 flex w-full flex-col items-center sm:text-xl">
-        <button
-          disabled={loading}
-          className={`${
-            loading ? "bg-gray-700" : "bg-blue-600 dark:bg-blue-900"
-          } m-2 w-2/3 max-w-xs rounded px-2 py-1 text-white drop-shadow-xl `}
-          onClick={signIn}
-        >
-          {loading ? "Logging in..." : "Sign in with Google"}
-        </button>
-      </div>
+      <GoogleSignIn
+        setErrorMessage={setErrorMessage}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

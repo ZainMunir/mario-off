@@ -59,7 +59,6 @@ export async function addNewUser(user) {
 }
 
 export async function addNewEmailUser(uid) {
-  console.log(uid);
   const newInfo = {
     username: "",
     profilePic: "",

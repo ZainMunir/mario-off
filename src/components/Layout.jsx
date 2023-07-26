@@ -13,7 +13,6 @@ export default function Layout() {
 
   React.useEffect(() => {
     if (user) {
-      console.log(user);
       return keepMyInfoUpdated(user.uid, setMyInfo);
     } else {
       setMyInfo(null);

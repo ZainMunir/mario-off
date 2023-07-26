@@ -2,15 +2,22 @@ import { getAuth } from "firebase/auth";
 import React from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
-export default function EmainSignin() {
+export default function EmainSignin(props) {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(getAuth());
-  const [errorMessage, setErrorMessage] = React.useState(null);
 
   const [data, setData] = React.useState({
     email: "",
     password: "",
   });
+
+  React.useEffect(() => {
+    console.log("Signin");
+    if (error && error.message != props.setErrorMessage) {
+      console.log("SigninIf");
+      props.setErrorMessage(error.message);
+    }
+  }, [error]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -23,23 +30,14 @@ export default function EmainSignin() {
   async function submit(event) {
     event.preventDefault();
     if (!data.email || !data.password) {
-      setErrorMessage("Please enter both fields");
+      props.setErrorMessage("Please enter both fields");
       return;
     }
     await signInWithEmailAndPassword(data.email, data.password);
   }
 
-  if (error && errorMessage != error.message) {
-    setErrorMessage(error.message);
-  }
-
   return (
     <form type="post" className="mx-auto flex w-full flex-col items-center p-5">
-      {errorMessage && (
-        <h3 className="text-center text-lg font-bold text-red-600">
-          {errorMessage}
-        </h3>
-      )}
       <input
         type="email"
         name="email"
