@@ -1,8 +1,8 @@
-import { getAuth } from "firebase/auth";
 import React from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { addNewEmailUser } from "../util-js/api";
-import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function EmailSignup() {
   const [createUserWithEmailAndPassword, user, loading, error] =

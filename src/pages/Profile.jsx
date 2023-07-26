@@ -2,22 +2,22 @@ import React from "react";
 import { useNavigate, useNavigation, useOutletContext } from "react-router-dom";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { getAuth } from "@firebase/auth";
+import ReactImageFallback from "react-image-fallback";
 import { updateProfile } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
-import ReactImageFallback from "react-image-fallback";
 import NotFound from "../assets/image-not-found.png";
 
 export default function Profile() {
+  const { myInfo, setDarkMode } = useOutletContext();
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const { myInfo, setDarkMode } = useOutletContext();
   const [signOut, loading, error] = useSignOut(getAuth());
+  const [errorMessage, setErrorMessage] = React.useState(null);
 
   const [data, setData] = React.useState({
     username: myInfo && myInfo.username,
     profilePic: myInfo && myInfo.profilePic,
   });
-  const [errorMessage, setErrorMessage] = React.useState(null);
 
   if (!myInfo) {
     return navigate("/", { replace: true });

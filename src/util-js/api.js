@@ -29,7 +29,7 @@ export const db = getFirestore(app);
 export const competitionsCollection = collection(db, "competitions");
 export const userInfoCollection = collection(db, "userInfo");
 
-export const auth = getAuth();
+const auth = getAuth();
 
 var loggedInStatus = false;
 

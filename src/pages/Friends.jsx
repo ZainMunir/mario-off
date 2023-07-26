@@ -1,5 +1,6 @@
 import React from "react";
 import { useOutletContext } from "react-router-dom";
+import ReactImageFallback from "react-image-fallback";
 import {
   addFriend,
   getFriends,
@@ -8,19 +9,19 @@ import {
 } from "../util-js/friends-api";
 import { MdAccountCircle } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
-import ReactImageFallback from "react-image-fallback";
 import NotFound from "../assets/image-not-found.png";
 
 export default function Friends() {
   const { myInfo } = useOutletContext();
+  const [friendsInfo, setFriendsInfo] = React.useState([]);
+  const [username, setUsername] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState(null);
+
   const friends = myInfo.friends;
   const sentRequests = friends.filter((x) => !x.accepted && x.sender);
   const receivedRequests = friends.filter((x) => !x.accepted && !x.sender);
   const actualFriends = friends.filter((x) => x.accepted);
-  const [friendsInfo, setFriendsInfo] = React.useState([]);
 
-  const [username, setUsername] = React.useState("");
-  const [errorMessage, setErrorMessage] = React.useState(null);
   React.useEffect(() => {
     return getFriends(myInfo, setFriendsInfo);
   }, [myInfo]);
@@ -32,6 +33,7 @@ export default function Friends() {
   async function delFriend(currFriend) {
     await deleteFriend(currFriend, myInfo);
   }
+
   const receivedElements =
     friendsInfo && friendsInfo.length != 0
       ? receivedRequests.map((friend) => {
@@ -128,6 +130,7 @@ export default function Friends() {
     const message = await addFriend(username, myInfo);
     setErrorMessage(message);
   }
+
   return (
     <div className="mx-auto flex h-full w-full max-w-xl flex-col border-x-2 p-2 dark:border-gray-700 sm:text-3xl">
       {errorMessage && (

@@ -7,13 +7,14 @@ import {
 } from "react-router-dom";
 import EmainSignin from "../components/EmailSignin";
 import GoogleSignIn from "../components/GoogleSignIn";
+
 export function loader({ request }) {
   return new URL(request.url).searchParams;
 }
 
 export default function Login() {
-  const searchParams = useLoaderData();
   const { myInfo } = useOutletContext();
+  const searchParams = useLoaderData();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState(null);
 

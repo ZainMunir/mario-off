@@ -1,11 +1,12 @@
 import React from "react";
+import ReactImageFallback from "react-image-fallback";
 import { getPersonInfo } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
-import ReactImageFallback from "react-image-fallback";
 import NotFound from "../assets/image-not-found.png";
 
 export default function CompScore(props) {
   const [playerDeets, setPlayerDeets] = React.useState([]);
+
   React.useEffect(() => {
     async function fetchPlayers() {
       setPlayerDeets([
@@ -15,12 +16,14 @@ export default function CompScore(props) {
     }
     fetchPlayers();
   }, [props]);
-  if (!playerDeets[1]) {
-    playerDeets[1] = { profilePic: "", username: "" };
-  }
+
   if (!playerDeets[0]) {
     playerDeets[0] = { profilePic: "", username: "" };
   }
+  if (!playerDeets[1]) {
+    playerDeets[1] = { profilePic: "", username: "" };
+  }
+
   return (
     <div className="mb-1 flex max-h-10 w-full flex-row place-content-center">
       <abbr className="mr-2 self-center" title={playerDeets[0].username}>

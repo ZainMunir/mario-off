@@ -1,30 +1,42 @@
 import React from "react";
 import ReactModal from "react-modal";
-import {
-  Form,
-  useOutletContext,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
+import { useOutletContext, useNavigate, useNavigation } from "react-router-dom";
+import ReactImageFallback from "react-image-fallback";
 import {
   deleteCompetition,
   updateCompetition,
 } from "../util-js/competitions-api";
 import CompScore from "../components/CompScore";
 import { LuSwords } from "react-icons/lu";
-import "./CompInfo.css";
-import ReactImageFallback from "react-image-fallback";
 import NotFound from "../assets/image-not-found.png";
+import "./CompInfo.css";
 
 export default function CompInfo(props) {
   let { currCompetition } = useOutletContext();
+  const navigate = useNavigate();
+  const navigation = useNavigation();
+  const [errorMessage, setErrorMessage] = React.useState(null);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
   if (!currCompetition) {
     currCompetition = props.currCompetition;
   }
-  const navigate = useNavigate();
-  const navigation = useNavigation();
 
-  const [errorMessage, setErrorMessage] = React.useState(null);
+  const [data, setData] = React.useState({
+    name: currCompetition.name,
+    image: currCompetition.image,
+    description: currCompetition.description,
+    status: currCompetition.status,
+  });
+
+  React.useEffect(() => {
+    setData({
+      name: currCompetition.name,
+      image: currCompetition.image,
+      description: currCompetition.description,
+      status: currCompetition.status,
+    });
+  }, [currCompetition]);
 
   function formatDate(date) {
     var d = new Date(date),
@@ -44,22 +56,6 @@ export default function CompInfo(props) {
     navigate("../competitions", { replace: true });
   }
 
-  const [data, setData] = React.useState({
-    name: currCompetition.name,
-    image: currCompetition.image,
-    description: currCompetition.description,
-    status: currCompetition.status,
-  });
-
-  React.useEffect(() => {
-    setData({
-      name: currCompetition.name,
-      image: currCompetition.image,
-      description: currCompetition.description,
-      status: currCompetition.status,
-    });
-  }, [currCompetition]);
-
   function handleChange(event) {
     const { name, value } = event.target;
     setData((prevData) => ({
@@ -67,15 +63,6 @@ export default function CompInfo(props) {
       [name]: value,
     }));
   }
-
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-
-  const selectColor =
-    data.status == "complete"
-      ? "bg-green-400 dark:bg-green-700"
-      : data.status == "ongoing"
-      ? "bg-orange-400 dark:bg-orange-600"
-      : "bg-red-500 dark:bg-red-700";
 
   async function submit(event) {
     event.preventDefault();
@@ -96,6 +83,13 @@ export default function CompInfo(props) {
       setErrorMessage(err.message);
     }
   }
+
+  const selectColor =
+    data.status == "complete"
+      ? "bg-green-400 dark:bg-green-700"
+      : data.status == "ongoing"
+      ? "bg-orange-400 dark:bg-orange-600"
+      : "bg-red-500 dark:bg-red-700";
 
   return (
     <form method="post" className="flex h-full flex-grow flex-col">

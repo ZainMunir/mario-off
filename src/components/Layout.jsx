@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getAuth } from "@firebase/auth";
+import { getAuth } from "firebase/auth";
 import { keepMyInfoUpdated } from "../util-js/api";
 import Header from "./Header";
 import Footer from "./Footer";

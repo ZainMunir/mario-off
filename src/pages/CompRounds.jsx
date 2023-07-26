@@ -11,12 +11,20 @@ import { FaTrashAlt } from "react-icons/fa";
 
 export default function CompRounds(props) {
   let { currCompetition } = useOutletContext();
-  if (!currCompetition) {
-    currCompetition = props.currCompetition;
-  }
   const [playerDeets, setPlayerDeets] = React.useState([]);
   const navigation = useNavigation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const selectedRound = searchParams.get("round") || 1;
+
+  if (!currCompetition) {
+    currCompetition = props.currCompetition;
+  }
+
+  const [data, setData] = React.useState({
+    name: "",
+    player: "draw",
+    points: 1,
+  });
 
   React.useEffect(() => {
     async function fetchPlayers() {
@@ -27,14 +35,6 @@ export default function CompRounds(props) {
     }
     fetchPlayers();
   }, []);
-
-  const selectedRound = searchParams.get("round") || 1;
-
-  const [data, setData] = React.useState({
-    name: "",
-    player: "draw",
-    points: 1,
-  });
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -76,6 +76,14 @@ export default function CompRounds(props) {
       ? playerDeets[0].username
       : uid == playerDeets[1].userid
       ? playerDeets[1].username
+      : "draw";
+  }
+
+  function convertUsernameToUid(username) {
+    return username == playerDeets[0].username
+      ? playerDeets[0].userid
+      : username == playerDeets[1].username
+      ? playerDeets[1].userid
       : "draw";
   }
 
@@ -153,14 +161,6 @@ export default function CompRounds(props) {
       }
       return prevParams;
     });
-  }
-
-  function convertUsernameToUid(username) {
-    return username == playerDeets[0].username
-      ? playerDeets[0].userid
-      : username == playerDeets[1].username
-      ? playerDeets[1].userid
-      : "draw";
   }
 
   async function addSubRound(event) {

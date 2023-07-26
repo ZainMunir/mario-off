@@ -1,14 +1,13 @@
 import {
   query,
   where,
-  getDocs,
   getDoc,
   doc,
   updateDoc,
   arrayUnion,
   onSnapshot,
 } from "firebase/firestore";
-import { db, userInfoCollection, getPersonInfo } from "./api";
+import { db, userInfoCollection } from "./api";
 
 export async function addFriend(username, myInfo) {
   try {

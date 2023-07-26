@@ -14,10 +14,10 @@ export async function loader({ request }) {
 export default function CompDetails() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currCompetition, setCompetition] = React.useState(null);
-
   const { id } = useParams();
-
   const [width, setWidth] = React.useState(window.innerWidth);
+
+  const round = searchParams.get("round");
 
   React.useEffect(() => {
     function updateWidth() {
@@ -39,7 +39,6 @@ export default function CompDetails() {
     throw currCompetition;
   }
 
-  const round = searchParams.get("round");
   const activeStyles = {
     textDecoration: "underline",
     fontWeight: "500",

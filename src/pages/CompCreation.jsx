@@ -5,9 +5,10 @@ import { getActualFriends } from "../util-js/friends-api";
 import CompThumbnail from "../components/CompThumbnail";
 
 export default function CompCreation(props) {
+  const { myInfo } = useOutletContext();
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const { myInfo } = useOutletContext();
+  const [errorMessage, setErrorMessage] = React.useState(null);
   const [friendsInfo, setFriendsInfo] = React.useState([]);
 
   React.useEffect(() => {
@@ -20,8 +21,6 @@ export default function CompCreation(props) {
     player2: "Select your Opponent",
     player2Id: "",
   });
-
-  const [errorMessage, setErrorMessage] = React.useState(null);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -39,6 +38,7 @@ export default function CompCreation(props) {
       };
     });
   }
+
   const friendOptions = friendsInfo
     ? friendsInfo.map((friend) => {
         return (

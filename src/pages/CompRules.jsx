@@ -1,18 +1,17 @@
 import React from "react";
-import { Form, useActionData, useNavigation } from "react-router-dom";
-import { useOutletContext } from "react-router-dom";
+import { useNavigation, useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/competitions-api";
 import { FaTrashAlt } from "react-icons/fa";
 
 export default function CompRules(props) {
   let { currCompetition } = useOutletContext();
+  const navigation = useNavigation();
+  const [errorMessage, setErrorMessage] = React.useState(null);
+  const [newRule, setNewRule] = React.useState("");
+
   if (!currCompetition) {
     currCompetition = props.currCompetition;
   }
-  const navigation = useNavigation();
-
-  const [errorMessage, setErrorMessage] = React.useState(null);
-  const [newRule, setNewRule] = React.useState("");
 
   function handleChange(event) {
     setNewRule(event.target.value);

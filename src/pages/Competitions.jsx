@@ -12,18 +12,21 @@ export async function loader({ request }) {
 }
 
 export default function Competitions() {
+  const { myInfo } = useOutletContext();
   const [competitions, setCompetitions] = React.useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const statusFilter = searchParams.get("status");
   const friendFilter = searchParams.get("friend");
-  const { myInfo } = useOutletContext();
   const [friendsInfo, setFriendsInfo] = React.useState([]);
+  const [width, setWidth] = React.useState(window.innerWidth);
 
   React.useEffect(() => {
     return getActualFriends(myInfo, setFriendsInfo);
   }, [myInfo]);
 
-  const [width, setWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    return keepCompetitionsUpdated(myInfo, setCompetitions);
+  }, []);
 
   React.useEffect(() => {
     function updateWidth() {
@@ -40,10 +43,6 @@ export default function Competitions() {
       return prevParams;
     });
   }
-
-  React.useEffect(() => {
-    return keepCompetitionsUpdated(myInfo, setCompetitions);
-  }, []);
 
   function handleFilterChange(event) {
     const { name, value } = event.target;

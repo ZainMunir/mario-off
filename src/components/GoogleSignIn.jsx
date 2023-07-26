@@ -1,8 +1,8 @@
-import { getAdditionalUserInfo, getAuth } from "firebase/auth";
 import React from "react";
+import { getAdditionalUserInfo, getAuth } from "firebase/auth";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { FcGoogle } from "react-icons/fc";
 import { addNewUser } from "../util-js/api";
+import { FcGoogle } from "react-icons/fc";
 
 export default function GoogleSignIn(props) {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(
@@ -10,14 +10,12 @@ export default function GoogleSignIn(props) {
   );
 
   React.useEffect(() => {
-    console.log("Google");
     if (error && error.message != props.setErrorMessage) {
-      console.log("GoogleIf");
       props.setErrorMessage(error.message);
     }
   }, [error]);
 
-  async function signIn() {
+  async function submit() {
     signInWithGoogle().then(async (result) => {
       if (!result) return;
       const details = getAdditionalUserInfo(result);
@@ -34,7 +32,7 @@ export default function GoogleSignIn(props) {
         className={`${
           loading ? "bg-gray-700" : "bg-blue-600 dark:bg-blue-900"
         } m-2 flex w-2/3 max-w-xs items-center justify-between rounded px-2 py-1 text-white drop-shadow-xl`}
-        onClick={signIn}
+        onClick={submit}
       >
         <FcGoogle size={20} />
         {loading ? "Signing in..." : "Google Sign in"}

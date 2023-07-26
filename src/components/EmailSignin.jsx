@@ -1,23 +1,21 @@
-import { getAuth } from "firebase/auth";
 import React from "react";
+import { getAuth } from "firebase/auth";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 export default function EmainSignin(props) {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(getAuth());
 
+  React.useEffect(() => {
+    if (error && error.message != props.setErrorMessage) {
+      props.setErrorMessage(error.message);
+    }
+  }, [error]);
+
   const [data, setData] = React.useState({
     email: "",
     password: "",
   });
-
-  React.useEffect(() => {
-    console.log("Signin");
-    if (error && error.message != props.setErrorMessage) {
-      console.log("SigninIf");
-      props.setErrorMessage(error.message);
-    }
-  }, [error]);
 
   function handleChange(event) {
     const { name, value } = event.target;
