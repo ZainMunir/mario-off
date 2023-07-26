@@ -58,6 +58,20 @@ export async function addNewUser(user) {
   });
 }
 
+export async function addNewEmailUser(uid) {
+  console.log(uid);
+  const newInfo = {
+    username: "",
+    profilePic: "",
+    userid: uid,
+    friends: [],
+  };
+  const docRef = await addDoc(userInfoCollection, newInfo);
+  await updateDoc(docRef, {
+    username: docRef.id,
+  });
+}
+
 export function keepMyInfoUpdated(userId, setMyInfo) {
   const q = query(userInfoCollection, where("userid", "==", userId));
   const unsub = onSnapshot(q, (snapshot) => {

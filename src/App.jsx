@@ -21,6 +21,7 @@ import CompRounds from "./pages/CompRounds";
 import CompCreation from "./pages/CompCreation";
 import Friends from "./pages/Friends";
 import { requireAuth } from "./util-js/requireAuth";
+import Signup from "./pages/Signup";
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -33,6 +34,7 @@ const router = createHashRouter(
         errorElement={<Error />}
         loader={async ({ request }) => await requireAuth(request)}
       />
+      <Route path="signup" element={<Signup />} errorElement={<Error />} />
       <Route
         path="friends"
         element={<Friends />}

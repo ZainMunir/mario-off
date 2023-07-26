@@ -206,13 +206,13 @@ export default function CompRounds(props) {
         {currCompetition.status === "ongoing" && (
           <button
             onClick={delRound}
-            className="mr-auto w-24 rounded-full bg-red-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-red-800"
+            className="mr-auto w-28 rounded-full bg-red-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-red-800"
             disabled={currCompetition.rounds.length == 1}
           >
             Delete Round
           </button>
         )}
-        <div className="mx-2 flex w-24 flex-row justify-around ">
+        <div className="mx-2 flex w-28 flex-row justify-around ">
           <select
             value={`Round ${selectedRound}`}
             onChange={setRound}
@@ -231,7 +231,7 @@ export default function CompRounds(props) {
         {currCompetition.status === "ongoing" && (
           <button
             onClick={newRound}
-            className="ml-auto flex w-24 place-content-center rounded-full bg-teal-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-teal-800"
+            className="ml-auto flex w-28 place-content-center rounded-full bg-teal-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-teal-800"
             disabled={currRound.nestedRounds.length == 0}
           >
             Add Round
