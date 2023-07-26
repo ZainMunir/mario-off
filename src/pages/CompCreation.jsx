@@ -49,10 +49,6 @@ export default function CompCreation(props) {
       })
     : [];
 
-  if (friendOptions.length == []) {
-    return <h1 className="mx-2 my-1">Please add some friends first!</h1>;
-  }
-
   async function submit(event) {
     event.preventDefault();
     if (data.name == "" || data.player2Id == "") {
@@ -68,7 +64,7 @@ export default function CompCreation(props) {
         },
         myInfo
       );
-      return navigate(`../competitions/${id}`, {
+      return navigate(`../competitions/${id}/`, {
         replace: props.keepHistory ? false : true,
       });
     } catch (err) {
@@ -76,11 +72,13 @@ export default function CompCreation(props) {
     }
   }
 
-  if (friendOptions == []) {
-    return <h1>Please add some friends first!</h1>;
-  }
   return (
     <div className="mx-auto flex max-w-xl flex-grow flex-col items-center border-x-2 dark:border-gray-700">
+      {friendOptions.length == [] && (
+        <h1 className="mx-auto my-1 text-3xl font-bold">
+          Please add some friends first!
+        </h1>
+      )}
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
