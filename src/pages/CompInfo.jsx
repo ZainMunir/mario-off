@@ -236,9 +236,7 @@ export default function CompInfo(props) {
             </button>
           </>
         ) : (
-          <>
-            <p>{data.description}</p>
-          </>
+          <p className="text-center">{data.description}</p>
         )}
       </div>
     </form>
