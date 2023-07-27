@@ -8,7 +8,7 @@ import {
 import NotFound from "./components/NotFound";
 import Error from "./components/Error";
 import Layout from "./components/Layout";
-import Home from "./pages/Home";
+import Home, { loader as homeLoader } from "./pages/Home";
 import Login, { loader as loginLoader } from "./pages/Login";
 import EmailSignup from "./pages/EmailSignup";
 import Profile from "./pages/Profile";
@@ -26,7 +26,7 @@ import { requireAuth } from "./util-js/requireAuth";
 const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route index element={<Home />} />
+      <Route index element={<Home />} loader={homeLoader} />
       <Route path="login" element={<Login />} loader={loginLoader} />
       <Route path="signup" element={<EmailSignup />} errorElement={<Error />} />
       <Route

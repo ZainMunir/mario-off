@@ -57,6 +57,22 @@ export function keepCompetitionUpdated(compid, setCompetition) {
   return unsub;
 }
 
+export async function getCompetition(compid) {
+  const docRef = doc(db, "competitions", compid);
+  const querySnapshot = await getDoc(docRef);
+  if (querySnapshot.data()) {
+    return {
+      ...querySnapshot.data(),
+      id: querySnapshot.id,
+    };
+  }
+  throw {
+    message: "Competition not found",
+    statusText: "Error",
+    status: 404,
+  };
+}
+
 export async function addCompetition(request, myInfo) {
   const newComp = {
     name: request.name,

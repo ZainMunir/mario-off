@@ -1,11 +1,20 @@
 import React from "react";
 import { AiFillGithub, AiOutlineForm } from "react-icons/ai";
 import { MdOutlineAccountCircle } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import { getCompetition } from "../util-js/competitions-api";
 import { BsDice5 } from "react-icons/bs";
 import { SiScrimba } from "react-icons/si";
+import CompThumbnail from "../components/CompThumbnail";
+
+export function loader() {
+  return getCompetition("G1h8eToxiquDJIx7lbHL");
+}
 
 export default function Home() {
+  const competition = useLoaderData();
+  console.log(competition);
+
   return (
     <div className="mx-auto flex h-full max-w-xl flex-grow flex-col border-x-2 p-2 text-justify dark:border-gray-700">
       <div className="border-b-4 pb-4 dark:border-gray-700">
@@ -32,8 +41,26 @@ export default function Home() {
             <AiFillGithub size={20} />
           </a>{" "}
           but viewer discretion is advised.
+          <br />
+          If you would like an example of a competition, click the thumbnail
+          below! Keep in mind that if you're not logged in, user data is
+          inaccessible, so names won't show up.
         </p>
+        <Link
+          to={`/competitions/${competition.id}/`}
+          key={competition.id}
+          className="mx-auto block w-1/3"
+        >
+          <CompThumbnail
+            status={competition.status}
+            image={competition.image}
+            name={competition.name}
+            players={competition.players}
+            currentScore={competition.currentScore}
+          />
+        </Link>
       </div>
+
       <div className="border-b-4 py-4 dark:border-gray-700 ">
         <h2 className="mb-2 text-2xl">Parts to the Website</h2>
         <h3 className="text-lg">Making an account</h3>
@@ -53,8 +80,9 @@ export default function Home() {
           Before you can make a competition, you need to have at least one
           friend, so head over to that page! You can add a friend if you know
           their username. That way you both have access to the competitions you
-          create, and no one else. You can also delete friends, but keep in mind
-          that it won't delete any existing competitions you may have with them.
+          create, and no one else (unless you make it public). You can also
+          delete friends, but keep in mind that it won't delete any existing
+          competitions you may have with them.
         </p>
         <h3 className="border-t-2 pt-2 text-lg dark:border-gray-700">
           Creating your first competition
