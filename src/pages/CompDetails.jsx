@@ -1,17 +1,18 @@
 import React from "react";
-import { NavLink, Outlet, useParams, useSearchParams } from "react-router-dom";
-import { requireAuth } from "../util-js/requireAuth";
+import {
+  NavLink,
+  Outlet,
+  useOutletContext,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { keepCompetitionUpdated } from "../util-js/competitions-api";
 import CompInfo from "./CompInfo";
 import CompRules from "./CompRules";
 import CompRounds from "./CompRounds";
 
-export async function loader({ request }) {
-  await requireAuth(request);
-  return null;
-}
-
 export default function CompDetails() {
+  const { myInfo } = useOutletContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currCompetition, setCompetition] = React.useState(null);
   const { id } = useParams();
@@ -38,6 +39,13 @@ export default function CompDetails() {
   if (currCompetition.message) {
     throw currCompetition;
   }
+
+  const isParticipant = !myInfo
+    ? false
+    : currCompetition.players.find((x) => x == myInfo.userid)
+    ? true
+    : false;
+  console.log(isParticipant);
 
   const activeStyles = {
     textDecoration: "underline",
@@ -77,7 +85,7 @@ export default function CompDetails() {
               </NavLink>
             </div>
             <div className="mx-auto flex w-full max-w-md flex-grow px-2 pt-2">
-              <Outlet context={{ currCompetition }} />
+              <Outlet context={{ currCompetition, isParticipant }} />
             </div>
           </div>
         </div>
@@ -90,13 +98,22 @@ export default function CompDetails() {
           </div>
           <div className="flex flex-grow text-2xl">
             <div className="mx-auto flex w-1/3 flex-grow border-r-2 px-2 pt-2  dark:border-gray-700">
-              <CompRules currCompetition={currCompetition} />
+              <CompRules
+                currCompetition={currCompetition}
+                isParticipant={isParticipant}
+              />
             </div>
             <div className="mx-auto flex w-1/3 flex-grow px-2 pt-2">
-              <CompInfo currCompetition={currCompetition} />
+              <CompInfo
+                currCompetition={currCompetition}
+                isParticipant={isParticipant}
+              />
             </div>
             <div className="mx-auto flex w-1/3 flex-grow border-l-2 px-2 pt-2  dark:border-gray-700">
-              <CompRounds currCompetition={currCompetition} />
+              <CompRounds
+                currCompetition={currCompetition}
+                isParticipant={isParticipant}
+              />
             </div>
           </div>
         </div>

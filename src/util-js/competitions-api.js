@@ -70,6 +70,7 @@ export async function addCompetition(request, myInfo) {
     currentScore: [0, 0],
     winner: "draw",
     rounds: [emptyRound],
+    public: false,
   };
   const compRef = await addDoc(competitionsCollection, newComp);
   return compRef.id;
@@ -90,6 +91,7 @@ export async function updateCompetition(request) {
     image: request.image,
     status: request.status,
     description: request.description,
+    public: request.public,
     updatedDate: serverTimestamp(),
   });
   const result = await getDoc(docRef);

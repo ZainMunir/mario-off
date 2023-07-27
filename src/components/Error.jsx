@@ -11,8 +11,8 @@ export default function Error() {
         {error.status} - {error.statusText}
       </pre>
       <p>
-        This could be caused by trying to access a competition you aren't in or
-        one that doesn't exist
+        This could be caused by trying to access a competition you aren't in,
+        isn't public or one that doesn't exist
       </p>
     </div>
   );

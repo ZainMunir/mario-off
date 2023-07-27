@@ -10,7 +10,7 @@ import CompScore from "../components/CompScore";
 import { FaTrashAlt } from "react-icons/fa";
 
 export default function CompRounds(props) {
-  let { currCompetition } = useOutletContext();
+  let { currCompetition, isParticipant } = useOutletContext();
   const [playerDeets, setPlayerDeets] = React.useState([]);
   const navigation = useNavigation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,6 +18,7 @@ export default function CompRounds(props) {
 
   if (!currCompetition) {
     currCompetition = props.currCompetition;
+    isParticipant = props.isParticipant;
   }
 
   const [data, setData] = React.useState({

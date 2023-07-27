@@ -12,7 +12,7 @@ import NotFound from "../assets/image-not-found.png";
 import "./CompInfo.css";
 
 export default function CompInfo(props) {
-  let { currCompetition } = useOutletContext();
+  let { currCompetition, isParticipant } = useOutletContext();
   const navigate = useNavigate();
   const navigation = useNavigation();
   const [errorMessage, setErrorMessage] = React.useState(null);
@@ -20,6 +20,7 @@ export default function CompInfo(props) {
 
   if (!currCompetition) {
     currCompetition = props.currCompetition;
+    isParticipant = props.isParticipant;
   }
 
   const [data, setData] = React.useState({
@@ -27,6 +28,7 @@ export default function CompInfo(props) {
     image: currCompetition.image,
     description: currCompetition.description,
     status: currCompetition.status,
+    public: currCompetition.public,
   });
 
   React.useEffect(() => {
@@ -35,6 +37,7 @@ export default function CompInfo(props) {
       image: currCompetition.image,
       description: currCompetition.description,
       status: currCompetition.status,
+      public: currCompetition.public,
     });
   }, [currCompetition]);
 
@@ -77,6 +80,7 @@ export default function CompInfo(props) {
         image: data.image,
         status: data.status,
         description: data.description,
+        public: data.public == "true",
       });
       setErrorMessage(null);
     } catch (err) {
@@ -125,7 +129,7 @@ export default function CompInfo(props) {
         </div>
       </ReactModal>
       <div className="mb-2 flex w-full flex-row ">
-        <div className="flex h-48 w-1/2 flex-wrap place-content-center">
+        <div className="flex h-52 w-1/2 flex-wrap place-content-center">
           {data.image ? (
             <ReactImageFallback
               src={data.image}
@@ -145,7 +149,7 @@ export default function CompInfo(props) {
           />
           <select
             name="status"
-            className={`mx-auto mt-8 w-28 rounded-xl p-1 ${selectColor}`}
+            className={`mx-auto mt-2 w-28 rounded-xl p-1 ${selectColor}`}
             value={data.status}
             onChange={handleChange}
           >
@@ -161,6 +165,15 @@ export default function CompInfo(props) {
             <option value="complete" className="bg-green-400 dark:bg-green-700">
               Complete
             </option>
+          </select>
+          <select
+            name="public"
+            className="mx-auto mt-2  w-28 rounded-xl bg-gray-100 p-1 dark:bg-gray-700"
+            value={data.public}
+            onChange={handleChange}
+          >
+            <option value={true}>Public</option>
+            <option value={false}>Private</option>
           </select>
           <div
             className="mx-auto mt-auto w-20 cursor-pointer rounded-full bg-red-500 text-lg  text-white drop-shadow-md dark:bg-red-900"

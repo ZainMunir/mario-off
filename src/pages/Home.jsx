@@ -105,7 +105,7 @@ export default function Home() {
           they're not ridiculous).
         </p>
       </div>
-      <div className="border-b-4 py-4 dark:border-gray-700 ">
+      <div className=" py-4">
         <h2 className="mb-2 text-2xl">How stuff works</h2>
         <h3 className="text-lg">React</h3>
         <p className="pb-2">
@@ -123,7 +123,11 @@ export default function Home() {
           Javascript to make this beaut. Then I just hosted it using GitHub
           pages. <br />I learnt the fundamentals from free react courses on
           scrimba{" "}
-          <a href="https://scrimba.com/" className="inline-block align-middle ">
+          <a
+            href="https://scrimba.com/"
+            target="_blank"
+            className="inline-block align-middle "
+          >
             <SiScrimba size={20} />
           </a>{" "}
           and then an absolutely metric ton of googling, and reading

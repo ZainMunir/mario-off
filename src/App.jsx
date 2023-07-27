@@ -17,7 +17,7 @@ import Competitions, {
   loader as competitionsLoader,
 } from "./pages/Competitions";
 import CompCreation from "./pages/CompCreation";
-import CompDetails, { loader as compDetailsLoader } from "./pages/CompDetails";
+import CompDetails from "./pages/CompDetails";
 import CompInfo from "./pages/CompInfo";
 import CompRules from "./pages/CompRules";
 import CompRounds from "./pages/CompRounds";
@@ -51,25 +51,13 @@ const router = createHashRouter(
         path="competitions/:id"
         element={<CompDetails />}
         errorElement={<Error />}
-        loader={compDetailsLoader}
       >
-        <Route
-          index
-          element={<CompInfo />}
-          errorElement={<Error />}
-          loader={async ({ request }) => await requireAuth(request)}
-        />
-        <Route
-          path="rules"
-          element={<CompRules />}
-          errorElement={<Error />}
-          loader={async ({ request }) => await requireAuth(request)}
-        />
+        <Route index element={<CompInfo />} errorElement={<Error />} />
+        <Route path="rules" element={<CompRules />} errorElement={<Error />} />
         <Route
           path="rounds"
           element={<CompRounds />}
           errorElement={<Error />}
-          loader={async ({ request }) => await requireAuth(request)}
         />
       </Route>
       <Route
