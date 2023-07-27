@@ -43,7 +43,7 @@ export default function Home() {
           but viewer discretion is advised.
           <br />
           If you would like an example of a competition, click the thumbnail
-          below! Keep in mind that if you're not logged in, user data is
+          below! Keep in mind that if you're not signed in, user data is
           inaccessible, so names won't show up.
         </p>
         <Link

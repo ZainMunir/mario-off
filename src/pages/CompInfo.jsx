@@ -134,8 +134,8 @@ export default function CompInfo(props) {
         }`}
       >
         <div
-          className={`flex  w-1/2 flex-wrap place-content-center ${
-            isParticipant ? "h-52" : ""
+          className={`flex w-1/2 flex-wrap place-content-center ${
+            isParticipant ? "h-52" : "max-h-96"
           }`}
         >
           {data.image ? (
@@ -143,8 +143,8 @@ export default function CompInfo(props) {
               src={data.image}
               fallbackImage={NotFound}
               alt={data.name}
-              className={`rounded object-contain ${
-                isParticipant ? "max-h-48 " : "max-h-1/2 max-w-xs"
+              className={`object-fit rounded  ${
+                isParticipant ? "max-h-48" : "max-h-96"
               }`}
             />
           ) : (

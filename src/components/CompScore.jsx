@@ -38,8 +38,8 @@ export default function CompScore(props) {
           <MdAccountCircle size={20} />
         )}
       </abbr>
-      <p className="self-center text-xl sm:text-2xl">
-        {props.currentScore[0]} - {props.currentScore[1]}
+      <p className="self-center text-lg sm:text-2xl">
+        {props.currentScore[0]}-{props.currentScore[1]}
       </p>
       <abbr className="ml-2 self-center" title={playerDeets[1].username}>
         {playerDeets[1].profilePic ? (
