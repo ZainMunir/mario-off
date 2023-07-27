@@ -111,7 +111,7 @@ export default function Home() {
         <p className="pb-2">
           This is my first proper foray (after this{" "}
           <a
-            href="https://github.com/ZainMunir/mario-off"
+            href="https://zainmunir.github.io/tenzies-extracredit/"
             target="_blank"
             className="inline-block align-middle"
           >
