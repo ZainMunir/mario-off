@@ -80,7 +80,7 @@ export default function CompInfo(props) {
         image: data.image,
         status: data.status,
         description: data.description,
-        public: data.public == "true",
+        public: data.public == "true" || data.public == true,
       });
       setErrorMessage(null);
     } catch (err) {
