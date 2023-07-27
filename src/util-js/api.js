@@ -17,7 +17,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBmBIk0-qSvkGSUSAs46Uxsw4mRtbrxinI",
-  authDomain: "mario-off.firebaseapp.com",
+  authDomain: "mario-off.web.app",
   projectId: "mario-off",
   storageBucket: "mario-off.appspot.com",
   messagingSenderId: "940790753598",
