@@ -37,6 +37,21 @@ export default function CompRounds(props) {
     fetchPlayers();
   }, []);
 
+  if (!playerDeets[0]) {
+    playerDeets[0] = {
+      profilePic: "",
+      username: "A",
+      userid: currCompetition.players[0],
+    };
+  }
+  if (!playerDeets[1]) {
+    playerDeets[1] = {
+      profilePic: "",
+      username: "B",
+      userid: currCompetition.players[1],
+    };
+  }
+  console.log(currCompetition.players);
   function handleChange(event) {
     const { name, value } = event.target;
     setData((prevData) => ({
