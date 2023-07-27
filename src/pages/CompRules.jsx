@@ -29,7 +29,7 @@ export default function CompRules(props) {
     return (
       <div key={currCompetition.rules.indexOf(rule)} className="group relative">
         - {rule}
-        {currCompetition.status === "ongoing" && (
+        {currCompetition.status === "ongoing" && isParticipant && (
           <button
             className="absolute right-0 top-1 opacity-0 transition-opacity duration-100 group-hover:opacity-100"
             onClick={() => delRule(rule)}
@@ -66,7 +66,7 @@ export default function CompRules(props) {
         </h3>
       )}
       <div>{ruleElements}</div>
-      {currCompetition.status === "ongoing" && (
+      {currCompetition.status === "ongoing" && isParticipant && (
         <form method="post" className="mt-auto flex flex-col justify-center">
           <input
             type="text"

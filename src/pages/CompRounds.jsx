@@ -100,10 +100,14 @@ export default function CompRounds(props) {
           {currRound.nestedRounds[i].name}
         </div>
         <div className="relative">
-          <div className="transition-opacity duration-100 group-hover:opacity-0">
+          <div
+            className={`transition-opacity duration-100 ${
+              isParticipant ? "group-hover:opacity-0" : ""
+            }`}
+          >
             {currRound.nestedRounds[i].points}
           </div>
-          {currCompetition.status === "ongoing" && (
+          {currCompetition.status === "ongoing" && isParticipant && (
             <div className="absolute inset-0 flex h-full w-full justify-center">
               <button
                 className="self-center opacity-0 transition-opacity duration-100 group-hover:opacity-100"
@@ -204,7 +208,7 @@ export default function CompRounds(props) {
   return (
     <div className="flex flex-grow flex-col text-center">
       <div className="mb-1 flex flex-row justify-around">
-        {currCompetition.status === "ongoing" && (
+        {currCompetition.status === "ongoing" && isParticipant && (
           <button
             onClick={delRound}
             className="mr-auto w-28 rounded-full bg-red-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-red-800"
@@ -226,10 +230,10 @@ export default function CompRounds(props) {
             name="valid"
             checked={currRound.valid}
             onChange={changeValidity}
-            disabled={currCompetition.status !== "ongoing"}
+            disabled={currCompetition.status !== "ongoing" || !isParticipant}
           />
         </div>
-        {currCompetition.status === "ongoing" && (
+        {currCompetition.status === "ongoing" && isParticipant && (
           <button
             onClick={newRound}
             className="ml-auto flex w-28 place-content-center rounded-full bg-teal-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-teal-800"
@@ -241,7 +245,7 @@ export default function CompRounds(props) {
       </div>
       <CompScore players={currCompetition.players} currentScore={score} />
       <div className="mt-5 flex-grow overflow-y-auto">{roundDetails}</div>
-      {currCompetition.status === "ongoing" && (
+      {currCompetition.status === "ongoing" && isParticipant && (
         <form type="post" className="h-22 mt-auto flex flex-col justify-center">
           <div className="my-2 flex w-full flex-row">
             <input

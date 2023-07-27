@@ -90,7 +90,7 @@ export default function CompInfo(props) {
 
   const selectColor =
     data.status == "complete"
-      ? "bg-green-400 dark:bg-green-700"
+      ? "bg-green-400 dark:bg-green-700 "
       : data.status == "ongoing"
       ? "bg-orange-400 dark:bg-orange-600"
       : "bg-red-500 dark:bg-red-700";
@@ -128,14 +128,24 @@ export default function CompInfo(props) {
           </div>
         </div>
       </ReactModal>
-      <div className="mb-2 flex w-full flex-row ">
-        <div className="flex h-52 w-1/2 flex-wrap place-content-center">
+      <div
+        className={`mb-2 flex w-full ${
+          isParticipant ? " flex-row " : "flex-col items-center "
+        }`}
+      >
+        <div
+          className={`flex  w-1/2 flex-wrap place-content-center ${
+            isParticipant ? "h-52" : ""
+          }`}
+        >
           {data.image ? (
             <ReactImageFallback
               src={data.image}
               fallbackImage={NotFound}
               alt={data.name}
-              className="max-h-48 rounded object-contain"
+              className={`rounded object-contain ${
+                isParticipant ? "max-h-48 " : "max-h-1/2 max-w-xs"
+              }`}
             />
           ) : (
             <LuSwords size={80} />
@@ -152,6 +162,7 @@ export default function CompInfo(props) {
             className={`mx-auto mt-2 w-28 rounded-xl p-1 ${selectColor}`}
             value={data.status}
             onChange={handleChange}
+            disabled={!isParticipant}
           >
             <option value="abandoned" className="bg-red-500 dark:bg-red-700">
               Abandoned
@@ -166,57 +177,69 @@ export default function CompInfo(props) {
               Complete
             </option>
           </select>
-          <select
-            name="public"
-            className="mx-auto mt-2  w-28 rounded-xl bg-gray-100 p-1 dark:bg-gray-700"
-            value={data.public}
-            onChange={handleChange}
-          >
-            <option value={true}>Public</option>
-            <option value={false}>Private</option>
-          </select>
-          <div
-            className="mx-auto mt-auto w-20 cursor-pointer rounded-full bg-red-500 text-lg  text-white drop-shadow-md dark:bg-red-900"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Delete
-          </div>
+          {isParticipant && (
+            <select
+              name="public"
+              className="mx-auto mt-2  w-28 rounded-xl bg-gray-100 p-1 dark:bg-gray-700"
+              value={data.public}
+              onChange={handleChange}
+            >
+              <option value={true}>Public</option>
+              <option value={false}>Private</option>
+            </select>
+          )}
+          {isParticipant && (
+            <div
+              className="mx-auto mt-auto w-20 cursor-pointer rounded-full bg-red-500 text-lg  text-white drop-shadow-md dark:bg-red-900"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Delete
+            </div>
+          )}
         </div>
       </div>
       <div className="flex flex-grow flex-col items-center">
-        <input
-          type="text"
-          name="name"
-          placeholder="Competition Name"
-          value={data.name}
-          onChange={handleChange}
-          className="m-2 w-full max-w-md rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
-        />
-        <input
-          type="url"
-          name="image"
-          placeholder="Thumbnail picture"
-          value={data.image}
-          onChange={handleChange}
-          className="m-2 w-full max-w-md rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
-        />
-        <textarea
-          placeholder="Description"
-          className="m-2 h-32 w-full max-w-md rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
-          name="description"
-          value={data.description}
-          onChange={handleChange}
-        />
-        <button
-          className={`${
-            navigation.state === "submitting"
-              ? "bg-gray-300 dark:bg-gray-700"
-              : "bg-teal-500 dark:bg-teal-800"
-          } mb-2 flex w-24 place-content-center rounded-full p-2 text-lg text-white drop-shadow-md`}
-          onClick={(event) => submit(event)}
-        >
-          {navigation.state === "submitting" ? "Saving" : "Save info"}
-        </button>
+        {isParticipant ? (
+          <>
+            <input
+              type="text"
+              name="name"
+              placeholder="Competition Name"
+              value={data.name}
+              onChange={handleChange}
+              className="m-2 w-full max-w-md rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
+            />
+            <input
+              type="url"
+              name="image"
+              placeholder="Thumbnail picture"
+              value={data.image}
+              onChange={handleChange}
+              className="m-2 w-full max-w-md rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
+            />
+            <textarea
+              placeholder="Description"
+              className="m-2 h-32 w-full max-w-md rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
+              name="description"
+              value={data.description}
+              onChange={handleChange}
+            />
+            <button
+              className={`${
+                navigation.state === "submitting"
+                  ? "bg-gray-300 dark:bg-gray-700"
+                  : "bg-teal-500 dark:bg-teal-800"
+              } mb-2 flex w-24 place-content-center rounded-full p-2 text-lg text-white drop-shadow-md`}
+              onClick={(event) => submit(event)}
+            >
+              {navigation.state === "submitting" ? "Saving" : "Save info"}
+            </button>
+          </>
+        ) : (
+          <>
+            <p>{data.description}</p>
+          </>
+        )}
       </div>
     </form>
   );
