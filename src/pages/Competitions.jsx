@@ -189,7 +189,7 @@ export default function Competitions() {
           <div
             className={`flex pt-1 ${
               competitionsElements
-                ? "absolute bottom-4 right-4 mt-auto justify-end"
+                ? "fixed bottom-6 right-5 mt-auto justify-end"
                 : "place-content-center"
             }`}
           >
