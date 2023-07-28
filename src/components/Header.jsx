@@ -11,8 +11,8 @@ export default function Header({ isLoggedIn, myInfo }) {
     fontWeight: "500",
   };
   return (
-    <header className="sticky top-0 z-10 flex h-12 w-screen items-center justify-center bg-gray-400 p-4 dark:bg-gray-800 dark:text-white">
-      <div className="max-w-screen flex w-full justify-between">
+    <header className="sticky top-0 z-10 flex h-12 w-full items-center justify-center bg-gray-400 p-4 dark:bg-gray-800 dark:text-white">
+      <div className="flex w-full max-w-full justify-between">
         <NavLink to="/" className="mr-auto flex items-center" end>
           {({ isActive }) =>
             isActive ? <AiFillHome size={30} /> : <AiOutlineHome size={30} />

@@ -3,8 +3,8 @@ import { AiFillGithub, AiOutlineForm } from "react-icons/ai";
 import { SiBuymeacoffee } from "react-icons/si";
 export default function Footer() {
   return (
-    <footer className="mt-auto flex h-6 w-screen items-center justify-center bg-gray-200 dark:bg-gray-600 dark:text-white">
-      <div className="max-w-screen flex h-6 w-full items-center justify-end">
+    <footer className="mt-auto flex h-6 w-full items-center justify-center bg-gray-200 dark:bg-gray-600 dark:text-white">
+      <div className="flex h-6 w-full max-w-full items-center justify-end">
         <p className="ml-2 mr-2 text-xs">Mario-off</p>
         <a
           href="https://www.buymeacoffee.com/zainmunir"

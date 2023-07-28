@@ -132,7 +132,7 @@ export default function Friends() {
   }
 
   return (
-    <div className="mx-auto flex h-full w-full max-w-xl flex-col border-x-2 p-2 dark:border-gray-700 sm:text-3xl">
+    <div className="mx-auto flex w-full max-w-xl flex-grow flex-col border-x-2 p-2 dark:border-gray-700 sm:text-3xl">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}

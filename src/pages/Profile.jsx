@@ -58,7 +58,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="mx-auto flex h-full max-w-xl flex-grow flex-col items-center border-x-2 dark:border-gray-700">
+    <div className="mx-auto flex max-w-xl flex-grow flex-col items-center border-x-2 dark:border-gray-700">
       {errorMessage && (
         <h3 className="text-center text-lg font-bold text-red-600">
           {errorMessage}
@@ -112,7 +112,7 @@ export default function Profile() {
       </form>
       <select
         name="status"
-        className="w-28 rounded-xl bg-gray-100 p-1 dark:bg-gray-700"
+        className="mb-2 w-28 rounded-xl bg-gray-100 p-1 dark:bg-gray-700"
         defaultValue={darkValue}
         onChange={handleDarkMode}
       >

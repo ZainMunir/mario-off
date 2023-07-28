@@ -27,7 +27,7 @@ export default function Layout() {
 
   return (
     <div
-      className={`flex h-screen w-screen flex-col items-center justify-center font-sans ${
+      className={`flex min-h-screen flex-col items-center justify-center font-sans ${
         darkMode ? "dark" : ""
       }`}
     >
