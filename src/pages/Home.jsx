@@ -4,7 +4,7 @@ import { MdOutlineAccountCircle } from "react-icons/md";
 import { Link, useLoaderData } from "react-router-dom";
 import { getCompetition } from "../util-js/competitions-api";
 import { BsDice5 } from "react-icons/bs";
-import { SiScrimba } from "react-icons/si";
+import { SiFirebase, SiScrimba, SiTailwindcss, SiVite } from "react-icons/si";
 import CompThumbnail from "../components/CompThumbnail";
 
 function Intro({ competition }) {
@@ -21,8 +21,8 @@ function Intro({ competition }) {
         </Link>{" "}
         and signup/login!
         <br />
-        If you would like some more information, that'll be below this. The code
-        is also public on GitHub{" "}
+        If you would like some more information, that'll be on the rest of this
+        page. The code is also public on GitHub{" "}
         <a
           href="https://github.com/ZainMunir/mario-off"
           target="_blank"
@@ -154,9 +154,25 @@ function HowStuffWorks() {
           <BsDice5 size={15} />
         </a>
         ) into making something with React, so if it's a bit rough around the
-        edges, I have an excuse :D <br />I used vite to put stuff together,
-        tailwind to style everything poorly and a lot of questionable Javascript
-        to make this beaut. Then I just hosted it using GitHub pages. <br />I
+        edges, I have an excuse :D <br />I used vite{" "}
+        <a
+          href="https://vitejs.dev/"
+          target="_blank"
+          className="inline-block align-middle "
+        >
+          <SiVite size={20} />
+        </a>{" "}
+        to put stuff together, tailwind{" "}
+        <a
+          href="https://tailwindcss.com/"
+          target="_blank"
+          className="inline-block align-middle "
+        >
+          <SiTailwindcss size={20} />
+        </a>{" "}
+        to style everything poorly and a lot of questionable Javascript to make
+        this beaut. Then I just hosted it using firebase (originally I used
+        GitHub pages, but the google login links looked suspicious). <br />I
         learnt the fundamentals from free react courses on scrimba{" "}
         <a
           href="https://scrimba.com/"
@@ -168,7 +184,16 @@ function HowStuffWorks() {
         and then an absolutely metric ton of googling, and reading
         documentation, and then some more googling.
       </p>
-      <h3 className="border-t-2 pt-2 text-xl dark:border-gray-700">Firebase</h3>
+      <h3 className="border-t-2 pt-2 text-xl dark:border-gray-700">
+        Firebase{" "}
+        <a
+          href="https://scrimba.com/"
+          target="_blank"
+          className="inline-block align-middle"
+        >
+          <SiFirebase size={20} />
+        </a>
+      </h3>
       <p>
         I'm using Firebase's firestore database to store all the competitions
         and the minimal amount of user information needed to make it all work. I
@@ -178,9 +203,9 @@ function HowStuffWorks() {
         I've tried to make the database rules as robust as possible but there
         are limitations with the free tier so there is probably opportunity for
         abuse. To that end, the only things stored in the database are the
-        competitions, your username for this website specifically, profile
-        picture and friends list. Don't put any sensitive data anywhere please -
-        I can't save you if you do. <br />
+        competitions, your username you've set for this website specifically,
+        profile picture and friends list. Don't put any sensitive data anywhere
+        please - I can't save you if you do. <br />
         Authentication is done using the tools in firebase too, meaning they're
         not stored directly in the database so email addresses are inaccesible.
         Passwords are obviously not saved, so don't ask me if you forget yours.
