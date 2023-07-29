@@ -1,6 +1,7 @@
 import React from "react";
 import { getAuth } from "firebase/auth";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import PasswordReset from "./PasswordReset";
 
 export default function EmainSignin(props) {
   const [signInWithEmailAndPassword, user, loading, error] =
@@ -51,6 +52,10 @@ export default function EmainSignin(props) {
         value={data.password}
         onChange={handleChange}
         className="m-2 w-5/6  max-w-xs rounded border-2 p-1  dark:border-gray-600 dark:bg-gray-700"
+      />
+      <PasswordReset
+        setErrorMessage={props.setErrorMessage}
+        email={data.email}
       />
       <button
         disabled={loading}
