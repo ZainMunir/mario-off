@@ -195,7 +195,6 @@ export function loader() {
 
 export default function Home() {
   const competition = useLoaderData();
-  console.log(competition);
 
   return (
     <div className="mx-auto flex flex-grow flex-col p-2 text-justify text-lg">
@@ -204,19 +203,19 @@ export default function Home() {
       </h1>
       <div className="flex w-full flex-grow flex-col items-center 2xl:flex-row">
         <div className="flex h-full flex-grow flex-col lg:w-full lg:flex-row">
-          <div className="h-full border-b-4 p-5 dark:border-gray-700 lg:w-1/2 lg:border-r-2 2xl:border-b-0 2xl:border-r-2">
+          <div className="h-full border-b-4 py-5 dark:border-gray-700 lg:w-1/2 lg:border-r-2 lg:px-5 2xl:border-b-0 2xl:border-r-2">
             <Intro competition={competition} />
           </div>
-          <div className="h-full border-b-4 p-5 dark:border-gray-700 lg:w-1/2  2xl:border-b-0 2xl:border-r-2 ">
+          <div className="h-full border-b-4 py-5 dark:border-gray-700 lg:w-1/2 lg:px-5  2xl:border-b-0 2xl:border-r-2 ">
             <WebsiteParts />
           </div>
         </div>
         <div className="flex h-full flex-grow flex-col lg:w-full lg:flex-row">
-          <div className="h-full border-b-4 p-5 dark:border-gray-700 lg:w-1/2 lg:border-b-0 lg:border-r-2 2xl:border-r-2 ">
+          <div className="h-full border-b-4 py-5 dark:border-gray-700 lg:w-1/2 lg:border-b-0 lg:border-r-2 lg:px-5 2xl:border-r-2 ">
             <HowStuffWorks />
           </div>
-          <div className="h-full p-5 lg:w-1/2">
-            <div className="border-b-2 pb-2 dark:border-gray-700">
+          <div className="h-full lg:w-1/2 lg:px-5">
+            <div className="border-b-2 py-5 pb-2 dark:border-gray-700">
               <Issues />
             </div>
             <div className="pt-2">

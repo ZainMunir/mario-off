@@ -45,7 +45,6 @@ export default function CompDetails() {
     : currCompetition.players.find((x) => x == myInfo.userid)
     ? true
     : false;
-  console.log(isParticipant);
 
   const activeStyles = {
     textDecoration: "underline",

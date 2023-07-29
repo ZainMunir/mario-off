@@ -51,7 +51,7 @@ export default function CompRounds(props) {
       userid: currCompetition.players[1],
     };
   }
-  console.log(currCompetition.players);
+
   function handleChange(event) {
     const { name, value } = event.target;
     setData((prevData) => ({
