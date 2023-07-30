@@ -67,7 +67,7 @@ export default function CompRounds(props) {
   const currRound = currCompetition.rounds[selectedRound - 1];
 
   const roundOptions = currCompetition.rounds.map((round, idx) => {
-    return <option key={idx + 1}>Round {idx + 1}</option>;
+    return <option key={`round-${idx + 1}`}>Round {idx + 1}</option>;
   });
 
   function convertUidToUsername(uid) {
@@ -81,7 +81,7 @@ export default function CompRounds(props) {
   const roundDetails = currRound.nestedRounds.map((subRound, idx) => {
     return (
       <CompSubRound
-        selectedRound={selectedRound}
+        key={`${selectedRound - 1}-${idx + 1}`}
         idx={idx}
         subRound={subRound}
         isParticipant={isParticipant}

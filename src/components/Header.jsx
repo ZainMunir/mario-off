@@ -43,23 +43,22 @@ export default function Header({ isLoggedIn, myInfo }) {
           className="ml-2 flex items-center"
         >
           {({ isActive }) =>
-            isActive
-              ? (myInfo && myInfo.profilePic && (
-                  <ReactImageFallback
-                    src={myInfo.profilePic}
-                    fallbackImage={NotFound}
-                    alt={myInfo.username}
-                    className="h-8 w-8 rounded-full border-2 border-black bg-gray-200 object-cover dark:border-white"
-                  />
-                )) || <MdAccountCircle size={32} />
-              : (myInfo && myInfo.profilePic && (
-                  <ReactImageFallback
-                    src={myInfo.profilePic}
-                    fallbackImage={NotFound}
-                    alt={myInfo.username}
-                    className="h-8 w-8 rounded-full border-2 bg-gray-200 object-cover dark:border-black"
-                  />
-                )) || <MdOutlineAccountCircle size={32} />
+            myInfo && myInfo.profilePic ? (
+              <ReactImageFallback
+                src={myInfo.profilePic}
+                fallbackImage={NotFound}
+                alt={myInfo.username}
+                className={`h-8 w-8 rounded-full border-2 bg-gray-200 object-cover ${
+                  isActive
+                    ? "border-black dark:border-white"
+                    : "dark:border-black"
+                }`}
+              />
+            ) : isActive ? (
+              <MdAccountCircle size={32} />
+            ) : (
+              <MdOutlineAccountCircle size={32} />
+            )
           }
         </NavLink>
       </div>

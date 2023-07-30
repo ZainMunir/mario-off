@@ -1,15 +1,9 @@
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
-export default function CompRule({
-  rule,
-  idx,
-  delRule,
-  status,
-  isParticipant,
-}) {
+export default function CompRule({ rule, delRule, status, isParticipant }) {
   return (
-    <div key={idx} className="group relative">
+    <div className="group relative">
       - {rule}
       {status === "ongoing" && isParticipant && (
         <button

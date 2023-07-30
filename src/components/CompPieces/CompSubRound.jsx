@@ -2,7 +2,6 @@ import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 export default function CompSubRound({
-  selectedRound,
   idx,
   subRound,
   isParticipant,
@@ -11,10 +10,7 @@ export default function CompSubRound({
   convertUidToUsername,
 }) {
   return (
-    <div
-      key={`${selectedRound - 1}-${idx + 1}`}
-      className="group  flex flex-row justify-between"
-    >
+    <div className="group  flex flex-row justify-between">
       <div className="mr-auto w-5/12 text-left">{subRound.name}</div>
       <div className="relative">
         <div

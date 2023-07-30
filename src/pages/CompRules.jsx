@@ -29,7 +29,7 @@ export default function CompRules(props) {
     return (
       <CompRule
         rule={rule}
-        idx={idx}
+        key={idx}
         delRule={delRule}
         status={currCompetition.status}
         isParticipant={isParticipant}
