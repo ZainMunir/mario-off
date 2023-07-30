@@ -3,7 +3,7 @@ import { Link, useSearchParams, useOutletContext } from "react-router-dom";
 import { requireAuth } from "../util-js/requireAuth";
 import { keepCompetitionsUpdated } from "../util-js/competitions-api";
 import { getActualFriends } from "../util-js/friends-api";
-import CompThumbnail from "../components/CompThumbnail";
+import CompThumbnail from "../components/CompPieces/CompThumbnail";
 import CompCreation from "./CompCreation";
 
 export async function loader({ request }) {

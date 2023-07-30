@@ -26,23 +26,24 @@ export async function addFriend(username, myInfo) {
     if (myInfo.friends.find((x) => x.userid == data.userid) != undefined) {
       throw "Invite already sent / Friends already";
     }
-    await updateDoc(docRef, {
-      friends: arrayUnion({
-        sender: false,
-        accepted: false,
-        userid: myInfo.userid,
-        score: [0, 0],
+    await Promise.all([
+      updateDoc(docRef, {
+        friends: arrayUnion({
+          sender: false,
+          accepted: false,
+          userid: myInfo.userid,
+          score: [0, 0],
+        }),
       }),
-    });
-
-    await updateDoc(doc(db, "userInfo", myInfo.username), {
-      friends: arrayUnion({
-        sender: true,
-        accepted: false,
-        userid: data.userid,
-        score: [0, 0],
+      updateDoc(doc(db, "userInfo", myInfo.username), {
+        friends: arrayUnion({
+          sender: true,
+          accepted: false,
+          userid: data.userid,
+          score: [0, 0],
+        }),
       }),
-    });
+    ]);
     return null;
   } catch (err) {
     return err;
@@ -97,12 +98,14 @@ export async function acceptFriend(request, myInfo) {
     return x;
   });
   try {
-    await updateDoc(doc(db, "userInfo", request.username), {
-      friends: theirFriends,
-    });
-    await updateDoc(doc(db, "userInfo", myInfo.username), {
-      friends: myFriends,
-    });
+    await Promise.all([
+      updateDoc(doc(db, "userInfo", request.username), {
+        friends: theirFriends,
+      }),
+      updateDoc(doc(db, "userInfo", myInfo.username), {
+        friends: myFriends,
+      }),
+    ]);
   } catch (err) {
     throw err;
   }
@@ -113,12 +116,14 @@ export async function deleteFriend(request, myInfo) {
   let myFriends = myInfo.friends.filter((x) => x.userid != request.userid);
   let theirFriends = request.friends.filter((x) => x.userid != myInfo.userid);
   try {
-    await updateDoc(doc(db, "userInfo", request.username), {
-      friends: theirFriends,
-    });
-    await updateDoc(doc(db, "userInfo", myInfo.username), {
-      friends: myFriends,
-    });
+    await Promise.all([
+      updateDoc(doc(db, "userInfo", request.username), {
+        friends: theirFriends,
+      }),
+      updateDoc(doc(db, "userInfo", myInfo.username), {
+        friends: myFriends,
+      }),
+    ]);
   } catch (err) {
     throw err;
   }

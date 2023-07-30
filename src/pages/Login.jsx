@@ -5,8 +5,8 @@ import {
   useNavigate,
   useOutletContext,
 } from "react-router-dom";
-import EmainSignin from "../components/EmailSignin";
-import GoogleSignIn from "../components/GoogleSignIn";
+import EmainSignin from "../components/AccountPieces/EmailSignin";
+import GoogleSignIn from "../components/AccountPieces/GoogleSignIn";
 
 export function loader({ request }) {
   return new URL(request.url).searchParams;

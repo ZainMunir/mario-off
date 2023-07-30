@@ -1,7 +1,7 @@
 import React from "react";
 import { getAdditionalUserInfo, getAuth } from "firebase/auth";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { addNewUser } from "../util-js/api";
+import { addNewUser } from "../../util-js/api";
 import { FcGoogle } from "react-icons/fc";
 
 export default function GoogleSignIn(props) {

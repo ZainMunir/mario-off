@@ -5,7 +5,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { getCompetition } from "../util-js/competitions-api";
 import { BsDice5 } from "react-icons/bs";
 import { SiFirebase, SiScrimba, SiTailwindcss, SiVite } from "react-icons/si";
-import CompThumbnail from "../components/CompThumbnail";
+import CompThumbnail from "../components/CompPieces/CompThumbnail";
 
 function Intro({ competition }) {
   return (

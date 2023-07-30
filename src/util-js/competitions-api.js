@@ -142,13 +142,15 @@ async function calcFriendScore(players) {
       wins[1]++;
     }
   }
-  const info0 = await getPersonInfo(players[0]);
-  const info1 = await getPersonInfo(players[1]);
+  const info = await Promise.all([
+    getPersonInfo(players[0]),
+    getPersonInfo(players[1]),
+  ]);
 
   let unnecessary = false;
 
-  let friends0 = info0.friends.map((x) => {
-    if (x.userid == info1.userid) {
+  let friends0 = info[0].friends.map((x) => {
+    if (x.userid == info[1].userid) {
       if (x.score[0] == wins[0] && x.score[1] == wins[1]) unnecessary = true;
       return {
         ...x,
@@ -162,8 +164,8 @@ async function calcFriendScore(players) {
     return null;
   }
 
-  let friends1 = info1.friends.map((x) => {
-    if (x.userid == info0.userid) {
+  let friends1 = info[1].friends.map((x) => {
+    if (x.userid == info[0].userid) {
       return {
         ...x,
         score: [wins[1], wins[0]],
@@ -173,12 +175,14 @@ async function calcFriendScore(players) {
   });
 
   try {
-    await updateDoc(doc(db, "userInfo", info0.username), {
-      friends: friends0,
-    });
-    await updateDoc(doc(db, "userInfo", info1.username), {
-      friends: friends1,
-    });
+    await Promise.all(
+      updateDoc(doc(db, "userInfo", info[0].username), {
+        friends: friends0,
+      }),
+      updateDoc(doc(db, "userInfo", info[1].username), {
+        friends: friends1,
+      })
+    );
   } catch (err) {
     throw err;
   }

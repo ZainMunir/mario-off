@@ -2,7 +2,7 @@ import React from "react";
 import ReactImageFallback from "react-image-fallback";
 import CompScore from "./CompScore";
 import { LuSwords } from "react-icons/lu";
-import NotFound from "../assets/image-not-found.png";
+import NotFound from "../../assets/image-not-found.png";
 
 export default function CompThumbnail(props) {
   const color =

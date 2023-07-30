@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigation, useNavigate, useOutletContext } from "react-router-dom";
 import { addCompetition } from "../util-js/competitions-api";
 import { getActualFriends } from "../util-js/friends-api";
-import CompThumbnail from "../components/CompThumbnail";
+import CompThumbnail from "../components/CompPieces/CompThumbnail";
 
 export default function CompCreation(props) {
   const { myInfo } = useOutletContext();

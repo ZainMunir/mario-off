@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { getPersonInfo } from "../util-js/api";
 import { addRound, updateRounds } from "../util-js/competitions-api";
-import CompScore from "../components/CompScore";
+import CompScore from "../components/CompPieces/CompScore";
 import { FaTrashAlt } from "react-icons/fa";
 
 export default function CompRounds(props) {
@@ -37,10 +37,11 @@ export default function CompRounds(props) {
 
   React.useEffect(() => {
     async function fetchPlayers() {
-      setPlayerDeets([
-        await getPersonInfo(currCompetition.players[0]),
-        await getPersonInfo(currCompetition.players[1]),
+      const data = await Promise.all([
+        getPersonInfo(currCompetition.players[0]),
+        getPersonInfo(currCompetition.players[1]),
       ]);
+      setPlayerDeets(data);
     }
     fetchPlayers();
   }, []);
@@ -55,7 +56,7 @@ export default function CompRounds(props) {
 
   if (selectedRound > currCompetition.rounds.length) {
     return (
-      <>
+      <div>
         <h1>Round not found</h1>
         <button
           className="flex place-content-center rounded-full bg-teal-500 p-1 px-2 text-xs text-white drop-shadow-md"
@@ -68,7 +69,7 @@ export default function CompRounds(props) {
         >
           Back to safety
         </button>
-      </>
+      </div>
     );
   }
 
@@ -154,11 +155,11 @@ export default function CompRounds(props) {
     });
   }
 
-  async function newRound() {
-    await addRound(currCompetition.id);
+  function newRound() {
+    return addRound(currCompetition.id);
   }
 
-  async function delRound() {
+  async function deleteRound() {
     let rounds = [...currCompetition.rounds];
     rounds.splice(selectedRound - 1, 1);
     await updateRounds({
@@ -218,7 +219,7 @@ export default function CompRounds(props) {
       <div className="mb-1 flex flex-row justify-around">
         {currCompetition.status === "ongoing" && isParticipant && (
           <button
-            onClick={delRound}
+            onClick={deleteRound}
             className="mr-auto w-28 rounded-full bg-red-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-red-800"
             disabled={currCompetition.rounds.length == 1}
           >

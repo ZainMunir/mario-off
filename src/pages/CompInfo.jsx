@@ -6,7 +6,7 @@ import {
   deleteCompetition,
   updateCompetition,
 } from "../util-js/competitions-api";
-import CompScore from "../components/CompScore";
+import CompScore from "../components/CompPieces/CompScore";
 import { LuSwords } from "react-icons/lu";
 import NotFound from "../assets/image-not-found.png";
 import "./CompInfo.css";
