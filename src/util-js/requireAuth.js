@@ -5,6 +5,7 @@ export async function requireAuth(request) {
   const url = new URL(request.url);
   const redirectTo = url.pathname + url.search;
   const loggedIn = await isLoggedIn();
+  console.log(loggedIn);
 
   if (!loggedIn) {
     throw redirect(

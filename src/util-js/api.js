@@ -32,17 +32,23 @@ export const userInfoCollection = collection(db, "userInfo");
 const auth = getAuth();
 
 var loggedInStatus = false;
-
+var initialised = false;
 onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    loggedInStatus = true;
-  } else {
-    loggedInStatus = false;
-  }
+  loggedInStatus = user && true;
+  initialised = true;
+  window.dispatchEvent(new Event("authStateChanged"));
 });
 
-export async function isLoggedIn() {
-  return loggedInStatus;
+export function isLoggedIn() {
+  return new Promise((resolve) => {
+    if (initialised) {
+      resolve(loggedInStatus);
+    } else {
+      window.addEventListener("authStateChanged", () => {
+        resolve(loggedInStatus);
+      });
+    }
+  });
 }
 
 export async function addNewUser(user) {
@@ -102,11 +108,7 @@ export async function updateProfile(request) {
     const docRef = doc(db, "userInfo", request.username);
     const querySnapshot = await getDoc(docRef);
     const data = querySnapshot.data();
-    if (data) {
-      if (data.userid != request.myInfo.userid) {
-        throw "Username taken";
-      }
-    }
+    if (data && data.userid != request.myInfo.userid) throw "Username taken";
   } catch (err) {
     return err;
   }
