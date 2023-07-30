@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { addNewEmailUser } from "../util-js/api";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function EmailSignup() {
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -49,11 +50,7 @@ export default function EmailSignup() {
       <h1 className="text-center text-2xl font-bold sm:text-4xl">
         Sign up with email
       </h1>
-      {errorMessage && (
-        <h3 className="text-center text-lg font-bold text-red-600">
-          {errorMessage}
-        </h3>
-      )}{" "}
+      <ErrorMessage message={errorMessage} />
       <form
         type="post"
         className="mx-auto flex w-full flex-col items-center p-5"

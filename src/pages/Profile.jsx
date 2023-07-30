@@ -6,6 +6,7 @@ import ReactImageFallback from "react-image-fallback";
 import { updateProfile } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
 import NotFound from "../assets/image-not-found.png";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function Profile() {
   const { myInfo, setDarkMode } = useOutletContext();
@@ -58,11 +59,7 @@ export default function Profile() {
 
   return (
     <div className="mx-auto flex max-w-xl flex-grow flex-col items-center border-x-2 dark:border-gray-700">
-      {errorMessage && (
-        <h3 className="text-center text-lg font-bold text-red-600">
-          {errorMessage}
-        </h3>
-      )}
+      <ErrorMessage message={errorMessage} />
       <h3 className="mb-2 text-center text-2xl font-bold sm:text-5xl">
         Profile
       </h3>
@@ -121,6 +118,7 @@ export default function Profile() {
       <button
         className="mx-auto mb-2 mt-auto cursor-pointer rounded-full bg-red-500 p-1 px-3 text-lg text-white drop-shadow-md dark:bg-red-900 sm:p-2 sm:text-2xl"
         onClick={async () => await signOut()}
+        disabled={loading}
       >
         Sign out
       </button>

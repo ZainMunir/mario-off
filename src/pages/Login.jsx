@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import EmainSignin from "../components/AccountPieces/EmailSignin";
 import GoogleSignIn from "../components/AccountPieces/GoogleSignIn";
+import ErrorMessage from "../components/ErrorMessage";
 
 export function loader({ request }) {
   return new URL(request.url).searchParams;
@@ -35,11 +36,7 @@ export default function Login() {
           {searchParams.get("message")}
         </h3>
       )}
-      {errorMessage && (
-        <h4 className="text-md text-center font-bold text-red-600">
-          {errorMessage}
-        </h4>
-      )}
+      <ErrorMessage message={errorMessage} />
       <EmainSignin
         setErrorMessage={setErrorMessage}
         errorMessage={errorMessage}

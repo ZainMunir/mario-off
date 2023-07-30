@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { addCompetition } from "../util-js/competitions-api";
 import { getActualFriends } from "../util-js/friends-api";
 import CompThumbnail from "../components/CompPieces/CompThumbnail";
+import ErrorMessage from "../components/ErrorMessage"
 
 export default function CompCreation(props) {
   const { myInfo } = useOutletContext();
@@ -78,12 +79,7 @@ export default function CompCreation(props) {
           Please add some friends first!
         </h1>
       )}
-      {errorMessage && (
-        <h3 className="text-center text-lg font-bold text-red-600">
-          {errorMessage}
-        </h3>
-      )}
-
+      <ErrorMessage message={errorMessage} />
       <h3 className="text-center text-xl font-bold">Preview</h3>
       <div className="w-1/3 max-w-xs">
         <CompThumbnail

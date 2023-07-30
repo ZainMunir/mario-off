@@ -10,6 +10,7 @@ import CompScore from "../components/CompPieces/CompScore";
 import { LuSwords } from "react-icons/lu";
 import NotFound from "../assets/image-not-found.png";
 import "./CompInfo.css";
+import ErrorMessage from "../components/ErrorMessage"
 
 export default function CompInfo(props) {
   let { currCompetition, isParticipant } = useOutletContext();
@@ -96,11 +97,7 @@ export default function CompInfo(props) {
 
   return (
     <form method="post" className="flex h-full flex-grow flex-col">
-      {errorMessage && (
-        <h3 className="text-center text-lg font-bold text-red-600">
-          {errorMessage}
-        </h3>
-      )}
+      <ErrorMessage message={errorMessage} />
       <ReactModal
         isOpen={isModalOpen}
         contentLabel="DeleteModal"

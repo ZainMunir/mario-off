@@ -2,6 +2,7 @@ import React from "react";
 import { useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/competitions-api";
 import CompRule from "../components/CompPieces/CompRule";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function CompRules(props) {
   let { currCompetition, isParticipant } = useOutletContext();
@@ -55,11 +56,7 @@ export default function CompRules(props) {
 
   return (
     <div className="flex h-full flex-grow flex-col">
-      {errorMessage && (
-        <h3 className="text-center text-lg font-bold text-red-600">
-          {errorMessage}
-        </h3>
-      )}
+      <ErrorMessage message={errorMessage} />
       <div>{ruleElements}</div>
       {currCompetition.status === "ongoing" && isParticipant && (
         <form method="post" className="mt-auto flex flex-col justify-center">

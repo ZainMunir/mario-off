@@ -10,6 +10,7 @@ import {
 import { MdAccountCircle } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
 import NotFound from "../assets/image-not-found.png";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function Friends() {
   const { myInfo } = useOutletContext();
@@ -133,11 +134,7 @@ export default function Friends() {
 
   return (
     <div className="mx-auto flex w-full max-w-xl flex-grow flex-col border-x-2 p-2 dark:border-gray-700 sm:text-3xl">
-      {errorMessage && (
-        <h3 className="text-center text-lg font-bold text-red-600">
-          {errorMessage}
-        </h3>
-      )}
+      <ErrorMessage message={errorMessage} />
       <form type="post" className="mt-2 flex flex-row justify-between">
         <input
           type="text"
