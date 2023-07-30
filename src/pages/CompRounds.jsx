@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  useOutletContext,
-  useNavigation,
-  useSearchParams,
-} from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import { getPersonInfo } from "../util-js/api";
 import { addRound, updateRounds } from "../util-js/competitions-api";
 import CompScore from "../components/CompPieces/CompScore";
@@ -11,7 +7,6 @@ import CompSubRound from "../components/CompPieces/CompSubRound";
 
 export default function CompRounds(props) {
   let { currCompetition, isParticipant } = useOutletContext();
-  const navigation = useNavigation();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedRound = searchParams.get("round") || 1;
 
@@ -247,14 +242,10 @@ export default function CompRounds(props) {
             </select>
           </div>
           <button
-            className={`${
-              navigation.state === "submitting"
-                ? "bg-gray-300 dark:bg-gray-700"
-                : "bg-teal-500 dark:bg-teal-800"
-            } text-md mx-auto mb-2 flex w-32 place-content-center rounded-full p-1 text-white drop-shadow-md lg:w-48`}
+            className="text-md mx-auto mb-2 flex w-32 place-content-center rounded-full bg-teal-500 p-1 text-white drop-shadow-md dark:bg-teal-800 lg:w-48"
             onClick={(event) => addSubRound(event)}
           >
-            {navigation.state === "submitting" ? "Adding..." : "Add Sub-round"}
+            Add Sub-round
           </button>
         </form>
       )}

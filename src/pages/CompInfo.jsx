@@ -1,6 +1,6 @@
 import React from "react";
 import ReactModal from "react-modal";
-import { useOutletContext, useNavigate, useNavigation } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import ReactImageFallback from "react-image-fallback";
 import {
   deleteCompetition,
@@ -14,7 +14,6 @@ import "./CompInfo.css";
 export default function CompInfo(props) {
   let { currCompetition, isParticipant } = useOutletContext();
   const navigate = useNavigate();
-  const navigation = useNavigation();
   const [errorMessage, setErrorMessage] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -225,14 +224,10 @@ export default function CompInfo(props) {
               onChange={handleChange}
             />
             <button
-              className={`${
-                navigation.state === "submitting"
-                  ? "bg-gray-300 dark:bg-gray-700"
-                  : "bg-teal-500 dark:bg-teal-800"
-              } mb-2 flex w-24 place-content-center rounded-full p-2 text-lg text-white drop-shadow-md`}
+              className="mb-2 flex w-24 place-content-center rounded-full bg-teal-500 p-2 text-lg text-white drop-shadow-md dark:bg-teal-800"
               onClick={(event) => submit(event)}
             >
-              {navigation.state === "submitting" ? "Saving" : "Save info"}
+              Save Info
             </button>
           </>
         ) : (

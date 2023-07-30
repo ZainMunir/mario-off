@@ -1,11 +1,10 @@
 import React from "react";
-import { useNavigation, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/competitions-api";
 import CompRule from "../components/CompPieces/CompRule";
 
 export default function CompRules(props) {
   let { currCompetition, isParticipant } = useOutletContext();
-  const navigation = useNavigation();
   const [errorMessage, setErrorMessage] = React.useState(null);
   const [newRule, setNewRule] = React.useState("");
 
@@ -73,14 +72,10 @@ export default function CompRules(props) {
             className="my-2 w-full rounded border-2 p-1 dark:border-gray-600 dark:bg-gray-700"
           />
           <button
-            className={`${
-              navigation.state === "submitting"
-                ? "bg-gray-300 dark:bg-gray-700"
-                : "bg-teal-500 dark:bg-teal-800"
-            } text-md mx-auto mb-2 flex w-20 place-content-center rounded-full p-1 text-white drop-shadow-md lg:w-32`}
+            className="text-md mx-auto mb-2 flex w-20 place-content-center rounded-full bg-teal-500 p-1 text-white drop-shadow-md dark:bg-teal-800 lg:w-32"
             onClick={(event) => submit(event)}
           >
-            {navigation.state === "submitting" ? "Adding..." : "Add rule"}
+            Add rule
           </button>
         </form>
       )}

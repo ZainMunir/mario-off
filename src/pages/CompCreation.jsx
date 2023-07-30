@@ -1,12 +1,11 @@
 import React from "react";
-import { useNavigation, useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { addCompetition } from "../util-js/competitions-api";
 import { getActualFriends } from "../util-js/friends-api";
 import CompThumbnail from "../components/CompPieces/CompThumbnail";
 
 export default function CompCreation(props) {
   const { myInfo } = useOutletContext();
-  const navigation = useNavigation();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState(null);
   const [friendsInfo, setFriendsInfo] = React.useState([]);
@@ -124,15 +123,10 @@ export default function CompCreation(props) {
           {friendOptions}
         </select>
         <button
-          disabled={navigation.state === "submitting"}
-          className={`${
-            navigation.state === "submitting"
-              ? "bg-gray-200 dark:bg-gray-700"
-              : "bg-teal-500 dark:bg-teal-800"
-          } m-2 w-1/2  max-w-xs rounded px-2 py-1 text-white drop-shadow-xl`}
+          className="m-2 w-1/2 max-w-xs rounded bg-teal-500 px-2 py-1 text-white drop-shadow-xl dark:bg-teal-800"
           onClick={(event) => submit(event)}
         >
-          {navigation.state === "submitting" ? "Creating..." : "Create"}
+          Create
         </button>
       </form>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useNavigation, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { getAuth } from "@firebase/auth";
 import ReactImageFallback from "react-image-fallback";
@@ -9,7 +9,6 @@ import NotFound from "../assets/image-not-found.png";
 
 export default function Profile() {
   const { myInfo, setDarkMode } = useOutletContext();
-  const navigation = useNavigation();
   const navigate = useNavigate();
   const [signOut, loading, error] = useSignOut(getAuth());
   const [errorMessage, setErrorMessage] = React.useState(null);
@@ -103,11 +102,10 @@ export default function Profile() {
           className="m-2 w-5/6 max-w-md rounded border-2 p-1 text-center dark:border-gray-600 dark:bg-gray-700"
         />
         <button
-          disabled={navigation.state === "submitting"}
           className="m-2 w-1/2 max-w-xs rounded bg-blue-500 px-2 py-1 text-white drop-shadow-xl dark:bg-blue-900"
           onClick={(event) => submit(event)}
         >
-          {navigation.state === "submitting" ? "Updating..." : "Update Profile"}
+          Update Profile
         </button>
       </form>
       <select
