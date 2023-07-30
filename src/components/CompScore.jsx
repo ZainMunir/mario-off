@@ -4,26 +4,25 @@ import { getPersonInfo } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
 import NotFound from "../assets/image-not-found.png";
 
+const defaultPlayer = { profilePic: "", username: "" };
+
 export default function CompScore(props) {
-  const [playerDeets, setPlayerDeets] = React.useState([]);
+  const [playerDeets, setPlayerDeets] = React.useState([
+    defaultPlayer,
+    defaultPlayer,
+  ]);
 
   React.useEffect(() => {
     async function fetchPlayers() {
       setPlayerDeets([
-        await getPersonInfo(props.players[0]),
-        await getPersonInfo(props.players[1]),
+        (await getPersonInfo(props.players[0])) || defaultPlayer,
+        (await getPersonInfo(props.players[1])) || defaultPlayer,
       ]);
     }
     fetchPlayers();
   }, [props]);
 
-  if (!playerDeets[0]) {
-    playerDeets[0] = { profilePic: "", username: "" };
-  }
-  if (!playerDeets[1]) {
-    playerDeets[1] = { profilePic: "", username: "" };
-  }
-
+  console.log(playerDeets);
   return (
     <div className="mb-1 flex max-h-10 w-full flex-row place-content-center">
       <abbr className="mr-2 self-center" title={playerDeets[0].username}>

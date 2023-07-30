@@ -60,11 +60,11 @@ function WebsiteParts() {
       <h3 className="text-xl">Making an account</h3>
       <p className="pb-2">
         On the login page, you can choose to login with Google, or signup with
-        an email address. Please remember your password if you do the latter
-        because I haven't implemented password resetting yet! If you choose
-        google, you're profile will auto populate with your profile picture from
-        there - that's the only information saved. Your username is
-        automatically generated using either method, but you can change it to
+        an email address. Please remember your password if you do the latter,
+        but you can reset it in case you forget it. If you choose google, your
+        profile will auto-populate with your profile picture from there - that's
+        the only information saved. Your username is a random string of
+        characeters initially using either method, but you can change it to
         something more readable, along with your picture on the profile page.
       </p>
       <h3 className="border-t-2 pt-2 text-xl dark:border-gray-700">
@@ -132,8 +132,8 @@ function Suggestions() {
         >
           <AiOutlineForm size={20} />
         </a>
-        . I'll try to learn how to add them if I have the time (only if they're
-        not ridiculous).
+        . I'll try to learn enough to add them if I have the time (and only if
+        they're not ridiculous).
       </p>
     </>
   );
@@ -187,7 +187,7 @@ function HowStuffWorks() {
       <h3 className="border-t-2 pt-2 text-xl dark:border-gray-700">
         Firebase{" "}
         <a
-          href="https://scrimba.com/"
+          href="https://firebase.google.com/"
           target="_blank"
           className="inline-block align-middle"
         >

@@ -11,7 +11,6 @@ import { FaTrashAlt } from "react-icons/fa";
 
 export default function CompRounds(props) {
   let { currCompetition, isParticipant } = useOutletContext();
-  const [playerDeets, setPlayerDeets] = React.useState([]);
   const navigation = useNavigation();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedRound = searchParams.get("round") || 1;
@@ -20,6 +19,15 @@ export default function CompRounds(props) {
     currCompetition = props.currCompetition;
     isParticipant = props.isParticipant;
   }
+
+  const [playerDeets, setPlayerDeets] = React.useState([
+    {
+      profilePic: "",
+      username: "A",
+      userid: currCompetition.players[0],
+    },
+    { profilePic: "", username: "B", userid: currCompetition.players[1] },
+  ]);
 
   const [data, setData] = React.useState({
     name: "",
@@ -36,21 +44,6 @@ export default function CompRounds(props) {
     }
     fetchPlayers();
   }, []);
-
-  if (!playerDeets[0]) {
-    playerDeets[0] = {
-      profilePic: "",
-      username: "A",
-      userid: currCompetition.players[0],
-    };
-  }
-  if (!playerDeets[1]) {
-    playerDeets[1] = {
-      profilePic: "",
-      username: "B",
-      userid: currCompetition.players[1],
-    };
-  }
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -88,7 +81,7 @@ export default function CompRounds(props) {
 
   function convertUidToUsername(uid) {
     if (!playerDeets.length) return;
-    return playerDeets[0] && uid == playerDeets[0].userid
+    return uid == playerDeets[0].userid
       ? playerDeets[0].username
       : uid == playerDeets[1].userid
       ? playerDeets[1].username
@@ -285,8 +278,8 @@ export default function CompRounds(props) {
               onChange={handleChange}
             >
               <option>draw</option>
-              <option>{playerDeets[0] && playerDeets[0].username}</option>
-              <option>{playerDeets[1] && playerDeets[1].username}</option>
+              <option>{playerDeets[0].username}</option>
+              <option>{playerDeets[1].username}</option>
             </select>
           </div>
           <button
