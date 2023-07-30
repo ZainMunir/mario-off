@@ -175,14 +175,14 @@ async function calcFriendScore(players) {
   });
 
   try {
-    await Promise.all(
+    await Promise.all([
       updateDoc(doc(db, "userInfo", info[0].username), {
         friends: friends0,
       }),
       updateDoc(doc(db, "userInfo", info[1].username), {
         friends: friends1,
-      })
-    );
+      }),
+    ]);
   } catch (err) {
     throw err;
   }
