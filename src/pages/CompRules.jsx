@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation, useOutletContext } from "react-router-dom";
 import { addRule, deleteRule } from "../util-js/competitions-api";
-import { FaTrashAlt } from "react-icons/fa";
+import CompRule from "../components/CompPieces/CompRule";
 
 export default function CompRules(props) {
   let { currCompetition, isParticipant } = useOutletContext();
@@ -25,19 +25,15 @@ export default function CompRules(props) {
     });
   }
 
-  const ruleElements = currCompetition.rules.map((rule) => {
+  const ruleElements = currCompetition.rules.map((rule, idx) => {
     return (
-      <div key={currCompetition.rules.indexOf(rule)} className="group relative">
-        - {rule}
-        {currCompetition.status === "ongoing" && isParticipant && (
-          <button
-            className="absolute right-0 top-1 opacity-0 transition-opacity duration-100 group-hover:opacity-100"
-            onClick={() => delRule(rule)}
-          >
-            <FaTrashAlt />
-          </button>
-        )}
-      </div>
+      <CompRule
+        rule={rule}
+        idx={idx}
+        delRule={delRule}
+        status={currCompetition.status}
+        isParticipant={isParticipant}
+      />
     );
   });
 

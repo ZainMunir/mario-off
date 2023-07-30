@@ -7,7 +7,7 @@ import {
 import { getPersonInfo } from "../util-js/api";
 import { addRound, updateRounds } from "../util-js/competitions-api";
 import CompScore from "../components/CompPieces/CompScore";
-import { FaTrashAlt } from "react-icons/fa";
+import CompSubRound from "../components/CompPieces/CompSubRound";
 
 export default function CompRounds(props) {
   let { currCompetition, isParticipant } = useOutletContext();
@@ -21,11 +21,7 @@ export default function CompRounds(props) {
   }
 
   const [playerDeets, setPlayerDeets] = React.useState([
-    {
-      profilePic: "",
-      username: "A",
-      userid: currCompetition.players[0],
-    },
+    { profilePic: "", username: "A", userid: currCompetition.players[0] },
     { profilePic: "", username: "B", userid: currCompetition.players[1] },
   ]);
 
@@ -75,63 +71,34 @@ export default function CompRounds(props) {
 
   const currRound = currCompetition.rounds[selectedRound - 1];
 
-  const roundOptions = [];
-  for (let i = 0; i < currCompetition.rounds.length; i++) {
-    roundOptions.push(<option key={i + 1}>Round {i + 1}</option>);
-  }
+  const roundOptions = currCompetition.rounds.map((round, idx) => {
+    return <option key={idx + 1}>Round {idx + 1}</option>;
+  });
 
   function convertUidToUsername(uid) {
-    if (!playerDeets.length) return;
-    return uid == playerDeets[0].userid
-      ? playerDeets[0].username
-      : uid == playerDeets[1].userid
-      ? playerDeets[1].username
-      : "draw";
+    return playerDeets.find((x) => x.userid == uid)?.username || "draw";
   }
 
   function convertUsernameToUid(username) {
-    return username == playerDeets[0].username
-      ? playerDeets[0].userid
-      : username == playerDeets[1].username
-      ? playerDeets[1].userid
-      : "draw";
+    return playerDeets.find((x) => x.username == username)?.userid || "draw";
   }
 
-  let score = [0, 0];
-  const roundDetails = [];
-  for (let i = 0; i < currRound.nestedRounds.length; i++) {
-    roundDetails.push(
-      <div
-        key={`${selectedRound - 1}-${i + 1}`}
-        className="group  flex flex-row justify-between"
-      >
-        <div className="mr-auto w-5/12 text-left">
-          {currRound.nestedRounds[i].name}
-        </div>
-        <div className="relative">
-          <div
-            className={`transition-opacity duration-100 ${
-              isParticipant ? "group-hover:opacity-0" : ""
-            }`}
-          >
-            {currRound.nestedRounds[i].points}
-          </div>
-          {currCompetition.status === "ongoing" && isParticipant && (
-            <div className="absolute inset-0 flex h-full w-full justify-center">
-              <button
-                className="self-center opacity-0 transition-opacity duration-100 group-hover:opacity-100"
-                onClick={() => delSubRound(i)}
-              >
-                <FaTrashAlt size={16} />
-              </button>
-            </div>
-          )}
-        </div>
-        <div className="ml-auto w-5/12 text-right">
-          {convertUidToUsername(currRound.nestedRounds[i].player)}
-        </div>
-      </div>
+  const roundDetails = currRound.nestedRounds.map((subRound, idx) => {
+    return (
+      <CompSubRound
+        selectedRound={selectedRound}
+        idx={idx}
+        subRound={subRound}
+        isParticipant={isParticipant}
+        status={currCompetition.status}
+        delSubRound={delSubRound}
+        convertUidToUsername={convertUidToUsername}
+      />
     );
+  });
+
+  let score = [0, 0];
+  for (let i = 0; i < currRound.nestedRounds.length; i++) {
     if (currRound.nestedRounds[i].player == currCompetition.players[0])
       score[0] += parseInt(currRound.nestedRounds[i].points);
     else if (currRound.nestedRounds[i].player == currCompetition.players[1])
@@ -153,10 +120,6 @@ export default function CompRounds(props) {
       }
       return prevParams;
     });
-  }
-
-  function newRound() {
-    return addRound(currCompetition.id);
   }
 
   async function deleteRound() {
@@ -244,7 +207,7 @@ export default function CompRounds(props) {
         </div>
         {currCompetition.status === "ongoing" && isParticipant && (
           <button
-            onClick={newRound}
+            onClick={async () => await addRound(currCompetition.id)}
             className="ml-auto flex w-28 place-content-center rounded-full bg-teal-500 px-1 text-sm text-white drop-shadow-md disabled:grayscale dark:bg-teal-800"
             disabled={currRound.nestedRounds.length == 0}
           >
@@ -253,7 +216,7 @@ export default function CompRounds(props) {
         )}
       </div>
       <CompScore players={currCompetition.players} currentScore={score} />
-      <div className="mt-5 flex-grow overflow-y-auto">{roundDetails}</div>
+      <div className="mt-5 flex-grow">{roundDetails}</div>
       {currCompetition.status === "ongoing" && isParticipant && (
         <form type="post" className="h-22 mt-auto flex flex-col justify-center">
           <div className="my-2 flex w-full flex-row">
