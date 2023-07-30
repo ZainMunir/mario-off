@@ -7,10 +7,9 @@ import {
   updateCompetition,
 } from "../util-js/competitions-api";
 import CompScore from "../components/CompPieces/CompScore";
+import ErrorMessage from "../components/ErrorMessage";
 import { LuSwords } from "react-icons/lu";
 import NotFound from "../assets/image-not-found.png";
-import "./CompInfo.css";
-import ErrorMessage from "../components/ErrorMessage"
 
 export default function CompInfo(props) {
   let { currCompetition, isParticipant } = useOutletContext();
@@ -102,7 +101,7 @@ export default function CompInfo(props) {
         isOpen={isModalOpen}
         contentLabel="DeleteModal"
         overlayClassName="bg-opacity-50 bg-black w-screen h-screen fixed top-0 left-0 z-20"
-        className="centerModal flex h-40 w-72 flex-col place-content-center justify-between rounded-xl bg-gray-200 p-4 text-center drop-shadow-xl "
+        className="absolute left-1/2 top-1/2  flex h-40 w-72 -translate-x-1/2 -translate-y-1/2 flex-col place-content-center justify-between rounded-xl bg-gray-200 p-4 text-center drop-shadow-xl "
         appElement={document.getElementById("root")}
       >
         <p>

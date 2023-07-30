@@ -9,8 +9,8 @@ import {
 } from "../util-js/friends-api";
 import { MdAccountCircle } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
-import NotFound from "../assets/image-not-found.png";
 import ErrorMessage from "../components/ErrorMessage";
+import NotFound from "../assets/image-not-found.png";
 
 export default function Friends() {
   const { myInfo } = useOutletContext();

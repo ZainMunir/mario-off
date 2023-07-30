@@ -5,8 +5,8 @@ import { getAuth } from "@firebase/auth";
 import ReactImageFallback from "react-image-fallback";
 import { updateProfile } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
-import NotFound from "../assets/image-not-found.png";
 import ErrorMessage from "../components/ErrorMessage";
+import NotFound from "../assets/image-not-found.png";
 
 export default function Profile() {
   const { myInfo, setDarkMode } = useOutletContext();
