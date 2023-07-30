@@ -82,12 +82,16 @@ export default function Friends() {
                   src={currentFriend.profilePic}
                   fallbackImage={NotFound}
                   alt={currentFriend.username}
-                  className="aspect-square w-5 rounded-full bg-gray-200 object-cover sm:w-8"
+                  className="aspect-square w-9 rounded-full bg-gray-200 object-cover"
                 />
               ) : (
-                <MdAccountCircle size={20} />
+                <MdAccountCircle size={36} />
               )}
-              <p className="ml-2">{currentFriend && currentFriend.username}</p>
+              <p className="ml-2">
+                {currentFriend && currentFriend.username}
+                {currentFriend?.username == "RwBo" &&
+                  " (Feel free to delete me!)"}
+              </p>
               <p className="ml-auto mr-8">
                 {myInfoOnThem.score[1]} - {myInfoOnThem.score[0]}{" "}
               </p>

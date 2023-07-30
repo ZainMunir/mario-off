@@ -31,10 +31,10 @@ export default function CompScore(props) {
             src={playerDeets[0].profilePic}
             fallbackImage={NotFound}
             alt={playerDeets[0].username}
-            className="aspect-square h-8 rounded-full bg-gray-200 object-cover sm:h-10"
+            className="aspect-square h-8 rounded-full bg-gray-200 object-cover"
           />
         ) : (
-          <MdAccountCircle size={20} />
+          <MdAccountCircle size={32} />
         )}
       </abbr>
       <p className="self-center text-lg sm:text-2xl">
@@ -46,10 +46,10 @@ export default function CompScore(props) {
             src={playerDeets[1].profilePic}
             fallbackImage={NotFound}
             alt={playerDeets[1].username}
-            className="aspect-square h-8 rounded-full bg-gray-200 object-cover sm:h-10"
+            className="aspect-square h-8 rounded-full bg-gray-200 object-cover"
           />
         ) : (
-          <MdAccountCircle size={20} />
+          <MdAccountCircle size={32} />
         )}
       </abbr>
     </div>

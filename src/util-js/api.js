@@ -12,6 +12,7 @@ import {
   onSnapshot,
   addDoc,
   updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -51,17 +52,25 @@ export function isLoggedIn() {
   });
 }
 
+const defaultFriend = {
+  accepted: true,
+  sender: false,
+  score: [0, 0],
+  userid: "yEOpVXccwZNUJbW5RBboUC85lTm2",
+};
+
 export async function addNewUser(user) {
   const newInfo = {
     username: "",
     profilePic: user.photoURL,
     userid: user.uid,
-    friends: [],
+    friends: [defaultFriend],
   };
   const docRef = await addDoc(userInfoCollection, newInfo);
   await updateDoc(docRef, {
     username: docRef.id,
   });
+  await addDefaultFriend(user.uid);
 }
 
 export async function addNewEmailUser(uid) {
@@ -69,11 +78,29 @@ export async function addNewEmailUser(uid) {
     username: "",
     profilePic: "",
     userid: uid,
-    friends: [],
+    friends: [defaultFriend],
   };
   const docRef = await addDoc(userInfoCollection, newInfo);
   await updateDoc(docRef, {
     username: docRef.id,
+  });
+  await addDefaultFriend(uid);
+}
+
+async function addDefaultFriend(uid) {
+  const q = query(
+    userInfoCollection,
+    where("userid", "==", "yEOpVXccwZNUJbW5RBboUC85lTm2")
+  );
+  const querySnapshot = await getDocs(q);
+  const data = querySnapshot.docs[0].data();
+  await updateDoc(doc(db, "userInfo", data.username), {
+    friends: arrayUnion({
+      sender: true,
+      accepted: true,
+      userid: uid,
+      score: [0, 0],
+    }),
   });
 }
 
