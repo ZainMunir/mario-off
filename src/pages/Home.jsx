@@ -65,7 +65,9 @@ function WebsiteParts() {
         profile will auto-populate with your profile picture from there - that's
         the only information saved. Your username is a random string of
         characeters initially using either method, but you can change it to
-        something more readable, along with your picture on the profile page.
+        something more readable, along with your picture on the profile page. By
+        default, you start with "RwBo" as a friend to test stuff out, but you
+        can remove them if you want.
       </p>
       <h3 className="border-t-2 pt-2 text-xl dark:border-gray-700">
         Making friends!

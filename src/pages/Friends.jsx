@@ -70,30 +70,31 @@ export default function Friends() {
             (x) => x.userid == friend.userid
           );
           const myInfoOnThem = myInfo.friends.find(
-            (x) => x.userid == currentFriend.userid
+            (x) => x.userid == currentFriend?.userid
           );
           return (
             <div
               key={friend.userid}
               className="group relative flex items-center"
             >
-              {currentFriend.profilePic ? (
+              {currentFriend?.profilePic ? (
                 <ReactImageFallback
                   src={currentFriend.profilePic}
                   fallbackImage={NotFound}
                   alt={currentFriend.username}
-                  className="aspect-square w-9 rounded-full bg-gray-200 object-cover"
+                  className="aspect-square w-8 rounded-full bg-gray-200 object-cover"
                 />
               ) : (
-                <MdAccountCircle size={36} />
+                <MdAccountCircle size={32} />
               )}
               <p className="ml-2">
                 {currentFriend && currentFriend.username}
                 {currentFriend?.username == "RwBo" &&
+                  friends.length == 1 &&
                   " (Feel free to delete me!)"}
               </p>
               <p className="ml-auto mr-8">
-                {myInfoOnThem.score[1]} - {myInfoOnThem.score[0]}{" "}
+                {myInfoOnThem?.score[1]} - {myInfoOnThem?.score[0]}{" "}
               </p>
               <button
                 className="absolute right-0 top-1 opacity-0 transition-opacity duration-100 group-hover:opacity-100"

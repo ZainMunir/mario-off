@@ -74,12 +74,13 @@ export default function CompCreation(props) {
 
   return (
     <div className="mx-auto flex max-w-xl flex-grow flex-col items-center border-x-2 dark:border-gray-700">
-      {friendOptions.length == [] ||
-        (friendsInfo[0].userid == "yEOpVXccwZNUJbW5RBboUC85lTm2" && (
-          <h1 className="mx-auto my-1 text-3xl font-bold">
-            Please add some friends first!
-          </h1>
-        ))}
+      {(friendOptions.length == 0 ||
+        (friendsInfo[0]?.userid == "yEOpVXccwZNUJbW5RBboUC85lTm2" &&
+          friendsInfo.length == 1)) && (
+        <h1 className="mx-auto my-1 text-3xl font-bold">
+          Please add some friends first!
+        </h1>
+      )}
       <ErrorMessage message={errorMessage} />
       <h3 className="text-center text-xl font-bold">Preview</h3>
       <div className="w-1/3 max-w-xs">
