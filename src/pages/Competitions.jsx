@@ -19,7 +19,7 @@ export default function Competitions() {
   const friendFilter = searchParams.get("friend");
   const [friendsInfo, setFriendsInfo] = React.useState([]);
   const [width, setWidth] = React.useState(window.innerWidth);
-
+  console.log(competitions);
   React.useEffect(() => {
     return getActualFriends(myInfo, setFriendsInfo);
   }, [myInfo]);

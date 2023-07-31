@@ -7,6 +7,7 @@ import { updateProfile } from "../util-js/api";
 import { MdAccountCircle } from "react-icons/md";
 import ErrorMessage from "../components/ErrorMessage";
 import NotFound from "../assets/image-not-found.png";
+import DeleteAccount from "../components/DeleteAccount";
 
 export default function Profile() {
   const { myInfo, setDarkMode } = useOutletContext();
@@ -115,13 +116,16 @@ export default function Profile() {
         <option value="light">Light</option>
         <option value="dark">Dark</option>
       </select>
-      <button
-        className="mx-auto mb-2 mt-auto cursor-pointer rounded-full bg-red-500 p-1 px-3 text-lg text-white drop-shadow-md dark:bg-red-900 sm:p-2 sm:text-2xl"
-        onClick={async () => await signOut()}
-        disabled={loading}
-      >
-        Sign out
-      </button>
+      <div className="mb-2 mt-auto flex w-full justify-center gap-10">
+        <button
+          className="rounded-full bg-teal-500 px-3 py-1 text-lg text-white drop-shadow-md dark:bg-teal-800 sm:py-2 sm:text-2xl"
+          onClick={async () => await signOut()}
+          disabled={loading}
+        >
+          Sign out
+        </button>
+        <DeleteAccount setErrorMessage={setErrorMessage} myInfo={myInfo} />
+      </div>
     </div>
   );
 }

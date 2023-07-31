@@ -23,6 +23,9 @@ export async function addFriend(username, myInfo) {
     if (!data) {
       throw "No user with that exact name";
     }
+    if (data?.deleted) {
+      throw "That user has been deleted";
+    }
     if (myInfo.friends.find((x) => x.userid == data.userid) != undefined) {
       throw "Invite already sent / Friends already";
     }

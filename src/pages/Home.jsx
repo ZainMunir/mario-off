@@ -141,6 +141,22 @@ function Suggestions() {
   );
 }
 
+function DelAccount() {
+  return (
+    <>
+      <h2 className="mb-2 text-2xl">Delete Your Account</h2>
+      <p>
+        You can delete your account at any time on the profile page. Doing so
+        means you will no longer have access to any competitions you're a part
+        of, and your username may be freed up in the future for someone else to
+        use. Your profile picture will also be cleared. Don't click it if you
+        want to keep your account, because undoing it is a pain for me and I
+        probably won't put in the effort.
+      </p>
+    </>
+  );
+}
+
 function HowStuffWorks() {
   return (
     <>
@@ -245,8 +261,11 @@ export default function Home() {
             <div className="border-b-2 py-5 pb-2 dark:border-gray-700">
               <Issues />
             </div>
-            <div className="pt-2">
+            <div className="border-b-2 pb-2 pt-2 dark:border-gray-700">
               <Suggestions />
+            </div>
+            <div className="pt-2">
+              <DelAccount />
             </div>
           </div>
         </div>

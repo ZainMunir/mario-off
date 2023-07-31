@@ -45,6 +45,7 @@ export default function Friends() {
             <div key={friend.userid} className="flex">
               <p className="mr-auto">
                 {currentFriend && currentFriend.username}
+                {currentFriend?.deleted && " (Deleted)"}
               </p>
               <button
                 onClick={() => delFriend(currentFriend)}
@@ -92,6 +93,7 @@ export default function Friends() {
                 {currentFriend?.username == "RwBo" &&
                   friends.length == 1 &&
                   " (Feel free to delete me!)"}
+                {currentFriend?.deleted && " (Deleted)"}
               </p>
               <p className="ml-auto mr-8">
                 {myInfoOnThem?.score[1]} - {myInfoOnThem?.score[0]}{" "}
@@ -115,7 +117,10 @@ export default function Friends() {
           );
           return (
             <div key={friend.userid} className="group relative">
-              <p>{currentFriend && currentFriend.username}</p>
+              <p>
+                {currentFriend && currentFriend.username}
+                {currentFriend?.deleted && " (Deleted)"}
+              </p>
               <button
                 className="absolute right-0 top-1 opacity-0 transition-opacity duration-100 group-hover:opacity-100"
                 onClick={() => delFriend(currentFriend)}

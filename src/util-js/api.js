@@ -65,6 +65,7 @@ export async function addNewUser(user) {
     profilePic: user.photoURL,
     userid: user.uid,
     friends: [defaultFriend],
+    deleted: false,
   };
   const docRef = await addDoc(userInfoCollection, newInfo);
   await updateDoc(docRef, {
@@ -79,6 +80,7 @@ export async function addNewEmailUser(uid) {
     profilePic: "",
     userid: uid,
     friends: [defaultFriend],
+    deleted: false,
   };
   const docRef = await addDoc(userInfoCollection, newInfo);
   await updateDoc(docRef, {
@@ -132,6 +134,7 @@ export async function updateProfile(request) {
       request.profilePic == request.myInfo.profilePic
     )
       throw "Nothing's changed";
+    if (request.username.length > 20) throw "Username too long (20 max)";
     const docRef = doc(db, "userInfo", request.username);
     const querySnapshot = await getDoc(docRef);
     const data = querySnapshot.data();
@@ -153,4 +156,14 @@ export async function updateProfile(request) {
     await updateDoc(docRef, newProfile);
   }
   return null;
+}
+
+export async function deleteAccount(myInfo) {
+  const docRef = doc(db, "userInfo", myInfo.username);
+  const newProfile = {
+    ...myInfo,
+    profilePic: "",
+    deleted: true,
+  };
+  await updateDoc(docRef, newProfile);
 }
