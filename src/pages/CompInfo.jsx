@@ -52,6 +52,7 @@ export default function CompInfo(props) {
     return [year, month, day].join("-");
   }
   const creationDate = formatDate(currCompetition.creationDate.toDate());
+  const updatedDate = formatDate(currCompetition.updatedDate.toDate());
 
   async function deleteComp() {
     await deleteCompetition(currCompetition.id);
@@ -147,7 +148,8 @@ export default function CompInfo(props) {
           )}
         </div>
         <div className="flex w-1/2 flex-col p-2 text-center align-middle text-sm">
-          <div className="mb-3">Started: {creationDate}</div>
+          <div>Started: {creationDate}</div>
+          <div className="mb-2">Updated: {updatedDate}</div>
           <CompScore
             players={currCompetition.players}
             currentScore={currCompetition.currentScore}
